@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { ApiCoreService, PagingInputFields } from '@pubkey-link/api-core-data-access'
+import { PubKeyIdentityProvider } from '@pubkey-program-library/anchor'
 import { UserPaging } from './entity/user.entity'
 
 @Injectable()
@@ -25,7 +26,7 @@ export class ApiUserDataService {
   }
 
   async findOne(userId: string) {
-    const found = await this.core.data.user.findUnique({ where: { id: userId } })
+    const found = await this.core.data.user.findUnique({ where: { id: userId }, include: { identities: true } })
     if (!found) {
       throw new Error(`User ${userId} not found`)
     }
@@ -63,6 +64,36 @@ export class ApiUserDataService {
     const exists = await this.core.data.user.findUnique({ where: { username } })
     if (exists) {
       throw new Error(`User ${username} already exists`)
+    }
+    return true
+  }
+
+  async verify(userId: string) {
+    const found = await this.findOne(userId)
+    if (!found.identities.length) {
+      throw new Error(`Can't verify a user without identities`)
+    }
+    let foundPubkeyProfile = null
+    for (const identity of found.identities) {
+      console.log(`Checking ${identity.provider} ${identity.providerId}`)
+      foundPubkeyProfile = await this.core.protocol.getProfileByProvider({
+        provider: identity.provider as PubKeyIdentityProvider,
+        providerId: identity.providerId,
+      })
+      if (foundPubkeyProfile) {
+        console.log(`We found one, we break!`)
+        break
+      }
+    }
+    if (foundPubkeyProfile) {
+      if (found.pubkeyProfile !== foundPubkeyProfile.publicKey.toString()) {
+        const updated = await this.core.data.user.update({
+          where: { id: found.id },
+          data: { pubkeyProfile: foundPubkeyProfile.publicKey.toString() },
+        })
+
+        console.log(`Updated ${updated.username}, attached pubkey profile ${updated.pubkeyProfile}`)
+      }
     }
     return true
   }

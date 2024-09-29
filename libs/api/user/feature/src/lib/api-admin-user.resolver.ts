@@ -33,4 +33,9 @@ export class ApiAdminUserResolver {
   adminUpdateUser(@Args('userId') userId: string, @Args('input') input: AdminUpdateUserInput) {
     return this.service.admin.updateUser(userId, input)
   }
+
+  @Mutation(() => Boolean, { nullable: true })
+  adminVerifyUser(@Args('userId') userId: string) {
+    return this.service.admin.verifyUser(userId)
+  }
 }

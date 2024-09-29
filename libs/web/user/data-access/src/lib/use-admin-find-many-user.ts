@@ -49,5 +49,10 @@ export function useAdminFindManyUser(props?: AdminFindManyUserInput) {
         toastSuccess('User deleted')
         return query.refetch()
       }),
+    verifyUser: (userId: string) =>
+      sdk.adminVerifyUser({ userId }).then(async () => {
+        toastSuccess('User verified')
+        await query.refetch()
+      }),
   }
 }

@@ -306,6 +306,7 @@ model User {
   developer      Boolean           @default(false)
   private        Boolean           @default(false)
   name           String?
+  pubkeyProfile  String?
   role           UserRole          @default(User)
   status         UserStatus        @default(Created)
   username       String            @unique
