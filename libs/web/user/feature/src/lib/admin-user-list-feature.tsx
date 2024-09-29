@@ -7,7 +7,8 @@ import { AdminUserUiSelectRole } from './admin-user-ui-select-role'
 import { AdminUserUiSelectStatus } from './admin-user-ui-select-status'
 
 export function AdminUserListFeature() {
-  const { deleteUser, items, pagination, query, role, setRole, setSearch, setStatus, status } = useAdminFindManyUser()
+  const { deleteUser, items, pagination, query, role, setRole, setSearch, setStatus, status, verifyUser } =
+    useAdminFindManyUser()
 
   return (
     <UiPage title="Users" leftAction={<UiBack />} rightAction={<UiDebugModal data={items} />}>
@@ -26,6 +27,7 @@ export function AdminUserListFeature() {
             if (!window.confirm('Are you sure?')) return
             return deleteUser(user.id)
           }}
+          verifyUser={(user) => verifyUser(user.id)}
           users={items}
           page={pagination.page}
           totalRecords={pagination.total}

@@ -4,24 +4,18 @@ fragment UserSummary on User {
   private
   id
   name
+  pubkeyProfile
   profileUrl
   role
   username
 }
 
 fragment UserDetails on User {
-  avatarUrl
+  ...UserSummary
   createdAt
-  developer
-  private
   lastLogin
-  id
-  name
-  profileUrl
-  role
   status
   updatedAt
-  username
 }
 
 mutation adminDeleteUser($userId: String!) {
@@ -54,6 +48,9 @@ mutation adminUpdateUser($userId: String!, $input: AdminUpdateUserInput!) {
   }
 }
 
+mutation adminVerifyUser($userId: String!) {
+  verified: adminVerifyUser(userId: $userId)
+}
 query userFindManyUser($input: UserFindManyUserInput!) {
   paging: userFindManyUser(input: $input) {
     data {

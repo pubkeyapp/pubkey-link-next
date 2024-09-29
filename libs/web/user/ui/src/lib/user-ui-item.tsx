@@ -24,7 +24,7 @@ export function UserUiItem({
 
   return (
     <UiAnchor to={to ?? undefined} underline="never" {...anchorProps} display="inline-flex">
-      <Group gap="sm" {...groupProps}>
+      <Group gap="sm" {...groupProps} wrap="nowrap">
         <UserUiAvatar user={user} {...avatarProps} />
         <Stack gap={1}>
           <UserUiUsername user={user} />

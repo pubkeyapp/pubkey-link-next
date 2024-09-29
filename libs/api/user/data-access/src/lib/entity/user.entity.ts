@@ -26,6 +26,8 @@ export class User {
   @Field({ nullable: true })
   name?: string | null
   @Field({ nullable: true })
+  pubkeyProfile?: string | null
+  @Field({ nullable: true })
   username!: string
   @HideField()
   identities?: unknown[] | null

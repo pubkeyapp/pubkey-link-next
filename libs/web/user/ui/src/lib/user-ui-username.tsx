@@ -11,6 +11,7 @@ export function UserUiUsername({ to, user }: { to?: string | null; user: User })
           {user.username}
         </Text>
       </UiAnchor>
+      {user.pubkeyProfile ? <span aria-label={'pubkey emoji'}>🅿️</span> : null}
       {user.private ? (
         <Tooltip label="Private profile">
           <Text c="dimmed" span display="flex">

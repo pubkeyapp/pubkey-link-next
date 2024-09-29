@@ -2,7 +2,7 @@ import { ActionIcon, Alert, Group, ScrollArea } from '@mantine/core'
 import { User } from '@pubkey-link/sdk'
 import { IdentityUiAvatarGroup } from '@pubkey-link/web-core-ui'
 import { UiTime } from '@pubkey-ui/core'
-import { IconPencil, IconTrash, IconUser } from '@tabler/icons-react'
+import { IconParking, IconPencil, IconTrash, IconUser } from '@tabler/icons-react'
 import { DataTable, DataTableProps } from 'mantine-datatable'
 import { Link } from 'react-router-dom'
 import { UserUiItem } from './user-ui-item'
@@ -16,6 +16,7 @@ interface AdminUserTableProps {
   totalRecords: DataTableProps['totalRecords']
   recordsPerPage: DataTableProps['recordsPerPage']
   onPageChange: (page: number) => void
+  verifyUser: (user: User) => Promise<void>
 }
 
 export function AdminUserUiTable({
@@ -25,6 +26,7 @@ export function AdminUserUiTable({
   page,
   recordsPerPage,
   totalRecords,
+  verifyUser,
 }: AdminUserTableProps) {
   return (
     <ScrollArea>
@@ -83,7 +85,10 @@ export function AdminUserUiTable({
             width: '10%',
             textAlign: 'right',
             render: (item) => (
-              <Group gap="xs" justify="right">
+              <Group gap="xs" justify="right" wrap="nowrap">
+                <ActionIcon size="sm" variant="light" color="blue" onClick={() => verifyUser(item)}>
+                  <IconParking size={16} />
+                </ActionIcon>
                 <ActionIcon size="sm" variant="light" color="brand" component={Link} to={item.profileUrl}>
                   <IconUser size={16} />
                 </ActionIcon>

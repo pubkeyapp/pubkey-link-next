@@ -468,6 +468,7 @@ type Mutation {
   adminUpdateRole(input: AdminUpdateRoleInput!, roleId: String!): Role
   adminUpdateUser(input: AdminUpdateUserInput!, userId: String!): User
   adminVerifyNetworkAssets: Boolean
+  adminVerifyUser(userId: String!): Boolean
   anonVerifyIdentityChallenge(input: VerifyIdentityChallengeInput!): IdentityChallenge
   logout: Boolean
   userAddCommunityMember(communityId: String!, input: UserAddCommunityMemberInput!): CommunityMember
@@ -783,6 +784,7 @@ type User {
   name: String
   private: Boolean
   profileUrl: String!
+  pubkeyProfile: String
   role: UserRole
   status: UserStatus
   updatedAt: DateTime
