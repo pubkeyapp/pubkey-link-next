@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Identity as PrismaIdentity, IdentityProvider, UserStatus } from '@prisma/client'
+import { ApiBotService } from '@pubkey-link/api-bot-data-access'
 import { ApiCoreService } from '@pubkey-link/api-core-data-access'
 import { ApiNetworkAssetService } from '@pubkey-link/api-network-asset-data-access'
 import { AdminCreateIdentityInput } from './dto/admin-create-identity.input'
@@ -7,7 +8,11 @@ import { AdminFindManyIdentityInput } from './dto/admin-find-many-identity.input
 
 @Injectable()
 export class ApiIdentityDataAdminService {
-  constructor(private readonly core: ApiCoreService, private readonly networkAsset: ApiNetworkAssetService) {}
+  constructor(
+    private readonly bot: ApiBotService,
+    private readonly core: ApiCoreService,
+    private readonly networkAsset: ApiNetworkAssetService,
+  ) {}
 
   async createIdentity(input: AdminCreateIdentityInput): Promise<PrismaIdentity> {
     const found = await this.core.data.identity.findUnique({
@@ -92,15 +97,26 @@ export class ApiIdentityDataAdminService {
     if (!identity) {
       throw new Error(`Identity ${identityId} not found`)
     }
-    if (identity.provider !== IdentityProvider.Solana) {
-      throw new Error(`Identity ${identityId} not supported`)
+
+    switch (identity.provider) {
+      case IdentityProvider.Discord:
+        return this.bot
+          .syncDiscordIdentity({ providerId: identity.providerId })
+          .then((res) => !!res)
+          .catch((err) => {
+            console.log('Error syncing identity', err)
+            return false
+          })
+      case IdentityProvider.Solana:
+        return this.networkAsset.sync
+          .syncIdentity({ owner: identity.providerId })
+          .then((res) => !!res)
+          .catch((err) => {
+            console.log('Error syncing identity', err)
+            return false
+          })
+      default:
+        throw new Error(`Identity provider ${identity.provider} not supported`)
     }
-    return this.networkAsset.sync
-      .syncIdentity({ owner: identity.providerId })
-      .then((res) => !!res)
-      .catch((err) => {
-        console.log('Error syncing identity', err)
-        return false
-      })
   }
 }

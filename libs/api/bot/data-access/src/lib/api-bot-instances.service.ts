@@ -73,6 +73,22 @@ export class ApiBotInstancesService {
     return this.core.data.bot.findMany({ where: { status: BotStatus.Active } })
   }
 
+  async getDefaultBot(): Promise<Bot | null> {
+    return this.core.data.bot.findFirst({ where: { id: this.core.config.authDiscordClientId } })
+  }
+
+  async getDefaultBotInstance(): Promise<DiscordBot> {
+    const bot = await this.getDefaultBot()
+    if (!bot) {
+      throw new Error(`Can't get default bot`)
+    }
+    const instance = this.getBotInstance(bot.id)
+    if (!instance) {
+      throw new Error(`Can't get default bot instance`)
+    }
+    return instance
+  }
+
   async getBotRole({
     botId,
     roleId,
