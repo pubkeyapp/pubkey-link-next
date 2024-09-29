@@ -6,7 +6,11 @@ import { getIdentityUrl, Identity } from '@pubkey-link/api-identity-data-access'
 export class ApiIdentityResolver {
   @ResolveField(() => String, { nullable: true })
   avatarUrl(@Parent() identity: Identity) {
-    return (identity.profile as { avatarUrl?: string })?.avatarUrl ?? null
+    return (
+      (identity.profile as { avatarUrl?: string })?.avatarUrl ??
+      (identity.profile as { avatarURL?: string })?.avatarURL ??
+      null
+    )
   }
 
   @ResolveField(() => Boolean, { nullable: true })

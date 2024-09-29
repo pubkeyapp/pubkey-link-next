@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { ApiAuthDataAccessModule } from '@pubkey-link/api-auth-data-access'
+import { ApiBotDataAccessModule } from '@pubkey-link/api-bot-data-access'
 import { ApiCoreDataAccessModule } from '@pubkey-link/api-core-data-access'
 import { ApiNetworkAssetDataAccessModule } from '@pubkey-link/api-network-asset-data-access'
 import { ApiNetworkDataAccessModule } from '@pubkey-link/api-network-data-access'
@@ -12,6 +13,7 @@ import { ApiIdentityService } from './api-identity.service'
 @Module({
   imports: [
     ApiAuthDataAccessModule,
+    ApiBotDataAccessModule,
     ApiNetworkDataAccessModule,
     ApiCoreDataAccessModule,
     ApiNetworkAssetDataAccessModule,

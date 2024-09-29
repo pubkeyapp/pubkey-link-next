@@ -1,6 +1,6 @@
 import { REST } from '@discordjs/rest'
 import { Logger } from '@nestjs/common'
-import { Client, Guild, GuildMember, MessageCreateOptions, NonThreadGuildBasedChannel } from 'discord.js'
+import { Client, Guild, GuildMember, MessageCreateOptions, NonThreadGuildBasedChannel, User } from 'discord.js'
 import { createDiscordClient, createDiscordRestClient } from './discord/client'
 
 export interface RESTDiscordRoleConnection {
@@ -209,6 +209,10 @@ export class DiscordBot {
       })
 
     return (roles ?? []) as RESTDiscordRoleConnection[]
+  }
+
+  async getUser(providerId: string): Promise<User | null> {
+    return this.client?.users?.fetch(providerId, { force: true }) ?? null
   }
 }
 

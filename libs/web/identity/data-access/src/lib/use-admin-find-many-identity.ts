@@ -65,15 +65,20 @@ export function useAdminFindManyIdentity({ ownerId, provider }: { ownerId?: stri
       })
     },
     syncIdentity: async (identity: Identity) => {
-      return sdk.adminSyncIdentity({ identityId: identity.id }).then(async (res) => {
-        if (res) {
-          toastSuccess('Identity synced')
-          await query.refetch()
-          return true
-        }
-        toastError('Error syncing identity')
-        return false
-      })
+      return sdk
+        .adminSyncIdentity({ identityId: identity.id })
+        .then(async (res) => {
+          if (res) {
+            toastSuccess('Identity synced')
+            await query.refetch()
+            return true
+          }
+          toastError('Error syncing identity')
+          return false
+        })
+        .catch((err) => {
+          toastError(err)
+        })
     },
   }
 }
