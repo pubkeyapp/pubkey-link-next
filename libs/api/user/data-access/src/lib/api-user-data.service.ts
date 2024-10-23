@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { ApiCoreService, PagingInputFields } from '@pubkey-link/api-core-data-access'
-import { PubKeyIdentityProvider } from '@pubkey-program-library/anchor'
+import { IdentityProvider } from '@pubkey-protocol/sdk'
 import { UserPaging } from './entity/user.entity'
 
 @Injectable()
@@ -61,7 +61,7 @@ export class ApiUserDataService {
     for (const identity of found.identities) {
       console.log(`Checking ${identity.provider} ${identity.providerId}`)
       foundPubkeyProfile = await this.core.protocol.getProfileByProvider({
-        provider: identity.provider as PubKeyIdentityProvider,
+        provider: identity.provider as IdentityProvider,
         providerId: identity.providerId,
       })
       if (foundPubkeyProfile) {

@@ -6,7 +6,7 @@ import { Injectable, Logger } from '@nestjs/common'
 import { OnEvent } from '@nestjs/event-emitter'
 import { Network, NetworkCluster } from '@prisma/client'
 import { ApiCoreService } from '@pubkey-link/api-core-data-access'
-import { AnchorKeypairWallet } from '@pubkey-program-library/sdk'
+import { AnchorKeypairWallet } from '@pubkey-protocol/sdk'
 import { Connection, Keypair } from '@solana/web3.js'
 import { ChainId, Client } from '@solflare-wallet/utl-sdk'
 import {
