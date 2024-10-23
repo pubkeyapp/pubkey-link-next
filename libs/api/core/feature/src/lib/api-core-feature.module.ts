@@ -13,7 +13,6 @@ import { ApiNetworkTokenFeatureModule } from '@pubkey-link/api-network-token-fea
 import { ApiRoleFeatureModule } from '@pubkey-link/api-role-feature'
 import { ApiSnapshotFeatureModule } from '@pubkey-link/api-snapshot-feature'
 import { ApiUserFeatureModule } from '@pubkey-link/api-user-feature'
-import { ApiCoreProtocolController } from './api-core-protocol.controller'
 import { ApiCoreController } from './api-core.controller'
 import { ApiCoreResolver } from './api-core.resolver'
 
@@ -36,7 +35,7 @@ const imports = [
 ]
 
 @Module({
-  controllers: [ApiCoreController, ApiCoreProtocolController],
+  controllers: [ApiCoreController],
   imports: [...imports],
   providers: [ApiCoreResolver],
 })

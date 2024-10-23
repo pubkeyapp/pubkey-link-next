@@ -1,5 +1,7 @@
 // Remove trailing slashes from the URLs to avoid double slashes
 import { LogLevel } from '@ogma/common'
+import { getKeypairFromByteArray } from '@pubkey-protocol/sdk'
+import { Keypair } from '@solana/web3.js'
 
 const API_URL = getUrl('API_URL') as string
 
@@ -76,8 +78,10 @@ export interface ApiCoreConfig {
   port: number
   // PubKey Protocol
   pubkeyProtocolCluster?: string
+  pubkeyProtocolCommunity?: string
   pubkeyProtocolEndpoint?: string
-  pubkeyProtocolFeePayer?: string
+  pubkeyProtocolEndpointPublic?: string
+  pubkeyProtocolSigner?: Keypair | undefined
   // Redis
   redisUrl: string
   // Solana Endpoints
@@ -135,8 +139,12 @@ export function configuration(): ApiCoreConfig {
     jwtSecret: process.env['JWT_SECRET'] as string,
     port: parseInt(process.env['PORT'] as string, 10) || 3000,
     pubkeyProtocolCluster: process.env['PUBKEY_PROTOCOL_CLUSTER'] as string,
+    pubkeyProtocolCommunity: process.env['PUBKEY_PROTOCOL_COMMUNITY'] as string,
     pubkeyProtocolEndpoint: process.env['PUBKEY_PROTOCOL_ENDPOINT'] as string,
-    pubkeyProtocolFeePayer: process.env['PUBKEY_PROTOCOL_FEE_PAYER'] as string,
+    pubkeyProtocolEndpointPublic: process.env['PUBKEY_PROTOCOL_ENDPOINT_PUBLIC'] as string,
+    pubkeyProtocolSigner: process.env['PUBKEY_PROTOCOL_SIGNER']?.length
+      ? getKeypairFromByteArray(JSON.parse(process.env['PUBKEY_PROTOCOL_SIGNER']))
+      : undefined,
     redisUrl: process.env['REDIS_URL'] as string,
     solanaCustomEndpoint: process.env['SOLANA_CUSTOM_ENDPOINT'] as string,
     solanaDevnetEndpoint: process.env['SOLANA_DEVNET_ENDPOINT'] as string,

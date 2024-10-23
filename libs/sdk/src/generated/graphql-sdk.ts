@@ -218,6 +218,9 @@ export type AppConfig = {
   authLinkProviders?: Maybe<Array<IdentityProvider>>
   authLoginProviders?: Maybe<Array<IdentityProvider>>
   features: Array<AppFeature>
+  pubkeyProtocolCommunity?: Maybe<Scalars['String']['output']>
+  pubkeyProtocolEndpoint?: Maybe<Scalars['String']['output']>
+  pubkeyProtocolSigner?: Maybe<Scalars['String']['output']>
   resolvers: Array<NetworkResolver>
 }
 
@@ -4058,6 +4061,9 @@ export type AppConfigDetailsFragment = {
   authLinkProviders?: Array<IdentityProvider> | null
   authLoginProviders?: Array<IdentityProvider> | null
   features: Array<AppFeature>
+  pubkeyProtocolCommunity?: string | null
+  pubkeyProtocolEndpoint?: string | null
+  pubkeyProtocolSigner?: string | null
   resolvers: Array<NetworkResolver>
 }
 
@@ -4089,6 +4095,9 @@ export type AppConfigQuery = {
     authLinkProviders?: Array<IdentityProvider> | null
     authLoginProviders?: Array<IdentityProvider> | null
     features: Array<AppFeature>
+    pubkeyProtocolCommunity?: string | null
+    pubkeyProtocolEndpoint?: string | null
+    pubkeyProtocolSigner?: string | null
     resolvers: Array<NetworkResolver>
   }
 }
@@ -8563,6 +8572,9 @@ export const AppConfigDetailsFragmentDoc = gql`
     authLinkProviders
     authLoginProviders
     features
+    pubkeyProtocolCommunity
+    pubkeyProtocolEndpoint
+    pubkeyProtocolSigner
     resolvers
   }
 `
