@@ -1,11 +1,14 @@
-import { NetworkTokenType, UserFindManyNetworkTokenInput } from '@pubkey-link/sdk'
+import { NetworkCluster, NetworkTokenType, UserFindManyNetworkTokenInput } from '@pubkey-link/sdk'
 import { useSdk } from '@pubkey-link/web-core-data-access'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
-export function useUserFindManyNetworkToken(props: Partial<UserFindManyNetworkTokenInput>) {
+export function useUserFindManyNetworkToken(
+  props: Partial<UserFindManyNetworkTokenInput> & { cluster: NetworkCluster },
+) {
   const sdk = useSdk()
   const [type, setType] = useState<NetworkTokenType | undefined>(props?.type ?? undefined)
+  const [cluster, setCluster] = useState<NetworkCluster>(props.cluster)
   const [limit, setLimit] = useState(props?.limit ?? 10)
   const [page, setPage] = useState(props?.page ?? 1)
   const [search, setSearch] = useState<string>(props?.search ?? '')
@@ -13,8 +16,8 @@ export function useUserFindManyNetworkToken(props: Partial<UserFindManyNetworkTo
   const input: UserFindManyNetworkTokenInput = {
     page,
     limit,
+    cluster,
     search,
-    cluster: props.cluster,
     username: props.username,
     type,
   }
@@ -29,6 +32,8 @@ export function useUserFindManyNetworkToken(props: Partial<UserFindManyNetworkTo
     items,
     query,
     type,
+    cluster,
+    setCluster,
     setType,
     pagination: {
       page,

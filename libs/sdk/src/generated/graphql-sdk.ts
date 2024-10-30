@@ -1459,7 +1459,7 @@ export type UserFindManyNetworkAssetInput = {
 }
 
 export type UserFindManyNetworkTokenInput = {
-  cluster?: InputMaybe<NetworkCluster>
+  cluster: NetworkCluster
   limit?: InputMaybe<Scalars['Int']['input']>
   page?: InputMaybe<Scalars['Int']['input']>
   search?: InputMaybe<Scalars['String']['input']>
@@ -12440,7 +12440,7 @@ export function UserFindManyNetworkAssetInputSchema(): z.ZodObject<Properties<Us
 
 export function UserFindManyNetworkTokenInputSchema(): z.ZodObject<Properties<UserFindManyNetworkTokenInput>> {
   return z.object({
-    cluster: NetworkClusterSchema.nullish(),
+    cluster: NetworkClusterSchema,
     limit: z.number().nullish(),
     page: z.number().nullish(),
     search: z.string().nullish(),

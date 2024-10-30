@@ -886,7 +886,7 @@ input UserFindManyNetworkAssetInput {
 }
 
 input UserFindManyNetworkTokenInput {
-  cluster: NetworkCluster
+  cluster: NetworkCluster!
   limit: Int = 10
   page: Int = 1
   search: String
