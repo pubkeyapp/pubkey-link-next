@@ -13,7 +13,7 @@
 Clone the repo and install dependencies:
 
 ```shell
-git clone git@github.com:pubkeyapp/pubkey-link.git
+git clone https://github.com/pubkeyapp/pubkey-link.git
 cd pubkey-link
 pnpm
 ```
