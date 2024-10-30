@@ -1,9 +1,8 @@
-import { ActionIcon, Paper } from '@mantine/core'
+import { Paper } from '@mantine/core'
 import { NetworkTokenType, RoleCondition, UserUpdateRoleConditionInput } from '@pubkey-link/sdk'
-import { NetworkTokenUiItem } from '@pubkey-link/web-network-token-ui'
 import { useUserFindOneRole } from '@pubkey-link/web-role-data-access'
-import { UiDebug, UiGroup, UiInfo, UiStack } from '@pubkey-ui/core'
-import { IconTrash } from '@tabler/icons-react'
+import { UiAlert, UiDebug, UiInfo, UiStack } from '@pubkey-ui/core'
+import { RoleConditionUiSettingsItem } from './role-condition-ui-settings-item'
 import { RoleConditionUiUpdateFormFungible } from './role-condition-ui-update-form-fungible'
 import { RoleConditionUiUpdateFormNonFungible } from './role-condition-ui-update-form-non-fungible'
 
@@ -22,22 +21,7 @@ export function RoleConditionUiSettings({ condition }: { condition: RoleConditio
       return condition.token ? (
         <Paper withBorder p="md" radius="sm" shadow="md">
           <UiStack>
-            <UiGroup>
-              <NetworkTokenUiItem networkToken={condition.token} />
-              <ActionIcon
-                onClick={() => {
-                  if (!window.confirm('Are you sure?')) {
-                    return
-                  }
-                  return deleteRoleCondition(condition.id)
-                }}
-                variant="light"
-                color="red"
-                size="xs"
-              >
-                <IconTrash />
-              </ActionIcon>
-            </UiGroup>
+            <RoleConditionUiSettingsItem condition={condition} />
             <RoleConditionUiUpdateFormNonFungible item={condition} submit={update} />
           </UiStack>
         </Paper>
@@ -48,7 +32,7 @@ export function RoleConditionUiSettings({ condition }: { condition: RoleConditio
       return condition.token ? (
         <Paper withBorder p="md" radius="sm" shadow="md">
           <UiStack>
-            <NetworkTokenUiItem networkToken={condition.token} />
+            <RoleConditionUiSettingsItem condition={condition} />
             <RoleConditionUiUpdateFormFungible item={condition} submit={update} />
           </UiStack>
         </Paper>
@@ -59,7 +43,7 @@ export function RoleConditionUiSettings({ condition }: { condition: RoleConditio
       return condition.token ? (
         <Paper withBorder p="md" radius="sm" shadow="md">
           <UiStack>
-            <NetworkTokenUiItem networkToken={condition.token} />
+            <RoleConditionUiSettingsItem condition={condition} />
             <UiInfo variant="outline" message="This condition has no configuration options" />
           </UiStack>
         </Paper>
@@ -69,6 +53,7 @@ export function RoleConditionUiSettings({ condition }: { condition: RoleConditio
     default:
       return (
         <UiStack>
+          <UiAlert message="Unknown condition type" />
           <UiDebug data={condition} open />
         </UiStack>
       )
