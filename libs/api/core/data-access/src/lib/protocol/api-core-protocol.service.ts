@@ -26,6 +26,7 @@ export class ApiCoreProtocolService implements OnModuleInit {
 
   async onModuleInit() {
     if (
+      !this.config.featurePubkeyProtocol ||
       !this.config.pubkeyProtocolCluster ||
       !this.config.pubkeyProtocolEndpoint ||
       !this.config.pubkeyProtocolFeePayer
