@@ -1,9 +1,8 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
-import { IdentityProvider, LogLevel, LogRelatedType, Prisma, User, UserRole } from '@prisma/client'
+import { IdentityProvider, LogLevel, LogRelatedType, NetworkCluster, Prisma, User, UserRole } from '@prisma/client'
 import { ApiCorePrismaClient, prismaClient } from './api-core-prisma-client'
 import { ApiCoreConfigService } from './config/api-core-config.service'
-
 import { StatRecord } from './entity/stat-record'
 import { StatRecordGroup } from './entity/stat-record-group'
 import { getRandomString } from './helpers/get-random-string'
@@ -78,6 +77,16 @@ export class ApiCoreService implements OnModuleInit {
       throw new Error(`User ${userId} is not an admin of community ${communityId}`)
     }
     return admin
+  }
+
+  async ensureNetworkCluster(cluster: NetworkCluster) {
+    const found = await this.data.network.findFirst({
+      where: { cluster },
+    })
+    if (!found) {
+      throw new Error(`Network cluster ${cluster} not found`)
+    }
+    return cluster
   }
 
   async ensureUserAdmin(userId: string): Promise<boolean> {

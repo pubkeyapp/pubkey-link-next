@@ -1,12 +1,16 @@
-import { UserCreateCommunityInput } from '@pubkey-link/sdk'
+import { NetworkCluster, UserCreateCommunityInput } from '@pubkey-link/sdk'
 import { useUserFindManyCommunity } from '@pubkey-link/web-community-data-access'
 import { UserCommunityUiCreateForm } from '@pubkey-link/web-community-ui'
-import { toastError, UiBack, UiCard, UiPage } from '@pubkey-ui/core'
+import { useUserGetEnabledNetworkClusters } from '@pubkey-link/web-network-data-access'
+import { toastError, UiAlert, UiBack, UiCard, UiLoader, UiPage } from '@pubkey-ui/core'
+import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export function UserCommunityCreateFeature() {
   const navigate = useNavigate()
   const { createCommunity } = useUserFindManyCommunity()
+  const clusterQuery = useUserGetEnabledNetworkClusters()
+  const clusters: NetworkCluster[] = useMemo(() => clusterQuery?.data?.clusters ?? [], [clusterQuery.data])
 
   async function submit(input: UserCreateCommunityInput) {
     return createCommunity(input)
@@ -25,7 +29,13 @@ export function UserCommunityCreateFeature() {
   return (
     <UiPage leftAction={<UiBack />} title="Create Community">
       <UiCard>
-        <UserCommunityUiCreateForm submit={submit} />
+        {clusterQuery.isLoading ? (
+          <UiLoader />
+        ) : clusters.length ? (
+          <UserCommunityUiCreateForm clusters={clusters} submit={submit} />
+        ) : (
+          <UiAlert message="No clusters enabled" />
+        )}
       </UiCard>
     </UiPage>
   )

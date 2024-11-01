@@ -9,6 +9,7 @@ export class ApiCommunityDataService {
 
   async create(userId: string, input: Prisma.CommunityCreateInput) {
     this.core.config.ensureFeature(AppFeature.CommunityCreate)
+    await this.core.ensureNetworkCluster(input.cluster)
     return this.core.createCommunity({ userId, input })
   }
 
