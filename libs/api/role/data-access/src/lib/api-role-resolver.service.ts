@@ -86,7 +86,7 @@ export class ApiRoleResolverService {
 
       // Now we want to loop over each condition and check the assets
       for (const condition of conditions) {
-        if (condition.token?.type === NetworkTokenType.Validator) {
+        if (condition.token?.type === NetworkTokenType.Validator && voteAccounts.length) {
           if (voteAccounts.find((va) => resolved.solanaIds.includes(va))) {
             resolved.conditions.push(condition)
           }
