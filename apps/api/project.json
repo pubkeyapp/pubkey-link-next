@@ -33,6 +33,7 @@
       },
       "configurations": {
         "development": {
+          "inspect": false,
           "buildTarget": "api:build:development"
         },
         "production": {
