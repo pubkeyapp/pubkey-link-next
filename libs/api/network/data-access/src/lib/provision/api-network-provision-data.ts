@@ -15,6 +15,10 @@ export function getProvisionNetworks(endpoints: NetworkEndpointMap) {
   if (endpointMainnet) {
     inputs.push(networkInputSolanaMainnet(endpointMainnet))
   }
+  const endpointTestnet = endpoints.get(NetworkCluster.SolanaTestnet)
+  if (endpointTestnet) {
+    inputs.push(networkInputSolanaTestnet(endpointTestnet))
+  }
   const endpointCustom = endpoints.get(NetworkCluster.SolanaCustom)
   if (endpointCustom) {
     inputs.push(networkInputSolanaCustom(endpointCustom))
@@ -259,5 +263,14 @@ function networkInputSolanaMainnet(endpoint: string): Prisma.NetworkCreateInput 
         id: getCollectionId(NetworkCluster.SolanaMainnet, c.account),
       })),
     },
+  }
+}
+
+function networkInputSolanaTestnet(endpoint: string): Prisma.NetworkCreateInput {
+  return {
+    cluster: NetworkCluster.SolanaTestnet,
+    name: process.env['NETWORK_SOLANA_TESTNET_NAME'] ?? 'Solana Testnet',
+    type: NetworkType.Solana,
+    endpoint,
   }
 }
