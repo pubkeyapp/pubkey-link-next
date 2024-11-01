@@ -5,6 +5,7 @@ import {
   CommunityMember,
   IdentityProvider,
   NetworkAsset,
+  NetworkCluster,
   NetworkToken,
   NetworkTokenType,
   Prisma,
@@ -41,6 +42,7 @@ export class ApiRoleResolverService {
       },
     })
     if (!communities.filter((c) => c.enableSync).length) {
+      this.logger.warn(`syncAllCommunityRoles: No communities found with enableSync=true`)
       return
     }
     this.logger.verbose(`Validating roles of ${communities.length} communities`)
@@ -71,14 +73,12 @@ export class ApiRoleResolverService {
     }
 
     if (!conditions?.length || !users?.length) {
+      this.logger.debug(`syncCommunityRoles: No conditions or users found for community ${communityId}`)
       return result
     }
     this.logger.verbose(`Validating ${conditions.length} conditions for ${users.length} users`)
 
-    const hasValidatorCondition: RoleCondition | undefined = conditions.find(
-      (c) => c.type === NetworkTokenType.Validator,
-    )
-    const voteAccounts = hasValidatorCondition ? await this.network.cluster.getVoteAccounts(community.cluster) : []
+    const voteAccounts = await this.getVoteAccounts({ cluster: community.cluster, conditions })
 
     for (const user of users) {
       // We are now in the context of a user
@@ -127,6 +127,23 @@ export class ApiRoleResolverService {
     }
     return Promise.resolve(result)
   }
+
+  async getVoteAccounts({ cluster, conditions }: { cluster: NetworkCluster; conditions: RoleCondition[] }) {
+    const hasValidatorCondition: RoleCondition | undefined = conditions.find(
+      (c) => c.type === NetworkTokenType.Validator,
+    )
+    if (!hasValidatorCondition) {
+      this.logger.debug(`getVoteAccounts: No validator condition found for cluster ${cluster}`)
+      return []
+    }
+    try {
+      return await this.network.cluster.getVoteAccounts(cluster)
+    } catch (e) {
+      this.logger.error(`getVoteAccounts: Error getting vote accounts for cluster ${cluster}: ${e}`)
+      return []
+    }
+  }
+
   async syncCommunityMembers(communityId: string) {
     // We're looking for any tokens that are linked to the community
     const tokens = await this.core.data.networkToken
