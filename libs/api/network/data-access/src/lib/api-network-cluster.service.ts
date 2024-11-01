@@ -116,7 +116,7 @@ export class ApiNetworkClusterService {
 
   async getTokenList(cluster: NetworkCluster) {
     if (cluster === NetworkCluster.SolanaCustom) {
-      throw new Error(`getTokenList: Token disabled for cluster: ${cluster}`)
+      return null
     }
     if (!this.tokenList.has(cluster)) {
       const connection = await this.getConnection(cluster)

@@ -82,7 +82,12 @@ export class ApiNetworkService {
 
     let tokenList: Token | null = null
     try {
-      tokenList = await this.cluster.getTokenList(cluster).then((res) => res.fetchMint(new PublicKey(account)))
+      tokenList = await this.cluster.getTokenList(cluster).then((res) => {
+        if (!res) {
+          return null
+        }
+        return res.fetchMint(new PublicKey(account))
+      })
     } catch (e) {
       this.logger.verbose(`Failed to fetch token list for ${account}`)
     }
