@@ -998,6 +998,7 @@ export type Query = {
   userGetBotServers?: Maybe<Array<DiscordServer>>
   userGetCommunities: Array<Community>
   userGetCommunityMember?: Maybe<CommunityMember>
+  userGetEnabledNetworkClusters: Array<NetworkCluster>
   userGetTokenAccounts?: Maybe<Scalars['JSON']['output']>
   userGetTokenMetadata?: Maybe<Scalars['JSON']['output']>
   userRequestIdentityChallenge?: Maybe<IdentityChallenge>
@@ -5661,6 +5662,10 @@ export type UserGetTokenAccountsQueryVariables = Exact<{
 
 export type UserGetTokenAccountsQuery = { __typename?: 'Query'; result?: any | null }
 
+export type UserGetEnabledNetworkClustersQueryVariables = Exact<{ [key: string]: never }>
+
+export type UserGetEnabledNetworkClustersQuery = { __typename?: 'Query'; clusters: Array<NetworkCluster> }
+
 export type RoleDetailsFragment = {
   __typename?: 'Role'
   createdAt?: Date | null
@@ -8807,6 +8812,11 @@ export const UserGetTokenAccountsDocument = gql`
     result: userGetTokenAccounts(cluster: $cluster, account: $account)
   }
 `
+export const UserGetEnabledNetworkClustersDocument = gql`
+  query userGetEnabledNetworkClusters {
+    clusters: userGetEnabledNetworkClusters
+  }
+`
 export const AdminFindManyRoleDocument = gql`
   query adminFindManyRole($input: AdminFindManyRoleInput!) {
     paging: adminFindManyRole(input: $input) {
@@ -9202,6 +9212,7 @@ const AdminUpdateNetworkDocumentString = print(AdminUpdateNetworkDocument)
 const AdminDeleteNetworkDocumentString = print(AdminDeleteNetworkDocument)
 const UserGetTokenMetadataDocumentString = print(UserGetTokenMetadataDocument)
 const UserGetTokenAccountsDocumentString = print(UserGetTokenAccountsDocument)
+const UserGetEnabledNetworkClustersDocumentString = print(UserGetEnabledNetworkClustersDocument)
 const AdminFindManyRoleDocumentString = print(AdminFindManyRoleDocument)
 const AdminFindOneRoleDocumentString = print(AdminFindOneRoleDocument)
 const AdminCreateRoleDocumentString = print(AdminCreateRoleDocument)
@@ -11350,6 +11361,28 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'userGetTokenAccounts',
+        'query',
+        variables,
+      )
+    },
+    userGetEnabledNetworkClusters(
+      variables?: UserGetEnabledNetworkClustersQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: UserGetEnabledNetworkClustersQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<UserGetEnabledNetworkClustersQuery>(
+            UserGetEnabledNetworkClustersDocumentString,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        'userGetEnabledNetworkClusters',
         'query',
         variables,
       )

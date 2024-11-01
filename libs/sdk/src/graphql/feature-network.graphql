@@ -52,3 +52,7 @@ query userGetTokenMetadata($cluster: NetworkCluster!, $account: String!) {
 query userGetTokenAccounts($cluster: NetworkCluster!, $account: String!) {
   result: userGetTokenAccounts(cluster: $cluster, account: $account)
 }
+
+query userGetEnabledNetworkClusters {
+  clusters: userGetEnabledNetworkClusters
+}

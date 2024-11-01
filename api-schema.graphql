@@ -668,6 +668,7 @@ type Query {
   userGetBotServers(botId: String!): [DiscordServer!]
   userGetCommunities(username: String!): [Community!]!
   userGetCommunityMember(communityId: String!): CommunityMember
+  userGetEnabledNetworkClusters: [NetworkCluster!]!
   userGetTokenAccounts(account: String!, cluster: NetworkCluster!): JSON
   userGetTokenMetadata(account: String!, cluster: NetworkCluster!): JSON
   userRequestIdentityChallenge(input: RequestIdentityChallengeInput!): IdentityChallenge

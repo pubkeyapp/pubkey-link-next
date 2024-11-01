@@ -52,6 +52,13 @@ export class ApiNetworkService {
         conn.getParsedAccountInfo(new PublicKey(account)).then((res) => res.value as AccountInfo<ParsedAccountData>),
       )
   }
+
+  async getEnabledNetworkClusters(): Promise<NetworkCluster[]> {
+    const networks = await this.core.data.network.findMany()
+
+    return networks.map((network) => network.cluster).sort()
+  }
+
   async getTokenMetadata({ cluster, account }: { cluster: NetworkCluster; account: string }) {
     return this.cluster
       .getConnection(cluster)

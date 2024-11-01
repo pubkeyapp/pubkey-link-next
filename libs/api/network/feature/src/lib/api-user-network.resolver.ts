@@ -9,6 +9,11 @@ import { GraphQLJSON } from 'graphql-scalars'
 export class ApiUserNetworkResolver {
   constructor(private readonly service: ApiNetworkService) {}
 
+  @Query(() => [NetworkCluster])
+  userGetEnabledNetworkClusters() {
+    return this.service.getEnabledNetworkClusters()
+  }
+
   @Query(() => GraphQLJSON, { nullable: true })
   userGetTokenAccounts(
     @Args({ name: 'cluster', type: () => NetworkCluster }) cluster: NetworkCluster,
