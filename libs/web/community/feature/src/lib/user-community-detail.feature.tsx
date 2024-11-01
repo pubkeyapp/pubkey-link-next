@@ -38,11 +38,9 @@ export function UserCommunityDetailFeature() {
   if (isLoading) {
     return <UiLoader />
   }
+
   if (!item) {
     return <UiError message="Community not found." />
-  }
-  if (!member) {
-    return <UiError message="You are not a member." />
   }
 
   const routes: UiGridRoute[] = [

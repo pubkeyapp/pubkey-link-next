@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { User, UserRole } from '@prisma/client'
+import { User } from '@prisma/client'
 import { ApiCoreService } from '@pubkey-link/api-core-data-access'
 import { ApiCommunityDataService } from './api-community-data.service'
 import { UserCreateCommunityInput } from './dto/user-create-community.input'
@@ -22,23 +22,18 @@ export class ApiCommunityDataUserService {
     return this.data.delete(communityId)
   }
 
-  async findManyCommunity(userId: string, input: UserFindManyCommunityInput): Promise<CommunityPaging> {
-    const user = await this.core.ensureUserById(userId)
+  async findManyCommunity(input: UserFindManyCommunityInput): Promise<CommunityPaging> {
     return this.data.findMany({
       orderBy: { name: 'asc' },
-      where: getCommunityWhereUserInput(user, input),
+      where: getCommunityWhereUserInput(input),
       limit: input.limit,
       page: input.page,
     })
   }
 
-  async findOneCommunity(userId: string, communityId: string) {
-    const user = await this.core.ensureUserById(userId)
+  async findOneCommunity(communityId: string) {
     return this.core.data.community.findFirst({
-      where: {
-        id: communityId,
-        members: user.role === UserRole.Admin ? undefined : { some: { userId: user.id } },
-      },
+      where: { id: communityId },
     })
   }
 

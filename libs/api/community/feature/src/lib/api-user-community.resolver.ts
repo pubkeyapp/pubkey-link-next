@@ -31,13 +31,13 @@ export class ApiUserCommunityResolver {
   }
 
   @Query(() => CommunityPaging)
-  userFindManyCommunity(@CtxUserId() actorId: string, @Args('input') input: UserFindManyCommunityInput) {
-    return this.service.user.findManyCommunity(actorId, input)
+  userFindManyCommunity(@Args('input') input: UserFindManyCommunityInput) {
+    return this.service.user.findManyCommunity(input)
   }
 
   @Query(() => Community, { nullable: true })
-  userFindOneCommunity(@CtxUserId() actorId: string, @Args('communityId') communityId: string) {
-    return this.service.user.findOneCommunity(actorId, communityId)
+  userFindOneCommunity(@Args('communityId') communityId: string) {
+    return this.service.user.findOneCommunity(communityId)
   }
 
   @Mutation(() => Community, { nullable: true })
