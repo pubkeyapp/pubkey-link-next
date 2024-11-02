@@ -5,10 +5,9 @@ import {
   UserFindManyCommunityInput,
   UserUpdateCommunityInput,
 } from '@pubkey-link/sdk'
-import { getAliceCookie, getBobCookie, sdk } from '../support'
-import { uniqueId } from '../support/unique-id'
+import { getAliceCookie, getBobCookie, sdk, uniqueId } from '../support'
 
-const defaultCluster = NetworkCluster.SolanaDevnet
+const defaultCluster = NetworkCluster.SolanaMainnet
 xdescribe('api-community-feature', () => {
   describe('api-community-user-resolver', () => {
     const communityName = uniqueId('acme-community')

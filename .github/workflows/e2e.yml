@@ -24,7 +24,8 @@ env:
   REDIS_URL: redis://localhost:6379
   JWT_SECRET: 1dfe5003518560c6362eab48f8220edf8708bbc67efbd4ed8cdf621965e938ee
   PORT: 3000
-  # TODO: Fix the setup so works on a local validator
+  SOLANA_CUSTOM_ENDPOINT: 'http://localhost:8899'
+  # TODO: Fix the setup so works on a local validator only
   SOLANA_MAINNET_ENDPOINT: 'https://api.mainnet-beta.solana.com'
 
 jobs:

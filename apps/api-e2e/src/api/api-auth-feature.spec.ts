@@ -1,6 +1,5 @@
 import { UserRole, UserStatus } from '@pubkey-link/sdk'
 import { alice, bob } from '../fixtures'
-
 import { getUserCookie } from '../support'
 
 describe('api-auth-feature', () => {

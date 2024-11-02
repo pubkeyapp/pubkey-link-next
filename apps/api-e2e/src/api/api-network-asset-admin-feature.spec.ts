@@ -1,7 +1,7 @@
 import { AdminFindManyNetworkAssetInput, NetworkCluster } from '@pubkey-link/sdk'
 import { getAliceCookie, getBobCookie, sdk } from '../support'
 
-const defaultCluster = NetworkCluster.SolanaDevnet
+const defaultCluster = NetworkCluster.SolanaMainnet
 // TODO: Figure out how to test this
 // We depend on Solana Network state to be able to test this
 

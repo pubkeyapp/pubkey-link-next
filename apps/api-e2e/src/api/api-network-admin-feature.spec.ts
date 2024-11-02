@@ -5,8 +5,7 @@ import {
   Network,
   NetworkCluster,
 } from '@pubkey-link/sdk'
-import { getAliceCookie, getBobCookie, sdk } from '../support'
-import { uniqueId } from '../support/unique-id'
+import { getAliceCookie, getBobCookie, sdk, uniqueId } from '../support'
 
 const defaultInput: AdminCreateNetworkInput = {
   endpoint: 'http://localhost:8899',

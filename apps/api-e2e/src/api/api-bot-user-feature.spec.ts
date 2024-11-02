@@ -12,7 +12,6 @@ const defaultInput: AdminCreateBotInput = {
 // TODO: Figure out how to test this
 // The challenge is that we're depending on Discord when creating a bot
 // So we need to mock the Discord API when running the tests
-
 xdescribe('api-bot-feature', () => {
   describe('api-bot-user-resolver', () => {
     let botId: string

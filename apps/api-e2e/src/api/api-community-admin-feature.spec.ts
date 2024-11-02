@@ -7,7 +7,7 @@ import {
 } from '@pubkey-link/sdk'
 import { getAliceCookie, getBobCookie, sdk, uniqueId } from '../support'
 
-const defaultCluster = NetworkCluster.SolanaDevnet
+const defaultCluster = NetworkCluster.SolanaMainnet
 describe('api-community-feature', () => {
   describe('api-community-admin-resolver', () => {
     const communityName = uniqueId('acme-community')

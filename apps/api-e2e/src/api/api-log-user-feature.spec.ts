@@ -1,7 +1,7 @@
 import { getAliceCookie, getBobCookie, sdk } from '../support'
 
 const defaultCommunityId = 'pubkey'
-fdescribe('api-log-feature', () => {
+describe('api-log-feature', () => {
   describe('api-log-user-resolver', () => {
     let alice: string
     let bob: string
