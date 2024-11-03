@@ -14,12 +14,10 @@ export function NetworkUiSelectCluster({
       setValue={(value) => setValue(value ?? NetworkCluster.SolanaMainnet)}
       clearable
       options={[
-        ...getEnumOptions(NetworkCluster)
-          .filter((item) => ![NetworkCluster.SolanaCustom, NetworkCluster.SolanaTestnet].includes(item.value))
-          .map(({ label, value }) => ({
-            value,
-            label: label.replace('Solana', 'Solana '),
-          })),
+        ...getEnumOptions(NetworkCluster).map(({ label, value }) => ({
+          value,
+          label: label.replace('Solana', 'Solana '),
+        })),
       ]}
     />
   )

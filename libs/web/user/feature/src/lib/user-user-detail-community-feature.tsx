@@ -1,6 +1,6 @@
 import { useUserGetCommunities } from '@pubkey-link/web-community-data-access'
 import { CommunityUiList } from '@pubkey-link/web-community-ui'
-import { UiDebugModal, UiLoader, UiStack, UiWarning } from '@pubkey-ui/core'
+import { UiDebugModal, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 
 export function UserUserDetailCommunityFeature({ username }: { username: string }) {
   const { items, query } = useUserGetCommunities({ username })
@@ -10,7 +10,7 @@ export function UserUserDetailCommunityFeature({ username }: { username: string 
   }
 
   if (!items?.length) {
-    return <UiWarning message={`${username} is not a member of any community.`} />
+    return <UiInfo title="No communities found." message={`${username} has no assigned roles in any community.`} />
   }
 
   return (

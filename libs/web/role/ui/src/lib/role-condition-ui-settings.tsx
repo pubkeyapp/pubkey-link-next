@@ -1,13 +1,13 @@
 import { Paper } from '@mantine/core'
 import { NetworkTokenType, RoleCondition, UserUpdateRoleConditionInput } from '@pubkey-link/sdk'
 import { useUserFindOneRole } from '@pubkey-link/web-role-data-access'
-import { UiAlert, UiDebug, UiInfo, UiStack } from '@pubkey-ui/core'
+import { UiAlert, UiDebug, UiStack } from '@pubkey-ui/core'
 import { RoleConditionUiSettingsItem } from './role-condition-ui-settings-item'
 import { RoleConditionUiUpdateFormFungible } from './role-condition-ui-update-form-fungible'
 import { RoleConditionUiUpdateFormNonFungible } from './role-condition-ui-update-form-non-fungible'
 
 export function RoleConditionUiSettings({ condition }: { condition: RoleCondition }) {
-  const { deleteRoleCondition, updateRoleCondition } = useUserFindOneRole({ roleId: condition.roleId! })
+  const { updateRoleCondition } = useUserFindOneRole({ roleId: condition.roleId! })
   function update(input: UserUpdateRoleConditionInput) {
     return updateRoleCondition(condition.id, {
       ...input,
@@ -42,10 +42,7 @@ export function RoleConditionUiSettings({ condition }: { condition: RoleConditio
     case NetworkTokenType.Validator:
       return condition.token ? (
         <Paper withBorder p="md" radius="sm" shadow="md">
-          <UiStack>
-            <RoleConditionUiSettingsItem condition={condition} />
-            <UiInfo variant="outline" message="This condition has no configuration options" />
-          </UiStack>
+          <RoleConditionUiSettingsItem condition={condition} />
         </Paper>
       ) : (
         <UiDebug data={condition} />

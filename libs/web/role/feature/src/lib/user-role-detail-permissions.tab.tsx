@@ -1,22 +1,19 @@
 import { ActionIcon, Button, Group, Select, SimpleGrid, Text } from '@mantine/core'
 import { modals } from '@mantine/modals'
-import { Role, UserCreateRolePermissionInput } from '@pubkey-link/sdk'
-import { useUserFindOneBot, useUserGetBotRoles, useUserGetBotServers } from '@pubkey-link/web-bot-data-access'
+import { Bot, Role, UserCreateRolePermissionInput } from '@pubkey-link/sdk'
+import { useUserGetBotRoles, useUserGetBotServers } from '@pubkey-link/web-bot-data-access'
 import { UiDiscordServerItem } from '@pubkey-link/web-core-ui'
 import { useUserFindOneRole } from '@pubkey-link/web-role-data-access'
-import { UiAnchor, UiCard, UiGroup, UiLoader, UiStack, UiWarning } from '@pubkey-ui/core'
+import { UiCard, UiGroup, UiLoader, UiStack, UiWarning } from '@pubkey-ui/core'
 import { IconPlus, IconTrash } from '@tabler/icons-react'
 import { useMemo, useState } from 'react'
 
 export function UserRoleDetailPermissionsTab({ role }: { role: Role }) {
-  const { query, item } = useUserFindOneBot({ communityId: role.communityId })
   const { deleteRolePermission } = useUserFindOneRole({ roleId: role.id })
   if (!role.conditions?.length) {
     return <UiWarning message="Role needs at least one condition." />
   }
-  return query.isLoading ? (
-    <UiLoader />
-  ) : item ? (
+  return (
     <UiStack>
       <Text size="sm" span>
         Permissions will be granted once the above conditions are met.
@@ -54,26 +51,13 @@ export function UserRoleDetailPermissionsTab({ role }: { role: Role }) {
         <UiWarning message="No permissions found." />
       )}
     </UiStack>
-  ) : (
-    <UiWarning
-      title="No bot configured."
-      message={
-        <Text size="sm" span>
-          In order to grant permissions, you need to configure a{' '}
-          <UiAnchor to={`/c/${role.communityId}/discord`}>Discord bot</UiAnchor> for this community.
-        </Text>
-      }
-    />
   )
 }
 
-export function AddPermissionButton({ role }: { role: Role }) {
-  const { query, item } = useUserFindOneBot({ communityId: role.communityId })
+export function AddPermissionButton({ bot, role }: { bot: Bot; role: Role }) {
   const { createRolePermission } = useUserFindOneRole({ roleId: role.id })
 
-  return query.isLoading ? (
-    <UiLoader size="sm" type="bars" />
-  ) : item ? (
+  return (
     <Button
       size="xs"
       variant="light"
@@ -83,7 +67,7 @@ export function AddPermissionButton({ role }: { role: Role }) {
           title: 'Add Permission',
           children: (
             <AddPermissionForm
-              botId={item.id}
+              botId={bot.id}
               role={role}
               create={(input) =>
                 createRolePermission(input).then((res) => {
@@ -98,8 +82,6 @@ export function AddPermissionButton({ role }: { role: Role }) {
     >
       Add Permission
     </Button>
-  ) : (
-    <UiWarning message="No bot configured." />
   )
 }
 

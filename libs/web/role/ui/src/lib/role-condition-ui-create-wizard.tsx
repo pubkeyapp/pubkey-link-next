@@ -1,14 +1,14 @@
 import { Box, Button, Group, Stepper } from '@mantine/core'
+import { modals } from '@mantine/modals'
 import { Community, NetworkToken, NetworkTokenType, Role } from '@pubkey-link/sdk'
 import { useAppConfig } from '@pubkey-link/web-core-data-access'
 import { NetworkTokenUiItem } from '@pubkey-link/web-network-token-ui'
 import { useUserFindOneRole } from '@pubkey-link/web-role-data-access'
-import { toastError, toastSuccess, UiCard, UiInfo, UiInfoTable, UiStack } from '@pubkey-ui/core'
+import { toastError, UiCard, UiInfo, UiInfoTable, UiStack } from '@pubkey-ui/core'
 import { useMemo, useState } from 'react'
 import { RoleConditionUiItem } from './role-condition-ui-item'
 import { RoleConditionUiNavLink } from './role-condition-ui-nav-link'
 import { RoleConditionUiTypeForm } from './role-condition-ui-type-form'
-import { RoleUiItem } from './role-ui-item'
 
 export function RoleConditionUiCreateWizard(props: { role: Role; community: Community; tokens: NetworkToken[] }) {
   const { query, createRoleCondition } = useUserFindOneRole({ roleId: props.role.id })
@@ -23,19 +23,27 @@ export function RoleConditionUiCreateWizard(props: { role: Role; community: Comm
       return props.tokens.filter((token) => token.type === NetworkTokenType.NonFungible)
     }
     if (networkTokenType === NetworkTokenType.Validator) {
-      return props.tokens.filter((token) => token.type === NetworkTokenType.Validator)
+      const filtered = props.tokens.filter((token) => token.type === NetworkTokenType.Validator)
+
+      if (filtered.length === 0) {
+        toastError('No validators found')
+      }
+      if (filtered.length === 1) {
+        setNetworkToken(filtered[0])
+      }
+
+      return filtered
     }
     return []
   }, [networkTokenType, props.tokens])
 
   async function addCondition(tokenId: string) {
     createRoleCondition({ roleId: props.role.id, tokenId })
-      .then(async (res) => {
-        toastSuccess('Condition created')
+      .then(async () => {
         await query.refetch()
+        modals.closeAll()
       })
       .catch((err) => {
-        toastError('Error creating condition')
         console.log('err', err)
       })
   }
@@ -48,7 +56,7 @@ export function RoleConditionUiCreateWizard(props: { role: Role; community: Comm
 
   return (
     <UiStack>
-      <UiCard title="Create Condition">
+      <UiCard title="Add Condition">
         <UiStack>
           <Stepper
             active={isActive}
@@ -94,14 +102,13 @@ export function RoleConditionUiCreateWizard(props: { role: Role; community: Comm
                 <UiStack>
                   <UiInfoTable
                     items={[
-                      ['Role', <RoleUiItem role={props.role} />],
                       ['Type', <RoleConditionUiItem type={networkTokenType} />],
                       networkToken ? ['Token', <NetworkTokenUiItem networkToken={networkToken} />] : undefined,
                       [
                         '',
                         <Group justify="end" mt="md">
                           <Button size="lg" onClick={() => addCondition(networkToken.id)}>
-                            Create Condition
+                            Add Condition
                           </Button>
                         </Group>,
                       ],
