@@ -9,7 +9,6 @@ import { NormalizedWebFeatureSchema } from './normalized-web-feature-schema'
 export async function generateWebLib(tree: Tree, type: WebLibType, options: NormalizedWebFeatureSchema) {
   const generated = await libraryGenerator(tree, {
     name: `${options.app}-${options.model}-${type}`,
-    projectNameAndRootFormat: 'as-provided',
     directory: `libs/${options.app}/${options.model}/${type}`,
     tags: `app:${options.app},type:${type}`,
     skipFormat: true,

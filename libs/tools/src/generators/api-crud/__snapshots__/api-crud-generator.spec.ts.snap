@@ -42,7 +42,6 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
           },
           "jest.config.ts": {
             "content": [
-              "/* eslint-disable */",
               "export default {",
               "displayName: 'test-company-data-access',",
               "preset: '../../../../jest.preset.js',",
@@ -349,10 +348,11 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
               ""module": "commonjs",",
               ""forceConsistentCasingInFileNames": true,",
               ""strict": true,",
+              ""importHelpers": true,",
               ""noImplicitOverride": true,",
-              ""noPropertyAccessFromIndexSignature": true,",
               ""noImplicitReturns": true,",
-              ""noFallthroughCasesInSwitch": true",
+              ""noFallthroughCasesInSwitch": true,",
+              ""noPropertyAccessFromIndexSignature": true",
               "},",
               ""files": [],",
               ""include": [],",
@@ -452,7 +452,6 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
           },
           "jest.config.ts": {
             "content": [
-              "/* eslint-disable */",
               "export default {",
               "displayName: 'test-company-feature',",
               "preset: '../../../../jest.preset.js',",
@@ -604,10 +603,11 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
               ""module": "commonjs",",
               ""forceConsistentCasingInFileNames": true,",
               ""strict": true,",
+              ""importHelpers": true,",
               ""noImplicitOverride": true,",
-              ""noPropertyAccessFromIndexSignature": true,",
               ""noImplicitReturns": true,",
-              ""noFallthroughCasesInSwitch": true",
+              ""noFallthroughCasesInSwitch": true,",
+              ""noPropertyAccessFromIndexSignature": true",
               "},",
               ""files": [],",
               ""include": [],",
@@ -712,7 +712,6 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
           },
           "jest.config.ts": {
             "content": [
-              "/* eslint-disable */",
               "export default {",
               "displayName: 'test-core-data-access',",
               "preset: '../../../../jest.preset.js',",
@@ -766,10 +765,9 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
                   "test-core-data-access.module.ts": {
                     "content": [
                       "import { Module } from '@nestjs/common';",
-                      "import { TestCoreService } from './test-core.service';",
                       "@Module({",
                       "controllers: [],",
-                      "providers: [TestCoreService],",
+                      "providers: [],",
                       "exports: [],",
                       "})",
                       "export class TestCoreDataAccessModule {}",
@@ -777,37 +775,67 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
                     "isBinary": false,
                     "path": "libs/test/core/data-access/src/lib/test-core-data-access.module.ts",
                   },
-                  "test-core.service.spec.ts": {
-                    "content": [
-                      "import { Test, TestingModule } from '@nestjs/testing';",
-                      "import { TestCoreService } from './test-core.service';",
-                      "describe('TestCoreService', () => {",
-                      "let service: TestCoreService;",
-                      "beforeEach(async () => {",
-                      "const module: TestingModule = await Test.createTestingModule({",
-                      "providers: [TestCoreService],",
-                      "}).compile();",
-                      "service = module.get<TestCoreService>(TestCoreService);",
-                      "});",
-                      "it('should be defined', () => {",
-                      "expect(service).toBeDefined();",
-                      "});",
-                      "});",
-                    ],
-                    "isBinary": false,
-                    "path": "libs/test/core/data-access/src/lib/test-core.service.spec.ts",
-                  },
-                  "test-core.service.ts": {
-                    "content": [
-                      "import { Injectable } from '@nestjs/common';",
-                      "@Injectable()",
-                      "export class TestCoreService {}",
-                    ],
-                    "isBinary": false,
-                    "path": "libs/test/core/data-access/src/lib/test-core.service.ts",
-                  },
                 },
                 "path": "libs/test/core/data-access/src/lib",
+              },
+              "libs": {
+                "children": {
+                  "test": {
+                    "children": {
+                      "core": {
+                        "children": {
+                          "data-access": {
+                            "children": {
+                              "src": {
+                                "children": {
+                                  "lib": {
+                                    "children": {
+                                      "lib.service.spec.ts": {
+                                        "content": [
+                                          "import { Test, TestingModule } from '@nestjs/testing';",
+                                          "import { LibService } from './lib.service';",
+                                          "describe('LibService', () => {",
+                                          "let service: LibService;",
+                                          "beforeEach(async () => {",
+                                          "const module: TestingModule = await Test.createTestingModule({",
+                                          "providers: [LibService],",
+                                          "}).compile();",
+                                          "service = module.get<LibService>(LibService);",
+                                          "});",
+                                          "it('should be defined', () => {",
+                                          "expect(service).toBeDefined();",
+                                          "});",
+                                          "});",
+                                        ],
+                                        "isBinary": false,
+                                        "path": "libs/test/core/data-access/src/libs/test/core/data-access/src/lib/lib.service.spec.ts",
+                                      },
+                                      "lib.service.ts": {
+                                        "content": [
+                                          "import { Injectable } from '@nestjs/common';",
+                                          "@Injectable()",
+                                          "export class LibService {}",
+                                        ],
+                                        "isBinary": false,
+                                        "path": "libs/test/core/data-access/src/libs/test/core/data-access/src/lib/lib.service.ts",
+                                      },
+                                    },
+                                    "path": "libs/test/core/data-access/src/libs/test/core/data-access/src/lib",
+                                  },
+                                },
+                                "path": "libs/test/core/data-access/src/libs/test/core/data-access/src",
+                              },
+                            },
+                            "path": "libs/test/core/data-access/src/libs/test/core/data-access",
+                          },
+                        },
+                        "path": "libs/test/core/data-access/src/libs/test/core",
+                      },
+                    },
+                    "path": "libs/test/core/data-access/src/libs/test",
+                  },
+                },
+                "path": "libs/test/core/data-access/src/libs",
               },
             },
             "path": "libs/test/core/data-access/src",
@@ -820,10 +848,11 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
               ""module": "commonjs",",
               ""forceConsistentCasingInFileNames": true,",
               ""strict": true,",
+              ""importHelpers": true,",
               ""noImplicitOverride": true,",
-              ""noPropertyAccessFromIndexSignature": true,",
               ""noImplicitReturns": true,",
-              ""noFallthroughCasesInSwitch": true",
+              ""noFallthroughCasesInSwitch": true,",
+              ""noPropertyAccessFromIndexSignature": true",
               "},",
               ""files": [],",
               ""include": [],",
@@ -923,7 +952,6 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
           },
           "jest.config.ts": {
             "content": [
-              "/* eslint-disable */",
               "export default {",
               "displayName: 'test-core-feature',",
               "preset: '../../../../jest.preset.js',",
@@ -1002,10 +1030,11 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
               ""module": "commonjs",",
               ""forceConsistentCasingInFileNames": true,",
               ""strict": true,",
+              ""importHelpers": true,",
               ""noImplicitOverride": true,",
-              ""noPropertyAccessFromIndexSignature": true,",
               ""noImplicitReturns": true,",
-              ""noFallthroughCasesInSwitch": true",
+              ""noFallthroughCasesInSwitch": true,",
+              ""noPropertyAccessFromIndexSignature": true",
               "},",
               ""files": [],",
               ""include": [],",
@@ -1108,7 +1137,6 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
       },
       "jest.config.ts": {
         "content": [
-          "/* eslint-disable */",
           "export default {",
           "displayName: 'sdk',",
           "preset: '../../../jest.preset.js',",
@@ -1236,10 +1264,11 @@ exports[`api-crud generator should create crud with parent ID 1`] = `
           ""module": "commonjs",",
           ""forceConsistentCasingInFileNames": true,",
           ""strict": true,",
+          ""importHelpers": true,",
           ""noImplicitOverride": true,",
-          ""noPropertyAccessFromIndexSignature": true,",
           ""noImplicitReturns": true,",
-          ""noFallthroughCasesInSwitch": true",
+          ""noFallthroughCasesInSwitch": true,",
+          ""noPropertyAccessFromIndexSignature": true",
           "},",
           ""files": [],",
           ""include": [],",
@@ -1346,7 +1375,6 @@ exports[`api-crud generator should run successfully 1`] = `
           },
           "jest.config.ts": {
             "content": [
-              "/* eslint-disable */",
               "export default {",
               "displayName: 'test-company-data-access',",
               "preset: '../../../../jest.preset.js',",
@@ -1642,10 +1670,11 @@ exports[`api-crud generator should run successfully 1`] = `
               ""module": "commonjs",",
               ""forceConsistentCasingInFileNames": true,",
               ""strict": true,",
+              ""importHelpers": true,",
               ""noImplicitOverride": true,",
-              ""noPropertyAccessFromIndexSignature": true,",
               ""noImplicitReturns": true,",
-              ""noFallthroughCasesInSwitch": true",
+              ""noFallthroughCasesInSwitch": true,",
+              ""noPropertyAccessFromIndexSignature": true",
               "},",
               ""files": [],",
               ""include": [],",
@@ -1745,7 +1774,6 @@ exports[`api-crud generator should run successfully 1`] = `
           },
           "jest.config.ts": {
             "content": [
-              "/* eslint-disable */",
               "export default {",
               "displayName: 'test-company-feature',",
               "preset: '../../../../jest.preset.js',",
@@ -1884,10 +1912,11 @@ exports[`api-crud generator should run successfully 1`] = `
               ""module": "commonjs",",
               ""forceConsistentCasingInFileNames": true,",
               ""strict": true,",
+              ""importHelpers": true,",
               ""noImplicitOverride": true,",
-              ""noPropertyAccessFromIndexSignature": true,",
               ""noImplicitReturns": true,",
-              ""noFallthroughCasesInSwitch": true",
+              ""noFallthroughCasesInSwitch": true,",
+              ""noPropertyAccessFromIndexSignature": true",
               "},",
               ""files": [],",
               ""include": [],",
@@ -1992,7 +2021,6 @@ exports[`api-crud generator should run successfully 1`] = `
           },
           "jest.config.ts": {
             "content": [
-              "/* eslint-disable */",
               "export default {",
               "displayName: 'test-core-data-access',",
               "preset: '../../../../jest.preset.js',",
@@ -2046,10 +2074,9 @@ exports[`api-crud generator should run successfully 1`] = `
                   "test-core-data-access.module.ts": {
                     "content": [
                       "import { Module } from '@nestjs/common';",
-                      "import { TestCoreService } from './test-core.service';",
                       "@Module({",
                       "controllers: [],",
-                      "providers: [TestCoreService],",
+                      "providers: [],",
                       "exports: [],",
                       "})",
                       "export class TestCoreDataAccessModule {}",
@@ -2057,37 +2084,67 @@ exports[`api-crud generator should run successfully 1`] = `
                     "isBinary": false,
                     "path": "libs/test/core/data-access/src/lib/test-core-data-access.module.ts",
                   },
-                  "test-core.service.spec.ts": {
-                    "content": [
-                      "import { Test, TestingModule } from '@nestjs/testing';",
-                      "import { TestCoreService } from './test-core.service';",
-                      "describe('TestCoreService', () => {",
-                      "let service: TestCoreService;",
-                      "beforeEach(async () => {",
-                      "const module: TestingModule = await Test.createTestingModule({",
-                      "providers: [TestCoreService],",
-                      "}).compile();",
-                      "service = module.get<TestCoreService>(TestCoreService);",
-                      "});",
-                      "it('should be defined', () => {",
-                      "expect(service).toBeDefined();",
-                      "});",
-                      "});",
-                    ],
-                    "isBinary": false,
-                    "path": "libs/test/core/data-access/src/lib/test-core.service.spec.ts",
-                  },
-                  "test-core.service.ts": {
-                    "content": [
-                      "import { Injectable } from '@nestjs/common';",
-                      "@Injectable()",
-                      "export class TestCoreService {}",
-                    ],
-                    "isBinary": false,
-                    "path": "libs/test/core/data-access/src/lib/test-core.service.ts",
-                  },
                 },
                 "path": "libs/test/core/data-access/src/lib",
+              },
+              "libs": {
+                "children": {
+                  "test": {
+                    "children": {
+                      "core": {
+                        "children": {
+                          "data-access": {
+                            "children": {
+                              "src": {
+                                "children": {
+                                  "lib": {
+                                    "children": {
+                                      "lib.service.spec.ts": {
+                                        "content": [
+                                          "import { Test, TestingModule } from '@nestjs/testing';",
+                                          "import { LibService } from './lib.service';",
+                                          "describe('LibService', () => {",
+                                          "let service: LibService;",
+                                          "beforeEach(async () => {",
+                                          "const module: TestingModule = await Test.createTestingModule({",
+                                          "providers: [LibService],",
+                                          "}).compile();",
+                                          "service = module.get<LibService>(LibService);",
+                                          "});",
+                                          "it('should be defined', () => {",
+                                          "expect(service).toBeDefined();",
+                                          "});",
+                                          "});",
+                                        ],
+                                        "isBinary": false,
+                                        "path": "libs/test/core/data-access/src/libs/test/core/data-access/src/lib/lib.service.spec.ts",
+                                      },
+                                      "lib.service.ts": {
+                                        "content": [
+                                          "import { Injectable } from '@nestjs/common';",
+                                          "@Injectable()",
+                                          "export class LibService {}",
+                                        ],
+                                        "isBinary": false,
+                                        "path": "libs/test/core/data-access/src/libs/test/core/data-access/src/lib/lib.service.ts",
+                                      },
+                                    },
+                                    "path": "libs/test/core/data-access/src/libs/test/core/data-access/src/lib",
+                                  },
+                                },
+                                "path": "libs/test/core/data-access/src/libs/test/core/data-access/src",
+                              },
+                            },
+                            "path": "libs/test/core/data-access/src/libs/test/core/data-access",
+                          },
+                        },
+                        "path": "libs/test/core/data-access/src/libs/test/core",
+                      },
+                    },
+                    "path": "libs/test/core/data-access/src/libs/test",
+                  },
+                },
+                "path": "libs/test/core/data-access/src/libs",
               },
             },
             "path": "libs/test/core/data-access/src",
@@ -2100,10 +2157,11 @@ exports[`api-crud generator should run successfully 1`] = `
               ""module": "commonjs",",
               ""forceConsistentCasingInFileNames": true,",
               ""strict": true,",
+              ""importHelpers": true,",
               ""noImplicitOverride": true,",
-              ""noPropertyAccessFromIndexSignature": true,",
               ""noImplicitReturns": true,",
-              ""noFallthroughCasesInSwitch": true",
+              ""noFallthroughCasesInSwitch": true,",
+              ""noPropertyAccessFromIndexSignature": true",
               "},",
               ""files": [],",
               ""include": [],",
@@ -2203,7 +2261,6 @@ exports[`api-crud generator should run successfully 1`] = `
           },
           "jest.config.ts": {
             "content": [
-              "/* eslint-disable */",
               "export default {",
               "displayName: 'test-core-feature',",
               "preset: '../../../../jest.preset.js',",
@@ -2282,10 +2339,11 @@ exports[`api-crud generator should run successfully 1`] = `
               ""module": "commonjs",",
               ""forceConsistentCasingInFileNames": true,",
               ""strict": true,",
+              ""importHelpers": true,",
               ""noImplicitOverride": true,",
-              ""noPropertyAccessFromIndexSignature": true,",
               ""noImplicitReturns": true,",
-              ""noFallthroughCasesInSwitch": true",
+              ""noFallthroughCasesInSwitch": true,",
+              ""noPropertyAccessFromIndexSignature": true",
               "},",
               ""files": [],",
               ""include": [],",
@@ -2388,7 +2446,6 @@ exports[`api-crud generator should run successfully 1`] = `
       },
       "jest.config.ts": {
         "content": [
-          "/* eslint-disable */",
           "export default {",
           "displayName: 'sdk',",
           "preset: '../../../jest.preset.js',",
@@ -2516,10 +2573,11 @@ exports[`api-crud generator should run successfully 1`] = `
           ""module": "commonjs",",
           ""forceConsistentCasingInFileNames": true,",
           ""strict": true,",
+          ""importHelpers": true,",
           ""noImplicitOverride": true,",
-          ""noPropertyAccessFromIndexSignature": true,",
           ""noImplicitReturns": true,",
-          ""noFallthroughCasesInSwitch": true",
+          ""noFallthroughCasesInSwitch": true,",
+          ""noPropertyAccessFromIndexSignature": true",
           "},",
           ""files": [],",
           ""include": [],",

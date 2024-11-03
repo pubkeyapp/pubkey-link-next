@@ -9,7 +9,6 @@ import { NormalizedApiFeatureSchema } from './normalized-api-feature-schema'
 export async function generateApiLib(tree: Tree, type: ApiLibType, options: NormalizedApiFeatureSchema) {
   const generated = await libraryGenerator(tree, {
     name: `${options.app}-${options.model}-${type}`,
-    projectNameAndRootFormat: 'as-provided',
     directory: `libs/${options.app}/${options.model}/${type}`,
     tags: `app:${options.app},type:${type}`,
     skipFormat: true,
