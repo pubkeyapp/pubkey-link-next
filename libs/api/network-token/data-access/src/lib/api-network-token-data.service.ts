@@ -30,7 +30,7 @@ export class ApiNetworkTokenDataService {
     if (!this.core.config.featureResolverSolanaValidator) {
       return
     }
-    this.logger.verbose(`Feature resolverSolanaValidator enabled, ensuring genesis block`)
+    this.logger.verbose(`ensureGenesisBlock: Feature resolverSolanaValidator enabled, ensuring genesis block`)
 
     const existing = await this.core.data.networkToken.findMany({ where: { type: NetworkTokenType.Validator } })
 
@@ -38,9 +38,14 @@ export class ApiNetworkTokenDataService {
       where: { cluster: { notIn: existing.map(({ cluster }) => cluster) } },
     })
 
+    this.logger.log(
+      `ensureGenesisBlock: Found ${existing.length} existing validators, adding ${networks.length} new networks`,
+    )
     for (const network of networks) {
+      this.logger.verbose(`ensureGenesisBlock: Ensuring genesis block for cluster ${network.cluster}`)
       const hash = await this.getClusterGenesisHash(network.cluster)
       if (hash) {
+        this.logger.debug(`ensureGenesisBlock: Found genesis hash for cluster ${network.cluster}: ${hash}`)
         const data: Prisma.NetworkTokenCreateInput = {
           network: { connect: { cluster: network.cluster } },
           type: NetworkTokenType.Validator,
@@ -50,7 +55,11 @@ export class ApiNetworkTokenDataService {
         }
 
         await this.core.data.networkToken.create({ data })
-        this.logger.log(`Created Genesis Block for cluster ${network.cluster} with genesis hash ${hash}`)
+        this.logger.log(
+          `ensureGenesisBlock: Created Genesis Block for cluster ${network.cluster} with genesis hash ${hash}`,
+        )
+      } else {
+        this.logger.error(`ensureGenesisBlock: No genesis hash found for cluster ${network.cluster}`)
       }
     }
   }
@@ -145,8 +154,11 @@ export class ApiNetworkTokenDataService {
   private async getClusterGenesisHash(cluster: NetworkCluster) {
     try {
       const connection = await this.network.cluster.getConnection(cluster)
-      return await connection.getGenesisHash()
-    } catch (_) {
+      const hash = await connection.getGenesisHash()
+      this.logger.debug(`getClusterGenesisHash: Found genesis hash for cluster ${cluster}: ${hash}`)
+      return hash
+    } catch (error) {
+      this.logger.error(`getClusterGenesisHash: Error getting genesis hash for cluster ${cluster}`, error)
       return null
     }
   }

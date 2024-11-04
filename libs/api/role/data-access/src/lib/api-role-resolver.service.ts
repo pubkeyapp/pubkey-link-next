@@ -137,7 +137,9 @@ export class ApiRoleResolverService {
       return []
     }
     try {
-      return await this.network.cluster.getVoteAccounts(cluster)
+      const accounts = await this.network.cluster.getVoteAccounts(cluster)
+      this.logger.debug(`getVoteAccounts: Found ${accounts.length} accounts for cluster ${cluster}`)
+      return accounts
     } catch (e) {
       this.logger.error(`getVoteAccounts: Error getting vote accounts for cluster ${cluster}: ${e}`)
       return []
