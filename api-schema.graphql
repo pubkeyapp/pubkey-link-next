@@ -847,6 +847,7 @@ input UserFindManyCommunityInput {
   limit: Int = 10
   page: Int = 1
   search: String
+  withRoles: Boolean
 }
 
 input UserFindManyCommunityMemberInput {
@@ -889,7 +890,7 @@ input UserFindManyNetworkAssetInput {
 }
 
 input UserFindManyNetworkTokenInput {
-  cluster: NetworkCluster!
+  cluster: NetworkCluster
   limit: Int = 10
   page: Int = 1
   search: String

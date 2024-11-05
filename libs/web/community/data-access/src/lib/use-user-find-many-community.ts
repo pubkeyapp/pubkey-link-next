@@ -10,7 +10,7 @@ export function useUserFindManyCommunity(props?: Partial<UserFindManyCommunityIn
   const [page, setPage] = useState(props?.page ?? 1)
   const [search, setSearch] = useState<string>(props?.search ?? '')
 
-  const input: UserFindManyCommunityInput = { page, limit, search }
+  const input: UserFindManyCommunityInput = { page, limit, search, withRoles: props?.withRoles ?? false }
   const query = useQuery({
     queryKey: ['user', 'find-many-community', input],
     queryFn: () => sdk.userFindManyCommunity({ input }).then((res) => res.data),

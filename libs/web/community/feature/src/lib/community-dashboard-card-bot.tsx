@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core'
+import { Button, SimpleGrid } from '@mantine/core'
 import { Community } from '@pubkey-link/sdk'
 import { useUserFindOneBot, useUserGetBotServers } from '@pubkey-link/web-bot-data-access'
 import { BotUiItem } from '@pubkey-link/web-bot-ui'
@@ -10,7 +10,7 @@ export function CommunityDashboardCardBot({ community }: { community: Community 
   const { item, query } = useUserFindOneBot({ communityId: community.id })
 
   return (
-    <UiCard title={<UiCardTitle>Discord Bot</UiCardTitle>}>
+    <UiCard title="Discord Bot">
       {query.isLoading ? (
         <UiLoader />
       ) : item ? (
@@ -21,14 +21,17 @@ export function CommunityDashboardCardBot({ community }: { community: Community 
           <BotServers botId={item.id} />
         </UiStack>
       ) : (
-        <UiCard title="No bot found.">
-          <UiGroup>
-            <div>This community does not have a bot.</div>
-            <Button component={Link} to={'../discord'}>
-              Add bot
-            </Button>
-          </UiGroup>
-        </UiCard>
+        <UiInfo
+          title="No bot found."
+          message={
+            <UiGroup>
+              <div>This community does not have a bot.</div>
+              <Button component={Link} to={'../discord'}>
+                Add bot
+              </Button>
+            </UiGroup>
+          }
+        />
       )}
     </UiCard>
   )
@@ -42,11 +45,13 @@ export function BotServers({ botId }: { botId: string }) {
   ) : query.data?.items?.length ? (
     <UiStack>
       <UiCardTitle>Bot Servers</UiCardTitle>
-      {query.data?.items?.map((item) => (
-        <UiCard key={item.id}>
-          <UiDiscordServerItem server={item} to={`../discord/servers/${item.id}`} />
-        </UiCard>
-      ))}
+      <SimpleGrid cols={{ base: 0, xl: 2 }} spacing={20}>
+        {query.data?.items?.map((item) => (
+          <UiCard key={item.id}>
+            <UiDiscordServerItem server={item} to={`../discord/servers/${item.id}`} />
+          </UiCard>
+        ))}
+      </SimpleGrid>
     </UiStack>
   ) : (
     <UiInfo message="No bot servers found." />

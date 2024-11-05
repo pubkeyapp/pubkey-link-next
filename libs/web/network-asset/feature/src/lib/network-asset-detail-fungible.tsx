@@ -1,15 +1,12 @@
 import { Button, Group, Text } from '@mantine/core'
 import { ellipsify, NetworkToken, NetworkTokenType } from '@pubkey-link/sdk'
-import { useUserFindManyNetworkAsset } from '@pubkey-link/web-network-asset-data-access'
-import {
-  NetworkAssetUiShowBalance,
-  NetworkTokenUiItem,
-  useNetworkTokenSummary,
-} from '@pubkey-link/web-network-token-ui'
-import { UiCard, UiGroup, UiInfo, UiInfoTable, UiLoader, UiStack } from '@pubkey-ui/core'
+import { useNetworkAssetSummary, useUserFindManyNetworkAsset } from '@pubkey-link/web-network-asset-data-access'
+import { NetworkAssetUiNotFound, NetworkAssetUiShowBalance } from '@pubkey-link/web-network-asset-ui'
+import { NetworkTokenUiItem } from '@pubkey-link/web-network-token-ui'
+import { UiCard, UiGroup, UiInfoTable, UiLoader, UiStack } from '@pubkey-ui/core'
 import { useState } from 'react'
 
-export function NetworkTokenUiDetailFungible({ token, username }: { token: NetworkToken; username: string }) {
+export function NetworkAssetDetailFungible({ token, username }: { token: NetworkToken; username: string }) {
   const [showDetails, setShowDetails] = useState(false)
   const { query, items } = useUserFindManyNetworkAsset({
     cluster: token.cluster,
@@ -18,21 +15,22 @@ export function NetworkTokenUiDetailFungible({ token, username }: { token: Netwo
     username,
     type: NetworkTokenType.Fungible,
   })
-
-  const summary = useNetworkTokenSummary({ items })
+  const isLoading = query.isLoading
+  const summary = useNetworkAssetSummary({ items })
+  const balance = summary?.total ?? '0'
 
   return (
     <UiCard>
       <UiGroup align="start">
         <NetworkTokenUiItem avatarProps={{ size: 'lg' }} networkToken={token} />
         <UiStack gap={0} align="end">
-          <NetworkAssetUiShowBalance balance={summary?.total ?? '0'} size="lg" symbol={token.symbol ?? ''} />
+          <NetworkAssetUiShowBalance balance={balance} size="lg" symbol={token.symbol ?? ''} />
           <Button variant="subtle" size="xs" onClick={() => setShowDetails(!showDetails)}>
             {showDetails ? 'Hide' : 'Show'} Details
           </Button>
         </UiStack>
       </UiGroup>
-      {query.isLoading ? (
+      {isLoading ? (
         <UiLoader />
       ) : items.length ? (
         showDetails ? (
@@ -56,7 +54,7 @@ export function NetworkTokenUiDetailFungible({ token, username }: { token: Netwo
           <div />
         )
       ) : (
-        <UiInfo mt="lg" message={`No assets found for ${username}.`} />
+        <NetworkAssetUiNotFound token={token} username={username} />
       )}
     </UiCard>
   )

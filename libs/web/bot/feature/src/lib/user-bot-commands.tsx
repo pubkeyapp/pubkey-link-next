@@ -1,14 +1,14 @@
 import { Button, Group } from '@mantine/core'
 import { Bot } from '@pubkey-link/sdk'
 import { useUserManageBot } from '@pubkey-link/web-bot-data-access'
-import { UiDebugModal } from '@pubkey-ui/core'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 
 export function UserBotCommands({ bot }: { bot: Bot }) {
   const { startBot, starting, stopBot, stopping } = useUserManageBot({ bot })
 
   return (
     <Group gap="xs">
-      <UiDebugModal data={bot} />
+      <AppUiDebugModal data={bot} />
       <Button size="xs" disabled={bot.started ?? true} loading={starting} onClick={() => startBot()}>
         Start
       </Button>

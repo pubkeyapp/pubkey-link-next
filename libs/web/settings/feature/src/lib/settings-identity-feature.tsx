@@ -1,8 +1,9 @@
+import { Group } from '@mantine/core'
 import { IdentityProvider } from '@pubkey-link/sdk'
 import { useAuth } from '@pubkey-link/web-auth-data-access'
 import { useUserFindManyIdentity } from '@pubkey-link/web-identity-data-access'
-import { IdentityUiGroupList, IdentityUiList } from '@pubkey-link/web-identity-ui'
-import { UiLoader, UiStack, UiWarning } from '@pubkey-ui/core'
+import { IdentityUiGroupList, IdentityUiLinkButton, IdentityUiList } from '@pubkey-link/web-identity-ui'
+import { UiLoader, UiStack } from '@pubkey-ui/core'
 
 export function SettingsIdentityFeature() {
   const { user } = useAuth()
@@ -47,7 +48,13 @@ export function SettingsIdentityDiscordFeature() {
           refresh={() => query.refetch()}
         />
       ) : (
-        <UiWarning message="No Discord identity found" />
+        <Group justify="center">
+          <IdentityUiLinkButton
+            identities={items ?? []}
+            refresh={() => query.refetch()}
+            provider={IdentityProvider.Discord}
+          />
+        </Group>
       )}
     </UiStack>
   )

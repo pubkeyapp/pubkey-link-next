@@ -1,7 +1,8 @@
-import { Badge, Button, Collapse, Group, Text } from '@mantine/core'
+import { Badge, Button, Collapse, Group } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import {
   AppFeature,
+  ellipsify,
   Identity,
   UserAddIdentityGrantInput,
   UserRemoveIdentityGrantInput,
@@ -9,9 +10,10 @@ import {
 } from '@pubkey-link/sdk'
 import { useAppConfig } from '@pubkey-link/web-core-data-access'
 import { IdentityUiAvatar } from '@pubkey-link/web-core-ui'
-import { UiCard, UiCopy, UiGroup, UiStack } from '@pubkey-ui/core'
+import { UiAnchor, UiCard, UiCopy, UiGroup, UiStack } from '@pubkey-ui/core'
 import { IdentityGrantUiManager } from './identity-grant-ui-manager'
 import { IdentityUiListActions } from './identity-ui-list-actions'
+import { IdentityUiProviderTag } from './identity-ui-provider-tag'
 import { IdentityUiSolanaVerifyButton } from './identity-ui-solana-verify-button'
 import { IdentityUiVerified } from './identity-ui-verified'
 
@@ -38,29 +40,30 @@ export function IdentityUiListItem({
     <UiCard>
       <Group justify="space-between">
         <Group>
-          <IdentityUiAvatar item={item} />
+          <IdentityUiAvatar item={item} size={42} />
           <UiStack gap={0} align="start">
             <UiGroup gap="xs" align="center">
-              <Text size="lg" display="flex">
-                {item.name}
-              </Text>
-              {item.verified ? (
-                <IdentityUiVerified item={item} />
-              ) : refresh ? (
-                <IdentityUiSolanaVerifyButton identity={item} refresh={refresh} />
-              ) : (
-                <Badge variant="light" color="yellow">
-                  Not verified
-                </Badge>
-              )}
+              <Group align="center" gap={4}>
+                <UiCopy text={item.name} tooltip="Copy name" variant="subtle" />
+                <UiAnchor to={item.url ?? ''} target="_blank" size="lg" fw="bold">
+                  {ellipsify(item.name, 8)}
+                </UiAnchor>
+                {item.verified ? (
+                  <IdentityUiVerified item={item} />
+                ) : refresh ? (
+                  <IdentityUiSolanaVerifyButton identity={item} refresh={refresh} />
+                ) : (
+                  <Badge variant="light" color="yellow">
+                    Not verified
+                  </Badge>
+                )}
+              </Group>
             </UiGroup>
 
-            <UiGroup gap={4} align="center">
-              <UiCopy text={item.providerId} />
-              <Text c="dimmed" size="xs">
-                {item.providerId}
-              </Text>
-            </UiGroup>
+            <Group align="center" gap={4}>
+              <UiCopy text={item.providerId} tooltip="Copy providerId" variant="subtle" />
+              <IdentityUiProviderTag provider={item.provider} />
+            </Group>
           </UiStack>
         </Group>
         <IdentityUiListActions

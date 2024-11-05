@@ -1,7 +1,7 @@
 import { Group, Stack, Table, Text } from '@mantine/core'
 import { useUserGetBotRoles } from '@pubkey-link/web-bot-data-access'
-import { UiDiscordRoleColor } from '@pubkey-link/web-core-ui'
-import { UiAlert, UiCard, UiDebug, UiDebugModal, UiLoader, UiStack } from '@pubkey-ui/core'
+import { AppUiDebugModal, UiDiscordRoleColor } from '@pubkey-link/web-core-ui'
+import { UiAlert, UiCard, UiDebug, UiLoader, UiStack } from '@pubkey-ui/core'
 import { IconBrandDiscord } from '@tabler/icons-react'
 
 export function UserBotDetailServerRoles({ botId, serverId }: { botId: string; serverId: string }) {
@@ -45,7 +45,7 @@ export function UserBotDetailServerRoles({ botId, serverId }: { botId: string; s
                     </Stack>
                   </Table.Td>
                   <Table.Td align="right">
-                    <UiDebugModal data={item} />
+                    <AppUiDebugModal data={item} />
                   </Table.Td>
                 </Table.Tr>
               ))}

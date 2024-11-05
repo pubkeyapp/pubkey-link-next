@@ -1,12 +1,11 @@
 import { Group } from '@mantine/core'
 import { NetworkCluster } from '@pubkey-link/sdk'
-import { UiSearchField } from '@pubkey-link/web-core-ui'
+import { AppUiDebugModal, UiSearchField } from '@pubkey-link/web-core-ui'
+import { NetworkAssetDetailFeature } from '@pubkey-link/web-network-asset-feature'
 import { useUserFindManyNetworkToken } from '@pubkey-link/web-network-token-data-access'
-
 import { NetworkTokenUiSelectType } from '@pubkey-link/web-network-token-ui'
 import { NetworkUiSelectCluster } from '@pubkey-link/web-network-ui'
-import { UiDebugModal, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
-import { NetworkTokenUiDetail } from './network-token-ui-detail'
+import { UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 
 export function UserNetworkTokenListFeature({ username }: { username: string }) {
   const { items, query, setSearch, type, setType, cluster, setCluster } = useUserFindManyNetworkToken({
@@ -21,14 +20,14 @@ export function UserNetworkTokenListFeature({ username }: { username: string }) 
         <UiSearchField placeholder="Search token" setSearch={setSearch} />
         <NetworkUiSelectCluster value={cluster} setValue={setCluster} />
         <NetworkTokenUiSelectType value={type} setValue={setType} />
-        <UiDebugModal data={items} />
+        <AppUiDebugModal data={items} />
       </Group>
       {query.isLoading ? (
         <UiLoader />
       ) : items?.length ? (
         <UiStack>
           {items.map((token) => (
-            <NetworkTokenUiDetail key={token.id} token={token} username={username} />
+            <NetworkAssetDetailFeature key={token.id} token={token} username={username} />
           ))}
         </UiStack>
       ) : (

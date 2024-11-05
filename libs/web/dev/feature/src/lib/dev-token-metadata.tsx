@@ -1,7 +1,7 @@
 import { Button, Group, Text } from '@mantine/core'
 import { getEnumOptions, NetworkCluster } from '@pubkey-link/sdk'
 import { UiAddressInput } from '@pubkey-link/web-core-ui'
-import { NetworkUiGetTokenAccounts, NetworkUiGetTokenMetadata } from '@pubkey-link/web-network-ui'
+import { NetworkUiGetTokenAccounts, NetworkUiGetTokenMetadata } from '@pubkey-link/web-network-token-ui'
 import { UiCard, UiDebug, UiSelectEnum, UiStack } from '@pubkey-ui/core'
 import { IconNetwork } from '@tabler/icons-react'
 import { useState } from 'react'

@@ -7,7 +7,7 @@ import { UiGroup, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 
 export function SettingsWalletsFeature() {
   const { appConfig, hasFeature } = useAppConfig()
-  const { user, refresh, hasSolana } = useAuth()
+  const { user } = useAuth()
   const { deleteIdentity, updateIdentity, addIdentityGrant, removeIdentityGrant, items, query } =
     useUserFindManyIdentity({
       provider: IdentityProvider.Solana,

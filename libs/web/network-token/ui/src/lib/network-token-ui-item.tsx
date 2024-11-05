@@ -1,6 +1,8 @@
 import { AvatarProps, Group, type GroupProps, Stack, Text } from '@mantine/core'
 import { ellipsify, NetworkCluster, NetworkToken } from '@pubkey-link/sdk'
-import { UiAnchor, type UiAnchorProps, UiCopy, UiDebugModal } from '@pubkey-ui/core'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
+import { NetworkUiClusterBadge } from '@pubkey-link/web-network-ui'
+import { UiAnchor, type UiAnchorProps, UiCopy } from '@pubkey-ui/core'
 import { NetworkTokenUiAvatar } from './network-token-ui-avatar'
 import { NetworkTokenUiExplorerIcon } from './network-token-ui-explorer-icon'
 import { NetworkTokenUiTypeBadge } from './network-token-ui-type-badge'
@@ -38,6 +40,9 @@ export function NetworkTokenUiItem({
               {networkToken?.name}
             </Text>
             <NetworkTokenUiTypeBadge type={networkToken.type} />
+            {networkToken.cluster === NetworkCluster.SolanaMainnet ? null : (
+              <NetworkUiClusterBadge cluster={networkToken.cluster} size="xs" style={{ textTransform: 'inherit' }} />
+            )}
           </Group>
           {to ? (
             account
@@ -45,7 +50,7 @@ export function NetworkTokenUiItem({
             <Group gap={4} wrap="nowrap">
               <UiCopy text={networkToken.account} tooltip="Copy account address" />
               <NetworkTokenUiExplorerIcon token={{ ...networkToken, cluster: networkToken.cluster ?? cluster }} />
-              <UiDebugModal data={networkToken} />
+              <AppUiDebugModal data={networkToken} />
               {account}
             </Group>
           )}

@@ -1,7 +1,7 @@
 import { Group, Pagination, SimpleGrid } from '@mantine/core'
 import { Community } from '@pubkey-link/sdk'
-import { gridLimits, UiPageLimit } from '@pubkey-link/web-core-ui'
-import { UiDebugModal, UiGroup, UiStack } from '@pubkey-ui/core'
+import { AppUiDebugModal, gridLimits, UiPageLimit } from '@pubkey-link/web-core-ui'
+import { UiGroup, UiStack } from '@pubkey-ui/core'
 import { DataTableProps } from 'mantine-datatable'
 import { useMemo } from 'react'
 import { CommunityUiGridItem } from './community-ui-grid-item'
@@ -23,7 +23,7 @@ export function CommunityUiGrid({
   setLimit: (limit: number) => void
   setPage: (page: number) => void
 }) {
-  const totalPages = totalRecords / limit + 1
+  const totalPages = Math.ceil(totalRecords / limit)
   const cols = useMemo(() => ({ base: 1, sm: communities.length === 1 ? 1 : 2 }), [communities.length])
 
   return (
@@ -36,7 +36,7 @@ export function CommunityUiGrid({
       <UiGroup>
         <Pagination disabled={totalPages < 2} total={totalPages} value={page} onChange={onPageChange} />
         <Group>
-          <UiDebugModal data={communities} />
+          <AppUiDebugModal data={communities} />
           <UiPageLimit data={gridLimits} limit={limit} setLimit={setLimit} setPage={setPage} />
         </Group>
       </UiGroup>

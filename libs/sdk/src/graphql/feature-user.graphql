@@ -68,6 +68,9 @@ query userFindManyUser($input: UserFindManyUserInput!) {
 query userFindOneUser($username: String!) {
   item: userFindOneUser(username: $username) {
     ...UserDetails
+    identities {
+      ...IdentityDetails
+    }
   }
 }
 

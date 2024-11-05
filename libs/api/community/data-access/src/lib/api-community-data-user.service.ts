@@ -26,6 +26,7 @@ export class ApiCommunityDataUserService {
     return this.data.findMany({
       orderBy: { name: 'asc' },
       where: getCommunityWhereUserInput(input),
+      include: input.withRoles ? { roles: { include: { conditions: { include: { token: true } } } } } : undefined,
       limit: input.limit,
       page: input.page,
     })

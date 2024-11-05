@@ -1,10 +1,11 @@
 import { Grid, Group } from '@mantine/core'
 import { NetworkCluster } from '@pubkey-link/sdk'
-import { UserLogFeature } from '@pubkey-link/web-log-feature'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
+import { UserLogListFeature } from '@pubkey-link/web-log-ui'
 import { useUserFindOneNetworkAsset } from '@pubkey-link/web-network-asset-data-access'
 import { NetworkAssetUiItem } from '@pubkey-link/web-network-asset-ui'
 import { NetworkUiClusterBadge } from '@pubkey-link/web-network-ui'
-import { UiDebugModal, UiError, UiLoader, UiPage, UiTabRoutes } from '@pubkey-ui/core'
+import { UiError, UiLoader, UiPage, UiTabRoutes } from '@pubkey-ui/core'
 import { useParams } from 'react-router-dom'
 import { UserNetworkAssetDetailOverviewTab } from './user-network-asset-detail-overview.tab'
 
@@ -17,7 +18,7 @@ export default function UserNetworkAssetDetailFeature() {
       title={<Group>{item?.name ?? ''}</Group>}
       rightAction={
         <Group>
-          <UiDebugModal data={item} />
+          <AppUiDebugModal data={item} />
           <NetworkUiClusterBadge cluster={item?.cluster} />
         </Group>
       }
@@ -37,7 +38,7 @@ export default function UserNetworkAssetDetailFeature() {
                   label: 'Overview',
                   element: <UserNetworkAssetDetailOverviewTab account={account} cluster={cluster} />,
                 },
-                { path: 'logs', label: 'Logs', element: <UserLogFeature networkAssetId={item.id} /> },
+                { path: 'logs', label: 'Logs', element: <UserLogListFeature networkAssetId={item.id} /> },
               ]}
             />
           </Grid.Col>

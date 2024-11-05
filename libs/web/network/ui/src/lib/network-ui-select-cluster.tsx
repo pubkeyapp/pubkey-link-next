@@ -10,9 +10,11 @@ export function NetworkUiSelectCluster({
 }) {
   return (
     <UiSelectEnum<NetworkCluster>
+      style={{ width: 140 }}
       value={value}
       setValue={(value) => setValue(value ?? NetworkCluster.SolanaMainnet)}
       clearable
+      placeholder="Filter by cluster"
       options={[
         ...getEnumOptions(NetworkCluster).map(({ label, value }) => ({
           value,

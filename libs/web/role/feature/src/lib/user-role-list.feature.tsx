@@ -1,10 +1,10 @@
 import { Button, Group } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import { Community } from '@pubkey-link/sdk'
+import { AppUiDebugModal, UiSearchField } from '@pubkey-link/web-core-ui'
 import { useUserFindManyRole, useUserSyncCommunityRoles } from '@pubkey-link/web-role-data-access'
 import { UserRoleUiTable } from '@pubkey-link/web-role-ui'
-import { UiSearchField } from '@pubkey-link/web-core-ui'
-import { UiDebug, UiDebugModal, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
+import { UiDebug, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 import { Link } from 'react-router-dom'
 
 export function UserRoleListFeature({ community }: { community: Community }) {
@@ -18,7 +18,7 @@ export function UserRoleListFeature({ community }: { community: Community }) {
     <UiStack>
       <Group>
         <UiSearchField placeholder="Search role" setSearch={setSearch} />
-        <UiDebugModal data={items} />
+        <AppUiDebugModal data={items} />
 
         <Button
           loading={syncCommunityRoles.isPending}

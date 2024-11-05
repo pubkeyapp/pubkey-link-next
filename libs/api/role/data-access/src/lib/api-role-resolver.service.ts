@@ -156,7 +156,9 @@ export class ApiRoleResolverService {
       .then((res) => res.map((r) => r.account))
 
     if (!tokens.length || !voteAccounts.length) {
-      this.logger.warn(`[${community.id}] No tokens or vote accounts found for community`)
+      this.logger.warn(
+        `[${community.id}] syncCommunityMembers: No tokens holders or vote accounts identities found for community`,
+      )
       return
     }
 

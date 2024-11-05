@@ -14,6 +14,19 @@ export class ApiUserDataUserService {
     return this.data.findMany({
       orderBy: { createdAt: 'desc' },
       where: getUserWhereUserInput(input),
+      include: {
+        identities: {
+          orderBy: [{ provider: 'asc' }, { providerId: 'asc' }],
+          select: {
+            id: true,
+            name: true,
+            profile: true,
+            provider: true,
+            providerId: true,
+            verified: true,
+          },
+        },
+      },
       limit: input.limit,
       page: input.page,
     })

@@ -34,7 +34,6 @@ export class ApiRoleDataUserService {
   }
 
   async findManyRole(userId: string, input: UserFindManyRoleInput): Promise<RolePaging> {
-    await this.core.ensureCommunityMember({ communityId: input.communityId, userId })
     return this.data.findMany({
       orderBy: { name: 'asc' },
       where: getRoleWhereUserInput(input),

@@ -1,6 +1,7 @@
 import { Paper } from '@mantine/core'
 import { Community } from '@pubkey-link/sdk'
-import { UiDebugModal, UiGroup, UiStack } from '@pubkey-ui/core'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
+import { UiGroup, UiStack } from '@pubkey-ui/core'
 import { ReactNode } from 'react'
 import { CommunityUiItem } from './community-ui-item'
 import { CommunityUiSocials } from './community-ui-socials'
@@ -20,7 +21,7 @@ export function CommunityUiGridItem({
         <UiGroup>
           <CommunityUiItem community={community} to={to} />
           <CommunityUiSocials community={community}>
-            <UiDebugModal data={community} />
+            <AppUiDebugModal data={community} />
           </CommunityUiSocials>
         </UiGroup>
         {children}

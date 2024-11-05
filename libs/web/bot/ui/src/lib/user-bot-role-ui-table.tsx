@@ -1,8 +1,8 @@
 import { ScrollArea } from '@mantine/core'
 import { BotRole } from '@pubkey-link/sdk'
+import { AppUiDebugModal, UiDiscordRoleColor } from '@pubkey-link/web-core-ui'
 import { RoleUiItem } from '@pubkey-link/web-role-ui'
-import { UiDiscordRoleColor } from '@pubkey-link/web-core-ui'
-import { UiDebugModal, UiStack } from '@pubkey-ui/core'
+import { UiStack } from '@pubkey-ui/core'
 import { DataTable } from 'mantine-datatable'
 
 export function UserBotRoleUiTable({ roles = [] }: { roles: BotRole[] }) {
@@ -46,7 +46,7 @@ export function UserBotRoleUiTable({ roles = [] }: { roles: BotRole[] }) {
           {
             accessor: 'debug',
             title: 'Debug',
-            render: (item) => <UiDebugModal data={item} />,
+            render: (item) => <AppUiDebugModal data={item} />,
           },
         ]}
         records={roles}

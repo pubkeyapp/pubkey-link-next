@@ -133,9 +133,13 @@ export class ApiCoreService implements OnModuleInit {
     return this.data.user.findUnique({ where: { id: userId } })
   }
 
+  async findUserByUsername(username: string) {
+    return this.data.user.findUnique({ where: { username } })
+  }
+
   async findUsername(username: string): Promise<string> {
     username = slugifyUsername(username)
-    const exists = await this.data.user.findUnique({ where: { username } })
+    const exists = await this.findUserByUsername(username)
     if (!exists) {
       return username
     }
@@ -180,7 +184,7 @@ export class ApiCoreService implements OnModuleInit {
 
   async isPrivateUser(actor: User, username: string) {
     if (actor.role !== UserRole.Admin && actor.username !== username) {
-      const user = await this.data.user.findUnique({ where: { username: username } })
+      const user = await this.findUserByUsername(username)
       if (!user) {
         throw new Error(`User ${username} not found`)
       }

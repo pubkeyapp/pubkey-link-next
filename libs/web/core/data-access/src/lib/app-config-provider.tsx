@@ -3,6 +3,7 @@ import {
   AppFeature,
   getNetworkTokenTypeForResolver,
   IdentityProvider,
+  NetworkResolver,
   NetworkTokenType,
 } from '@pubkey-link/sdk'
 import {
@@ -27,6 +28,7 @@ export interface AppConfigContext {
   enabledProviders: IdentityProvider[]
   enabledTokenTypes: NetworkTokenType[]
   hasFeature: (feature: AppFeature) => boolean
+  hasResolver: (resolver: NetworkResolver) => boolean
   features: AppFeature[]
 }
 
@@ -79,6 +81,7 @@ export function AppConfigProvider({ children }: { children: ReactNode }) {
     enabledProviders,
     enabledTokenTypes,
     hasFeature: (feature: AppFeature) => features.includes(feature),
+    hasResolver: (resolver: NetworkResolver) => (appConfig?.resolvers ?? [])?.includes(resolver),
     features,
   }
   return <Context.Provider value={value}>{children}</Context.Provider>

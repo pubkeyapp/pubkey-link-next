@@ -2,9 +2,9 @@ import { ActionIcon, Anchor, Group, ScrollArea } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import { CommunityMember } from '@pubkey-link/sdk'
 import { useUserFindOneCommunityMember } from '@pubkey-link/web-community-member-data-access'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { RoleUiItem } from '@pubkey-link/web-role-ui'
 import { UserUiItem } from '@pubkey-link/web-user-ui'
-import { UiDebugModal } from '@pubkey-ui/core'
 import { IconPencil, IconTrash } from '@tabler/icons-react'
 import { DataTable, DataTableProps } from 'mantine-datatable'
 import { Link } from 'react-router-dom'
@@ -66,7 +66,7 @@ export function UserCommunityMemberUiTable({
             textAlign: 'right',
             render: (item) => (
               <Group gap="xs" justify="right">
-                <UiDebugModal data={item} />
+                <AppUiDebugModal data={item} />
                 <ActionIcon
                   color="brand"
                   variant="light"

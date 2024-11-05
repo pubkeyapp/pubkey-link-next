@@ -10,9 +10,12 @@ export function NetworkTokenUiSelectType({
 }) {
   return (
     <UiSelectEnum<NetworkTokenType>
+      style={{ width: 150 }}
       value={value}
       setValue={setValue}
-      options={[{ value: '', label: 'Filter by type' }, ...getEnumOptions(NetworkTokenType)]}
+      clearable
+      placeholder="Filter by type"
+      options={[...getEnumOptions(NetworkTokenType)]}
     />
   )
 }

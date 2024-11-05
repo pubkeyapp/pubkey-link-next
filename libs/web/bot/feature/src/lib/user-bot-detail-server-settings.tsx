@@ -6,6 +6,7 @@ import {
   useUserSyncBotServer,
 } from '@pubkey-link/web-bot-data-access'
 import { UserBotServerUiUpdateForm } from '@pubkey-link/web-bot-ui'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { UiAlert, UiCard, UiDebugModal, UiLoader, UiStack } from '@pubkey-ui/core'
 
 export function UserBotDetailServerSettings({ botId, serverId }: { botId: string; serverId: string }) {
@@ -42,7 +43,7 @@ export function UserBotDetailServerSettings({ botId, serverId }: { botId: string
             roles={roleOptions}
             submit={updateBotServer}
           >
-            <UiDebugModal data={{ item, channelOptions, roleOptions }} />
+            <AppUiDebugModal data={{ item, channelOptions, roleOptions }} />
             <Button
               loading={syncServerMutation.isPending}
               onClick={() => syncServerMutation.mutate(serverId)}

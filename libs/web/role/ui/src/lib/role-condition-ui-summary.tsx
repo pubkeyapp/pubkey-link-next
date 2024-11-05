@@ -1,4 +1,4 @@
-import { Anchor, Group, Text } from '@mantine/core'
+import { Anchor, Code, Group, Text, Tooltip } from '@mantine/core'
 import { getNetworkTokenUrl, RoleCondition } from '@pubkey-link/sdk'
 import { NetworkTokenUiTypeBadge } from '@pubkey-link/web-network-token-ui'
 
@@ -18,6 +18,15 @@ export function RoleConditionUiSummary({ condition }: { condition: RoleCondition
       <Text c="dimmed" span>
         {condition.token.name}
       </Text>
+      {Object.keys(condition.filters ?? {}).length ? (
+        <Tooltip label="Filters">
+          <Code>
+            {`{ ${Object.keys(condition.filters ?? {})
+              .map((key) => `${key}: ${condition.filters[key]}`)
+              .join(', ')} }`}
+          </Code>
+        </Tooltip>
+      ) : null}
     </Group>
   )
 }

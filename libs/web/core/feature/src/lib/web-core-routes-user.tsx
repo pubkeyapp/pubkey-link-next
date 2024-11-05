@@ -1,5 +1,6 @@
 import { UserCommunityFeature } from '@pubkey-link/web-community-feature'
 import { DashboardFeature } from '@pubkey-link/web-dashboard-feature'
+import { DevProfileRoutes } from '@pubkey-link/web-dev-feature'
 import { UserNetworkAssetDetailFeature } from '@pubkey-link/web-network-asset-feature'
 import { SettingsFeature } from '@pubkey-link/web-settings-feature'
 import { SolanaFeature } from '@pubkey-link/web-solana-feature'
@@ -23,6 +24,7 @@ const routes: RouteObject[] = [
   { path: '/settings/*', element: <SettingsFeature /> },
   { path: '/solana/*', element: <SolanaFeature /> },
   { path: '/u/*', element: <UserFeature /> },
+  { path: '/p/*', element: <DevProfileRoutes /> },
   { path: '/users', element: <Navigate to="/u" replace /> },
 ]
 

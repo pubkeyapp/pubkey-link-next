@@ -1,7 +1,8 @@
 import { Button, Group } from '@mantine/core'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { useUserFindOneSnapshot } from '@pubkey-link/web-snapshot-data-access'
 import { SnapshotUiItem } from '@pubkey-link/web-snapshot-ui'
-import { UiBack, UiDebugModal, UiError, UiGroup, UiLoader, UiStack, UiTabRoutes } from '@pubkey-ui/core'
+import { UiBack, UiError, UiGroup, UiLoader, UiStack, UiTabRoutes } from '@pubkey-ui/core'
 import { useParams } from 'react-router-dom'
 import { downloadJson } from './download-json'
 import { UserSnapshotDetailOverviewTab } from './user-snapshot-detail-overview.tab'
@@ -26,7 +27,7 @@ export function UserSnapshotDetailFeature() {
           <SnapshotUiItem snapshot={item} />
         </Group>
         <Group>
-          <UiDebugModal data={item} />
+          <AppUiDebugModal data={item} />
           <Button variant="light" onClick={() => downloadJson(item.name, item.data)}>
             Download JSON
           </Button>

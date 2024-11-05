@@ -12,6 +12,7 @@ export function useUserProfile() {
 
   return {
     user: query.data?.item,
+    isLoading: query.isLoading,
     query,
     updateUser: async (input: UserUpdateUserInput) =>
       sdk
@@ -20,7 +21,7 @@ export function useUserProfile() {
         })
         .then(async (res) => {
           await Promise.all([query.refetch(), me.refetch()])
-          return !!res.data
+          return res.data.updated
         })
         .catch((err) => {
           toastError(err.message)

@@ -1,9 +1,10 @@
 import { Button, Group } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { Identity, User, UserAddIdentityGrantInput, UserRemoveIdentityGrantInput } from '@pubkey-link/sdk'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { useUserFindManyUser } from '@pubkey-link/web-user-data-access'
 import { UserUiAutocomplete } from '@pubkey-link/web-user-ui'
-import { UiDebugModal, UiInfo, UiStack } from '@pubkey-ui/core'
+import { UiInfo, UiStack } from '@pubkey-ui/core'
 import { IdentityGrantUiTable } from './identity-grant-ui-table'
 
 export function IdentityGrantUiManager({
@@ -48,7 +49,7 @@ export function IdentityGrantUiManager({
           }}
         />
         <Group justify="flex-end">
-          <UiDebugModal data={item} />
+          <AppUiDebugModal data={item} />
           <Button type="submit" mt="md">
             Save
           </Button>

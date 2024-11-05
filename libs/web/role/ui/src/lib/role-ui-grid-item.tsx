@@ -1,6 +1,7 @@
 import { Paper } from '@mantine/core'
 import { Role } from '@pubkey-link/sdk'
-import { UiDebugModal, UiGroup } from '@pubkey-ui/core'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
+import { UiGroup } from '@pubkey-ui/core'
 import { RoleUiItem } from './role-ui-item'
 
 export function RoleUiGridItem({ role, to }: { role: Role; to?: string }) {
@@ -8,7 +9,7 @@ export function RoleUiGridItem({ role, to }: { role: Role; to?: string }) {
     <Paper withBorder p="md">
       <UiGroup>
         <RoleUiItem role={role} to={to} />
-        <UiDebugModal data={role} />
+        <AppUiDebugModal data={role} />
       </UiGroup>
     </Paper>
   )

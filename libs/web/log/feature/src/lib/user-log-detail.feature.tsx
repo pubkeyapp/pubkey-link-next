@@ -1,6 +1,7 @@
 import { Group } from '@mantine/core'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { useUserFindOneLog } from '@pubkey-link/web-log-data-access'
-import { UiBack, UiDebugModal, UiError, UiLoader, UiPage } from '@pubkey-ui/core'
+import { UiBack, UiError, UiLoader, UiPage } from '@pubkey-ui/core'
 import { useParams } from 'react-router-dom'
 import { UserLogDetailOverviewTab } from './user-log-detail-overview.tab'
 
@@ -21,7 +22,7 @@ export function UserLogDetailFeature() {
       leftAction={<UiBack />}
       rightAction={
         <Group>
-          <UiDebugModal data={item} />
+          <AppUiDebugModal data={item} />
         </Group>
       }
     >

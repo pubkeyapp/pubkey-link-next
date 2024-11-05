@@ -1,8 +1,9 @@
 import { AvatarProps, Group, type GroupProps, Text } from '@mantine/core'
 import { IdentityProvider } from '@pubkey-link/sdk'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { useUserFindOneIdentity } from '@pubkey-link/web-identity-data-access'
 import { UserUiItemById } from '@pubkey-link/web-user-ui'
-import { type UiAnchorProps, UiDebugModal, UiLoader } from '@pubkey-ui/core'
+import { type UiAnchorProps, UiLoader } from '@pubkey-ui/core'
 
 export function IdentityUiItemById({
   provider,
@@ -22,7 +23,7 @@ export function IdentityUiItemById({
     <UiLoader size="xs" type="dots" />
   ) : query.data?.item?.ownerId ? (
     <Group>
-      <UiDebugModal data={query.data.item} />
+      <AppUiDebugModal data={query.data.item} />
       <UserUiItemById userId={query.data.item.ownerId} />
     </Group>
   ) : (

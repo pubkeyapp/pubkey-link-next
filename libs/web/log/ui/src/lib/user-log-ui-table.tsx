@@ -1,8 +1,8 @@
 import { Anchor, Badge, Group, ScrollArea } from '@mantine/core'
 import { Log, LogLevel } from '@pubkey-link/sdk'
-import { BotUiAvatar } from '@pubkey-link/web-bot-ui'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { UserUiAvatarLoader } from '@pubkey-link/web-user-ui'
-import { UiDebugModal, UiTime, useUiColorScheme } from '@pubkey-ui/core'
+import { UiTime, useUiColorScheme } from '@pubkey-ui/core'
 import { DataTable, DataTableProps } from 'mantine-datatable'
 import { Link } from 'react-router-dom'
 
@@ -60,21 +60,14 @@ export function UserLogUiTable({
             render: (item) => <UserUiAvatarLoader userId={item.userId} size="sm" />,
           },
           {
-            accessor: 'bot',
-            width: '60px',
-            title: 'Bot',
-            render: (item) =>
-              item?.bot ? <BotUiAvatar bot={item.bot} size="sm" to={`/c/${item.communityId}/discord`} /> : null,
-          },
-          {
             width: '75px',
             accessor: 'actions',
             title: 'Actions',
             textAlign: 'right',
             render: (item) => (
               <Group gap="xs" justify="right">
-                <UiDebugModal disabled={!item.data} data={item.data} />
-                <UiDebugModal data={item} />
+                <AppUiDebugModal disabled={!item.data} data={item.data} />
+                <AppUiDebugModal data={item} />
               </Group>
             ),
           },

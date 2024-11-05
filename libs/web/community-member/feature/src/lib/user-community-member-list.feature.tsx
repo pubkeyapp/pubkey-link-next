@@ -2,8 +2,8 @@ import { Checkbox, Group } from '@mantine/core'
 import { Community } from '@pubkey-link/sdk'
 import { useUserFindManyCommunityMember } from '@pubkey-link/web-community-member-data-access'
 import { UserAddCommunityMemberModal, UserCommunityMemberUiTable } from '@pubkey-link/web-community-member-ui'
-import { UiPageLimit, UiSearchField } from '@pubkey-link/web-core-ui'
-import { UiDebugModal, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
+import { AppUiDebugModal, UiPageLimit, UiSearchField } from '@pubkey-link/web-core-ui'
+import { UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 
 export function UserCommunityMemberListFeature({ community }: { community: Community }) {
   const { addCommunityMember, removeCommunityMember, items, pagination, query, setSearch, admin, setAdmin } =
@@ -16,7 +16,7 @@ export function UserCommunityMemberListFeature({ community }: { community: Commu
     <UiStack>
       <Group>
         <UiSearchField placeholder="Search member" setSearch={setSearch} />
-        <UiDebugModal data={items} />
+        <AppUiDebugModal data={items} />
         <UserAddCommunityMemberModal add={addCommunityMember} />
         <Checkbox label="Admins" checked={admin} onChange={() => setAdmin(!admin)} />
         <UiPageLimit limit={pagination.limit} setLimit={pagination.setLimit} setPage={pagination.setPage} />

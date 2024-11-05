@@ -23,17 +23,17 @@ export class ApiNetworkTokenDataService {
 
   @OnEvent(EVENT_NETWORKS_PROVISIONED)
   async onNetworkProvisioned() {
-    await this.ensureGenesisBlock()
+    await this.ensureGenesisHash()
   }
 
-  private async ensureGenesisBlock() {
+  private async ensureGenesisHash() {
     if (!this.core.config.featureResolverSolanaValidator) {
       this.logger.debug(
-        `[GLOBAL] ensureGenesisBlock: Feature resolverSolanaValidator disabled, skipping genesis block check.`,
+        `[GLOBAL] ensureGenesisHash: Feature resolverSolanaValidator disabled, skipping genesis block check.`,
       )
       return
     }
-    this.logger.debug(`[GLOBAL] ensureGenesisBlock: Ensuring genesis block for validators.`)
+    this.logger.debug(`[GLOBAL] ensureGenesisHash: Ensuring genesis hash for validators.`)
 
     const existing = await this.core.data.networkToken.findMany({ where: { type: NetworkTokenType.Validator } })
 
@@ -42,28 +42,28 @@ export class ApiNetworkTokenDataService {
     })
 
     this.logger.verbose(
-      `[GLOBAL] ensureGenesisBlock: Found ${existing.length} existing tokens, adding ${networks.length} more.`,
+      `[GLOBAL] ensureGenesisHash: Found ${existing.length} existing tokens, adding ${networks.length} more.`,
     )
 
     for (const network of networks) {
-      this.logger.verbose(`[${network.cluster}] ensureGenesisBlock: Ensuring genesis block for cluster.`)
+      this.logger.verbose(`[${network.cluster}] ensureGenesisHash: Ensuring genesis hash for cluster.`)
       const hash = await this.getClusterGenesisHash(network.cluster)
       if (hash) {
-        this.logger.debug(`[${network.cluster}] ensureGenesisBlock: Found genesis hash for cluster: ${hash}`)
+        this.logger.debug(`[${network.cluster}] ensureGenesisHash: Found genesis hash for cluster: ${hash}`)
         const data: Prisma.NetworkTokenCreateInput = {
           network: { connect: { cluster: network.cluster } },
           type: NetworkTokenType.Validator,
           account: hash,
-          name: `Solana Genesis Block`,
+          name: `Solana Genesis`,
           program: SystemProgram.programId.toBase58(),
         }
 
         await this.core.data.networkToken.create({ data })
         this.logger.log(
-          `ensureGenesisBlock: Created Genesis Block for cluster ${network.cluster} with genesis hash ${hash}`,
+          `ensureGenesisHash: Created Genesis Block for cluster ${network.cluster} with genesis hash ${hash}`,
         )
       } else {
-        this.logger.error(`ensureGenesisBlock: No genesis hash found for cluster ${network.cluster}`)
+        this.logger.error(`ensureGenesisHash: No genesis hash found for cluster ${network.cluster}`)
       }
     }
   }
@@ -159,10 +159,10 @@ export class ApiNetworkTokenDataService {
     try {
       const connection = await this.network.cluster.getConnection(cluster)
       const hash = await connection.getGenesisHash()
-      this.logger.debug(`getClusterGenesisHash: Found genesis hash for cluster ${cluster}: ${hash}`)
+      this.logger.debug(`[${cluster}] getClusterGenesisHash: Found genesis hash for cluster: ${hash}`)
       return hash
     } catch (error) {
-      this.logger.error(`getClusterGenesisHash: Error getting genesis hash for cluster ${cluster}`, error)
+      this.logger.error(`[${cluster}] getClusterGenesisHash: Error getting genesis hash for cluster`, error)
       return null
     }
   }

@@ -5,8 +5,8 @@ import { NetworkTokenType } from '../entity/network-token-type.enum'
 
 @InputType()
 export class UserFindManyNetworkTokenInput extends PagingInput() {
-  @Field(() => NetworkCluster)
-  cluster!: NetworkCluster
+  @Field(() => NetworkCluster, { nullable: true })
+  cluster?: NetworkCluster
   @Field(() => NetworkTokenType, { nullable: true })
   type?: NetworkTokenType
   @Field({ nullable: true })

@@ -1,12 +1,13 @@
 import { Button } from '@mantine/core'
 import { NetworkToken, NetworkTokenType } from '@pubkey-link/sdk'
 import { useUserFindManyNetworkAsset } from '@pubkey-link/web-network-asset-data-access'
-import { UserNetworkAssetFeature } from '@pubkey-link/web-network-asset-feature'
-import { NetworkAssetUiShowBalance, NetworkTokenUiItem } from '@pubkey-link/web-network-token-ui'
-import { UiCard, UiGroup, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
+import { NetworkAssetUiNotFound, NetworkAssetUiShowBalance } from '@pubkey-link/web-network-asset-ui'
+import { NetworkTokenUiItem } from '@pubkey-link/web-network-token-ui'
+import { UiCard, UiGroup, UiLoader, UiStack } from '@pubkey-ui/core'
 import { Suspense, useState } from 'react'
+import { UserNetworkAssetFeature } from '../index'
 
-export function NetworkTokenUiDetailNonFungible({ token, username }: { token: NetworkToken; username: string }) {
+export function NetworkAssetDetailNonFungible({ token, username }: { token: NetworkToken; username: string }) {
   const [showDetails, setShowDetails] = useState(false)
   const { query, items, pagination } = useUserFindManyNetworkAsset({
     cluster: token.cluster,
@@ -15,24 +16,22 @@ export function NetworkTokenUiDetailNonFungible({ token, username }: { token: Ne
     username,
     type: NetworkTokenType.NonFungible,
   })
+  const isLoading = query.isLoading
+  const balance = pagination?.total.toString() ?? '0'
+
   return (
     <UiCard>
       <UiGroup align="start">
         <NetworkTokenUiItem avatarProps={{ size: 'lg' }} networkToken={token} />
         <UiStack gap={0} align="end">
-          <NetworkAssetUiShowBalance
-            balance={pagination?.total.toString() ?? '0'}
-            size="lg"
-            symbol={token.symbol ?? ''}
-          />
+          <NetworkAssetUiShowBalance balance={balance} size="lg" symbol={token.symbol ?? ''} />
           <Button variant="subtle" size="xs" onClick={() => setShowDetails(!showDetails)}>
             {showDetails ? 'Hide' : 'Show'} Details
           </Button>
         </UiStack>
       </UiGroup>
-
       <Suspense fallback={<UiLoader />}>
-        {query.isLoading ? (
+        {isLoading ? (
           <UiLoader />
         ) : items.length ? (
           showDetails ? (
@@ -49,7 +48,7 @@ export function NetworkTokenUiDetailNonFungible({ token, username }: { token: Ne
             <div />
           )
         ) : (
-          <UiInfo mt="lg" message={`No assets found for ${username}.`} />
+          <NetworkAssetUiNotFound token={token} username={username} />
         )}
       </Suspense>
     </UiCard>

@@ -1,6 +1,7 @@
 import { Paper } from '@mantine/core'
 import { User } from '@pubkey-link/sdk'
-import { UiDebugModal, UiGroup } from '@pubkey-ui/core'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
+import { UiGroup } from '@pubkey-ui/core'
 import { UserUiItem } from './user-ui-item'
 
 export function UserUiGridItem({ user, to }: { user: User; to?: string }) {
@@ -8,7 +9,7 @@ export function UserUiGridItem({ user, to }: { user: User; to?: string }) {
     <Paper withBorder p="md">
       <UiGroup>
         <UserUiItem user={user} to={to} />
-        <UiDebugModal data={user} />
+        <AppUiDebugModal data={user} />
       </UiGroup>
     </Paper>
   )

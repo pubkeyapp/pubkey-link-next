@@ -1,46 +1,40 @@
-import { Community, NetworkToken, NetworkTokenType } from '@pubkey-link/sdk'
+import { Button } from '@mantine/core'
+import { Community } from '@pubkey-link/sdk'
 import { useAuth } from '@pubkey-link/web-auth-data-access'
-import { NetworkTokenUiDetail } from '@pubkey-link/web-network-token-feature'
 import { useUserFindManyRole } from '@pubkey-link/web-role-data-access'
-import { RoleUiList } from '@pubkey-link/web-role-ui'
-import { UiCard, UiLoader, UiStack, UiWarning } from '@pubkey-ui/core'
+import { RoleUiListWithAssets } from '@pubkey-link/web-role-ui'
+import { UiCard, UiGroup, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
+import { Link } from 'react-router-dom'
 
 export function CommunityDashboardMemberCardRoles({ community }: { community: Community }) {
-  const { user } = useAuth()
   const { items, query } = useUserFindManyRole({ communityId: community.id })
+  const { user, isAdmin } = useAuth()
 
   const filtered = items?.filter((item) => (item?.conditions ?? [])?.length > 0)
 
-  const tokens = items.map((item) => item.conditions?.map((condition) => condition.token)).flat()
-
-  // Get the unique tokens based on the `account` property
-  const uniqueTokens = Array.from(new Set(tokens.map((token) => token?.account)))
-    .map((account) => tokens.find((token) => token?.account === account))
-    .filter((token) => token !== undefined)
-    .filter((token) => token?.type === NetworkTokenType.Fungible || token?.type === NetworkTokenType.NonFungible)
-
   return (
     <UiStack>
-      {query.isLoading ? (
-        <UiLoader />
-      ) : filtered?.length ? (
-        <UiStack>
-          {user?.username && uniqueTokens?.length ? (
-            <UiCard title="Community Assets">
-              <UiStack>
-                {((uniqueTokens ?? []) as NetworkToken[]).map((token) => (
-                  <NetworkTokenUiDetail key={token.id} token={token} username={user.username!} />
-                ))}
-              </UiStack>
-            </UiCard>
-          ) : null}
-          <UiCard title="Community Roles">
-            <RoleUiList mt="xs" roles={filtered ?? []} />
-          </UiCard>
-        </UiStack>
-      ) : (
-        <UiWarning title="No roles found." message="This community does not have any roles." />
-      )}
+      <UiCard title="Community Roles">
+        {query.isLoading ? (
+          <UiLoader />
+        ) : filtered?.length ? (
+          <RoleUiListWithAssets mt="xs" roles={filtered ?? []} username={user?.username as string} />
+        ) : (
+          <UiInfo
+            title="No roles found."
+            message={
+              <UiGroup>
+                <div>This community does not have any roles.</div>
+                {isAdmin ? (
+                  <Button component={Link} to={'../roles/create'}>
+                    Create role
+                  </Button>
+                ) : null}
+              </UiGroup>
+            }
+          />
+        )}
+      </UiCard>
     </UiStack>
   )
 }

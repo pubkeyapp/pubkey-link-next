@@ -32,6 +32,7 @@ export class ApiCommunityMemberDataService {
   async getMember({ communityId, userId }: { communityId: string; userId: string }) {
     return this.core.data.communityMember.findUnique({
       where: { communityId_userId: { communityId, userId } },
+      include: { roles: { include: { role: true } } },
     })
   }
 

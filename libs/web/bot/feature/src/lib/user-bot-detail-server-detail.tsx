@@ -1,8 +1,8 @@
 import { Button, Group } from '@mantine/core'
 import { Bot, DiscordServer } from '@pubkey-link/sdk'
 import { useUserGetBotServer, useUserManageBot } from '@pubkey-link/web-bot-data-access'
-import { UiDiscordServerItem } from '@pubkey-link/web-core-ui'
-import { UiAlert, UiCard, UiDebugModal, UiGroup, UiLoader, UiStack, UiTabRoutes } from '@pubkey-ui/core'
+import { AppUiDebugModal, UiDiscordServerItem } from '@pubkey-link/web-core-ui'
+import { UiAlert, UiCard, UiGroup, UiLoader, UiStack, UiTabRoutes } from '@pubkey-ui/core'
 import { useNavigate, useParams } from 'react-router-dom'
 import { UserBotDetailRolesTab } from './user-bot-detail-roles-tab'
 import { UserBotDetailServerRoles } from './user-bot-detail-server-roles'
@@ -31,7 +31,7 @@ export function UserBotDetailServerDetail({ bot }: { bot: Bot }) {
             <UiDiscordServerItem server={item} />
           </Group>
           <Group justify="end">
-            <UiDebugModal data={item} />
+            <AppUiDebugModal data={item} />
             <Button
               size="xs"
               color="red"

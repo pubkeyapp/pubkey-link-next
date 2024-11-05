@@ -6,7 +6,7 @@ export function getNetworkAssetWhereUserInput(
   input: UserFindManyNetworkAssetInput,
 ): Prisma.NetworkAssetWhereInput {
   const where: Prisma.NetworkAssetWhereInput = {
-    cluster: input.cluster,
+    cluster: input.cluster ?? undefined,
     type: input.type ?? undefined,
     group: input.group ?? undefined,
     owner: { in: identities },

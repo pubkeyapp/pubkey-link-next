@@ -2,7 +2,7 @@ import { Button, Group, Stack, Text } from '@mantine/core'
 import { AppFeature, ellipsify, UserRole } from '@pubkey-link/sdk'
 import { useAuth } from '@pubkey-link/web-auth-data-access'
 import { useAppConfig } from '@pubkey-link/web-core-data-access'
-import { UiGrid } from '@pubkey-link/web-core-ui'
+import { AppUiDebugModal, UiGrid } from '@pubkey-link/web-core-ui'
 import { useUserFindManyIdentity } from '@pubkey-link/web-identity-data-access'
 import { IdentityRefreshIcon, IdentityUiIcon, IdentityUiLink } from '@pubkey-link/web-identity-ui'
 import { UserNetworkTokenFeature } from '@pubkey-link/web-network-token-feature'
@@ -11,7 +11,6 @@ import { UserUiProfile } from '@pubkey-link/web-user-ui'
 import {
   UiCard,
   UiContainer,
-  UiDebugModal,
   UiGroup,
   UiInfo,
   UiLoader,
@@ -26,7 +25,7 @@ import { UserPubkeyProfileFeature } from './user-pubkey-profile-feature'
 import { UserUserDetailCommunityFeature } from './user-user-detail-community-feature'
 
 export function UserUserDetailFeature() {
-  const { user: authUser } = useAuth()
+  const { user: authUser, isDeveloper } = useAuth()
   const { hasFeature } = useAppConfig()
   const { username } = useParams<{ username: string }>() as { username: string }
   const { user, query } = useUserFineOneUser({ username })
@@ -74,11 +73,18 @@ export function UserUserDetailFeature() {
             <UserUiProfile
               user={user}
               action={
-                isAuthAdmin ? (
-                  <Button size="xs" variant="light" component={Link} to={`/admin/users/${user.id}`}>
-                    Manage
-                  </Button>
-                ) : undefined
+                <Group>
+                  {isAuthAdmin ? (
+                    <Button size="xs" variant="light" component={Link} to={`/admin/users/${user.id}`}>
+                      Manage
+                    </Button>
+                  ) : null}
+                  {isDeveloper ? (
+                    <Button size="xs" variant="light" component={Link} to={`/p/${user.username}`}>
+                      New Profile
+                    </Button>
+                  ) : null}
+                </Group>
               }
             />
             {items?.map((identity) => (
@@ -101,7 +107,7 @@ export function UserUserDetailFeature() {
                   </Group>
                   <Group gap={2}>
                     <IdentityRefreshIcon item={identity} onClick={refreshIdentity} />
-                    <UiDebugModal data={identity} />
+                    <AppUiDebugModal data={identity} />
                     <IdentityUiLink item={identity} />
                   </Group>
                 </UiGroup>

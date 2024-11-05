@@ -1429,6 +1429,7 @@ export type UserFindManyCommunityInput = {
   limit?: InputMaybe<Scalars['Int']['input']>
   page?: InputMaybe<Scalars['Int']['input']>
   search?: InputMaybe<Scalars['String']['input']>
+  withRoles?: InputMaybe<Scalars['Boolean']['input']>
 }
 
 export type UserFindManyCommunityMemberInput = {
@@ -1471,7 +1472,7 @@ export type UserFindManyNetworkAssetInput = {
 }
 
 export type UserFindManyNetworkTokenInput = {
-  cluster: NetworkCluster
+  cluster?: InputMaybe<NetworkCluster>
   limit?: InputMaybe<Scalars['Int']['input']>
   page?: InputMaybe<Scalars['Int']['input']>
   search?: InputMaybe<Scalars['String']['input']>
@@ -3578,6 +3579,80 @@ export type UserFindManyCommunityQuery = {
       telegramUrl?: string | null
       updatedAt?: Date | null
       cluster: NetworkCluster
+      roles?: Array<{
+        __typename?: 'Role'
+        createdAt?: Date | null
+        id: string
+        communityId: string
+        name: string
+        updatedAt?: Date | null
+        viewUrl?: string | null
+        conditions?: Array<{
+          __typename?: 'RoleCondition'
+          createdAt?: Date | null
+          id: string
+          type: NetworkTokenType
+          amount?: string | null
+          amountMax?: string | null
+          filters?: any | null
+          config?: any | null
+          tokenId?: string | null
+          roleId?: string | null
+          updatedAt?: Date | null
+          valid?: boolean | null
+          token?: {
+            __typename?: 'NetworkToken'
+            id: string
+            createdAt?: Date | null
+            updatedAt?: Date | null
+            cluster: NetworkCluster
+            type: NetworkTokenType
+            account: string
+            program: string
+            name: string
+            mintList?: Array<string> | null
+            vault?: string | null
+            symbol?: string | null
+            description?: string | null
+            imageUrl?: string | null
+            metadataUrl?: string | null
+            raw?: any | null
+          } | null
+          asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
+        }> | null
+        permissions?: Array<{
+          __typename?: 'RolePermission'
+          createdAt?: Date | null
+          id: string
+          updatedAt?: Date | null
+          botId?: string | null
+          roleId?: string | null
+          botRole?: {
+            __typename?: 'BotRole'
+            botId?: string | null
+            createdAt?: Date | null
+            id: string
+            serverId?: string | null
+            updatedAt?: Date | null
+            serverRoleId?: string | null
+            serverRole?: {
+              __typename?: 'DiscordRole'
+              id: string
+              name: string
+              managed: boolean
+              color: number
+              position: number
+            } | null
+            server?: {
+              __typename?: 'DiscordServer'
+              id: string
+              name: string
+              icon?: string | null
+              permissions?: Array<string> | null
+            } | null
+          } | null
+        }> | null
+      }> | null
     }>
     meta: {
       __typename?: 'PagingMeta'
@@ -7560,6 +7635,23 @@ export type UserFindOneUserQuery = {
     status?: UserStatus | null
     updatedAt?: Date | null
     username?: string | null
+    identities?: Array<{
+      __typename?: 'Identity'
+      avatarUrl?: string | null
+      createdAt?: Date | null
+      syncStarted?: Date | null
+      syncEnded?: Date | null
+      expired?: boolean | null
+      id: string
+      name: string
+      ownerId?: string | null
+      profile?: any | null
+      provider: IdentityProvider
+      providerId: string
+      updatedAt?: Date | null
+      url?: string | null
+      verified?: boolean | null
+    }> | null
   } | null
 }
 
@@ -8376,6 +8468,9 @@ export const UserFindManyCommunityDocument = gql`
     paging: userFindManyCommunity(input: $input) {
       data {
         ...CommunityDetails
+        roles {
+          ...RoleDetails
+        }
       }
       meta {
         ...PagingMetaDetails
@@ -8383,6 +8478,7 @@ export const UserFindManyCommunityDocument = gql`
     }
   }
   ${CommunityDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
   ${PagingMetaDetailsFragmentDoc}
 `
 export const UserFindOneCommunityDocument = gql`
@@ -9115,9 +9211,13 @@ export const UserFindOneUserDocument = gql`
   query userFindOneUser($username: String!) {
     item: userFindOneUser(username: $username) {
       ...UserDetails
+      identities {
+        ...IdentityDetails
+      }
     }
   }
   ${UserDetailsFragmentDoc}
+  ${IdentityDetailsFragmentDoc}
 `
 export const UserFindOneUserByIdDocument = gql`
   query userFindOneUserById($userId: String!) {
@@ -12499,6 +12599,7 @@ export function UserFindManyCommunityInputSchema(): z.ZodObject<Properties<UserF
     limit: z.number().nullish(),
     page: z.number().nullish(),
     search: z.string().nullish(),
+    withRoles: z.boolean().nullish(),
   })
 }
 
@@ -12551,7 +12652,7 @@ export function UserFindManyNetworkAssetInputSchema(): z.ZodObject<Properties<Us
 
 export function UserFindManyNetworkTokenInputSchema(): z.ZodObject<Properties<UserFindManyNetworkTokenInput>> {
   return z.object({
-    cluster: NetworkClusterSchema,
+    cluster: NetworkClusterSchema.nullish(),
     limit: z.number().nullish(),
     page: z.number().nullish(),
     search: z.string().nullish(),

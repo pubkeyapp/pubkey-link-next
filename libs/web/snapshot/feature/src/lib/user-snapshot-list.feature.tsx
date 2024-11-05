@@ -1,11 +1,11 @@
 import { Button, Group } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import { Role, UserCreateSnapshotInput } from '@pubkey-link/sdk'
+import { AppUiDebugModal, UiPageLimit, UiSearchField } from '@pubkey-link/web-core-ui'
 import { useUserFindManyRole } from '@pubkey-link/web-role-data-access'
 import { useUserFindManySnapshot } from '@pubkey-link/web-snapshot-data-access'
 import { UserSnapshotUiTable } from '@pubkey-link/web-snapshot-ui'
-import { UiPageLimit, UiSearchField } from '@pubkey-link/web-core-ui'
-import { UiDebugModal, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
+import { UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 
 export function UserSnapshotListFeature({ communityId }: { communityId: string }) {
   const { items: roles } = useUserFindManyRole({ communityId })
@@ -17,7 +17,7 @@ export function UserSnapshotListFeature({ communityId }: { communityId: string }
     <UiStack>
       <Group>
         <UiSearchField placeholder="Search snapshot" setSearch={setSearch} />
-        <UiDebugModal data={items} />
+        <AppUiDebugModal data={items} />
         <CreateSnapshot createSnapshot={createSnapshot} roles={roles} />
         <UiPageLimit limit={pagination.limit} setLimit={pagination.setLimit} setPage={pagination.setPage} />
       </Group>

@@ -4,6 +4,7 @@ import { DevBackup } from './dev-backup'
 import { DevConditionWizard } from './dev-condition-wizard'
 import { DevIdentityWizard } from './dev-identity-wizard'
 import { DevNew } from './dev-new'
+import { DevProfile } from './dev-profile'
 import { DevTokenMetadata } from './dev-token-metadata'
 import { DevUserAutocomplete } from './dev-user-autocomplete'
 
@@ -11,9 +12,9 @@ export default function DevRoutes() {
   return (
     <UiContainer>
       <UiTabRoutes
-        grow={false}
         tabs={[
           { path: 'new', label: 'New', element: <DevNew /> },
+          { path: 'profile', label: 'Profile', element: <DevProfile /> },
           { path: 'address-input', label: 'Address Input', element: <DevAddressInput /> },
           { path: 'backup', label: 'Backup', element: <DevBackup /> },
           { path: 'condition-wizard', label: 'Condition Wizard', element: <DevConditionWizard /> },

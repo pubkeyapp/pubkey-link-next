@@ -1,4 +1,3 @@
-import { BotUiItemById } from '@pubkey-link/web-bot-ui'
 import { useUserFindOneLog } from '@pubkey-link/web-log-data-access'
 import { UserUiItemById } from '@pubkey-link/web-user-ui'
 import { UiCard, UiError, UiInfoItems, UiInfoTable, UiLoader } from '@pubkey-ui/core'
@@ -13,9 +12,6 @@ export function UserLogDetailOverviewTab({ logId }: { logId: string }) {
     return <UiError message="Log not found." />
   }
   const items: UiInfoItems = []
-  if (item.botId && item.communityId) {
-    items.unshift(['Bot', <BotUiItemById communityId={item.communityId} />])
-  }
   if (item.identity?.ownerId) {
     items.unshift(['Identity Owner', <UserUiItemById userId={item.identity.ownerId} />])
   }

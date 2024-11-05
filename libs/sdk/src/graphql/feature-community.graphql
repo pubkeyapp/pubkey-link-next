@@ -67,6 +67,9 @@ query userFindManyCommunity($input: UserFindManyCommunityInput!) {
   paging: userFindManyCommunity(input: $input) {
     data {
       ...CommunityDetails
+      roles {
+        ...RoleDetails
+      }
     }
     meta {
       ...PagingMetaDetails

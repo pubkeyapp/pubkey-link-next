@@ -1,7 +1,7 @@
 import { NetworkAsset } from '@pubkey-link/sdk'
 import { useMemo } from 'react'
 
-export function useNetworkTokenSummary({ items }: { items: NetworkAsset[] }) {
+export function useNetworkAssetSummary({ items }: { items: NetworkAsset[] }) {
   return useMemo(() => {
     if (!items.length) {
       return { total: '0', items: [] }

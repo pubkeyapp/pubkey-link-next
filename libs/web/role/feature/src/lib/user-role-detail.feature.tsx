@@ -1,21 +1,11 @@
 import { Group, Text } from '@mantine/core'
 import { Community } from '@pubkey-link/sdk'
 import { useUserFindOneBot } from '@pubkey-link/web-bot-data-access'
+import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { useUserFindManyNetworkToken } from '@pubkey-link/web-network-token-data-access'
 import { useUserFindOneRole } from '@pubkey-link/web-role-data-access'
 import { RoleConditionUiAddButton, RoleUiItem } from '@pubkey-link/web-role-ui'
-import {
-  UiAnchor,
-  UiBack,
-  UiCard,
-  UiCardTitle,
-  UiDebugModal,
-  UiError,
-  UiGroup,
-  UiLoader,
-  UiStack,
-  UiWarning,
-} from '@pubkey-ui/core'
+import { UiAnchor, UiBack, UiCard, UiCardTitle, UiError, UiGroup, UiLoader, UiStack, UiWarning } from '@pubkey-ui/core'
 import { useParams } from 'react-router-dom'
 import { UserRoleDetailConditionsTab } from './user-role-detail-conditions.tab'
 import { AddPermissionButton, UserRoleDetailPermissionsTab } from './user-role-detail-permissions.tab'
@@ -38,7 +28,7 @@ export function UserRoleDetailFeature({ community }: { community: Community }) {
           <UiBack />
           <RoleUiItem role={item} />
         </Group>
-        <UiDebugModal data={item} />
+        <AppUiDebugModal data={item} />
       </UiGroup>
       <UiStack>
         <UiCard

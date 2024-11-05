@@ -6,7 +6,7 @@ export function getNetworkTokenWhereUserInput(
   input: UserFindManyNetworkTokenInput,
 ): Prisma.NetworkTokenWhereInput {
   const where: Prisma.NetworkTokenWhereInput = {
-    cluster: input.cluster,
+    cluster: input.cluster ?? undefined,
     type: input.type ?? undefined,
   }
 

@@ -31,8 +31,24 @@ export class ApiUserDataService {
     }
     return found
   }
+
   async findOneByUsername(username: string) {
-    const found = await this.core.data.user.findUnique({ where: { username } })
+    const found = await this.core.data.user.findUnique({
+      where: { username },
+      include: {
+        identities: {
+          orderBy: [{ provider: 'asc' }, { providerId: 'asc' }],
+          select: {
+            id: true,
+            name: true,
+            profile: true,
+            provider: true,
+            providerId: true,
+            verified: true,
+          },
+        },
+      },
+    })
     if (!found) {
       throw new Error(`User ${username} not found`)
     }
