@@ -103,11 +103,14 @@ export class ApiRoleResolverService {
         roleMap,
       })
       if (ensureRoles.granted || ensureRoles.revoked) {
-        await this.core.logInfo(`Roles set: ${ensureRoles.granted} granted, ${ensureRoles.revoked} revoked`, {
-          userId: resolved.userId,
-          communityId,
-          data: JSON.stringify({ roles, ensureRoles }, null, 2),
-        })
+        await this.core.logInfo(
+          `[${community.id}] Roles set: ${ensureRoles.granted} granted, ${ensureRoles.revoked} revoked`,
+          {
+            userId: resolved.userId,
+            communityId,
+            data: JSON.stringify({ roles, ensureRoles }, null, 2),
+          },
+        )
       }
       result.totalGranted += ensureRoles.granted
       result.totalRevoked += ensureRoles.revoked
@@ -240,9 +243,11 @@ export class ApiRoleResolverService {
     granted: number
     revoked: number
   }> {
-    const result = {
+    const result: { granted: number; grantedRoles: string[]; revoked: number; revokedRoles: string[] } = {
       granted: 0,
+      grantedRoles: [],
       revoked: 0,
+      revokedRoles: [],
     }
     const existing = await this.core.data.communityMemberRole.findMany({
       where: { member: { communityId, userId } },
@@ -259,7 +264,7 @@ export class ApiRoleResolverService {
       const deleted = await this.core.data.communityMemberRole.delete({
         where: { id: role.id },
       })
-      await this.core.logInfo(`Role revoked: ${roleName}`, {
+      await this.core.logInfo(`[${communityId}] Role revoked: ${roleName}`, {
         userId,
         communityId,
         roleId: role.roleId,
@@ -267,6 +272,7 @@ export class ApiRoleResolverService {
         relatedType: 'Role',
       })
       result.revoked += deleted ? 1 : 0
+      result.revokedRoles.push(deleted ? roleName : `Role ${roleName} not revoked`)
     }
     for (const role of toGrant) {
       const roleName = roleMap[role.id]?.name ?? 'Unknown Role (to be granted)'
@@ -276,7 +282,7 @@ export class ApiRoleResolverService {
           member: { connect: { communityId_userId: { communityId, userId } } },
         },
       })
-      await this.core.logInfo(`Role granted: ${roleName}`, {
+      await this.core.logInfo(`[${communityId}] Role granted: ${roleName}`, {
         userId,
         communityId,
         roleId: role.id,
@@ -284,6 +290,7 @@ export class ApiRoleResolverService {
         relatedType: 'Role',
       })
       result.granted += created ? 1 : 0
+      result.grantedRoles.push(created ? roleName : `Role ${roleName} not granted`)
     }
     return result
   }
