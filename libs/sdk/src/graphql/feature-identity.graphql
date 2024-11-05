@@ -83,6 +83,10 @@ mutation adminDeleteIdentity($identityId: String!) {
   deleted: adminDeleteIdentity(identityId: $identityId)
 }
 
+mutation adminSetIdentityVerified($identityId: String!, $verified: Boolean!) {
+  verified: adminSetIdentityVerified(identityId: $identityId, verified: $verified)
+}
+
 mutation adminSyncIdentity($identityId: String!) {
   deleted: adminSyncIdentity(identityId: $identityId)
 }

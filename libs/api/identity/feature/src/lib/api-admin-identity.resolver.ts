@@ -39,6 +39,11 @@ export class ApiAdminIdentityResolver {
   }
 
   @Mutation(() => Boolean, { nullable: true })
+  adminSetIdentityVerified(@Args('identityId') identityId: string, @Args('verified') verified: boolean) {
+    return this.service.admin.setIdentityVerified(identityId, verified)
+  }
+
+  @Mutation(() => Boolean, { nullable: true })
   adminSyncIdentity(@Args('identityId') identityId: string) {
     return this.service.admin.syncIdentity(identityId)
   }

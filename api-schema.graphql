@@ -457,6 +457,7 @@ type Mutation {
   adminPurgeLogs: Boolean
   adminRemoveCommunityMember(communityMemberId: String!): Boolean
   adminRestoreBackup(name: String!): Boolean!
+  adminSetIdentityVerified(identityId: String!, verified: Boolean!): Boolean
   adminSyncIdentity(identityId: String!): Boolean
   adminSyncNetworkAssets: Boolean
   adminUpdateBot(botId: String!, input: AdminUpdateBotInput!): Bot

@@ -86,6 +86,21 @@ export class ApiIdentityDataAdminService {
     })
   }
 
+  async setIdentityVerified(identityId: string, verified: boolean) {
+    const identity = await this.core.data.identity.findUnique({ where: { id: identityId } })
+    if (!identity) {
+      throw new Error(`Identity ${identityId} not found`)
+    }
+    if (identity.provider !== IdentityProvider.Solana) {
+      throw new Error(`Identity ${identityId} not supported`)
+    }
+    const updated = await this.core.data.identity.update({
+      where: { id: identityId },
+      data: { verified },
+    })
+    return !!updated
+  }
+
   async syncIdentity(identityId: string) {
     console.log('syncIdentity', identityId)
     const identity = await this.core.data.identity.findUnique({ where: { id: identityId } })

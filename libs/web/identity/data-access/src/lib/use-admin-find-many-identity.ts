@@ -53,6 +53,17 @@ export function useAdminFindManyIdentity({ ownerId, provider }: { ownerId?: stri
         return false
       })
     },
+    setIdentityVerified: async (identity: Identity, verified: boolean) => {
+      return sdk.adminSetIdentityVerified({ identityId: identity.id, verified }).then(async (res) => {
+        if (res) {
+          toastSuccess('Identity verified')
+          await query.refetch()
+          return true
+        }
+        toastError('Error verifying identity')
+        return false
+      })
+    },
     syncIdentity: async (identity: Identity) => {
       return sdk.adminSyncIdentity({ identityId: identity.id }).then(async (res) => {
         if (res) {

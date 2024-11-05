@@ -1,4 +1,4 @@
-import { ActionIcon, Anchor, Group, ScrollArea, Stack, Text } from '@mantine/core'
+import { ActionIcon, Anchor, Group, ScrollArea, Stack, Switch, Text } from '@mantine/core'
 import { ellipsify, Identity } from '@pubkey-link/sdk'
 import { IdentityUiAvatar } from '@pubkey-link/web-core-ui'
 import { UiCopy, UiDebugModal } from '@pubkey-ui/core'
@@ -8,10 +8,16 @@ import { DataTable } from 'mantine-datatable'
 interface AdminIdentityTableProps {
   identities: Identity[]
   deleteIdentity: (identity: Identity) => void
+  setIdentityVerified: (identity: Identity, verified: boolean) => void
   syncIdentity: (identity: Identity) => void
 }
 
-export function AdminIdentityUiTable({ deleteIdentity, identities = [], syncIdentity }: AdminIdentityTableProps) {
+export function AdminIdentityUiTable({
+  deleteIdentity,
+  identities = [],
+  setIdentityVerified,
+  syncIdentity,
+}: AdminIdentityTableProps) {
   return (
     <ScrollArea>
       <DataTable
@@ -38,11 +44,26 @@ export function AdminIdentityUiTable({ deleteIdentity, identities = [], syncIden
             },
           },
           {
+            accessor: 'verified',
+            textAlign: 'center',
+            width: '100px',
+            render: (item) => (
+              <Group justify="center">
+                <Switch
+                  size="xs"
+                  checked={!!item.verified}
+                  onChange={(event) => setIdentityVerified(item, event.currentTarget.checked)}
+                />
+              </Group>
+            ),
+          },
+          {
             accessor: 'actions',
             title: 'Actions',
             textAlign: 'right',
+            width: '125px',
             render: (item) => (
-              <Group gap="xs" justify="right">
+              <Group gap="xs" justify="right" wrap="nowrap">
                 <UiDebugModal data={item} />
                 <UiCopy text={item.providerId} tooltip="Copy the providerId" />
                 <ActionIcon

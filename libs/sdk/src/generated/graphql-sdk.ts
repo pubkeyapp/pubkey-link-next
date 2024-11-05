@@ -487,6 +487,7 @@ export type Mutation = {
   adminPurgeLogs?: Maybe<Scalars['Boolean']['output']>
   adminRemoveCommunityMember?: Maybe<Scalars['Boolean']['output']>
   adminRestoreBackup: Scalars['Boolean']['output']
+  adminSetIdentityVerified?: Maybe<Scalars['Boolean']['output']>
   adminSyncIdentity?: Maybe<Scalars['Boolean']['output']>
   adminSyncNetworkAssets?: Maybe<Scalars['Boolean']['output']>
   adminUpdateBot?: Maybe<Bot>
@@ -628,6 +629,11 @@ export type MutationAdminRemoveCommunityMemberArgs = {
 
 export type MutationAdminRestoreBackupArgs = {
   name: Scalars['String']['input']
+}
+
+export type MutationAdminSetIdentityVerifiedArgs = {
+  identityId: Scalars['String']['input']
+  verified: Scalars['Boolean']['input']
 }
 
 export type MutationAdminSyncIdentityArgs = {
@@ -3921,6 +3927,13 @@ export type AdminDeleteIdentityMutationVariables = Exact<{
 }>
 
 export type AdminDeleteIdentityMutation = { __typename?: 'Mutation'; deleted?: boolean | null }
+
+export type AdminSetIdentityVerifiedMutationVariables = Exact<{
+  identityId: Scalars['String']['input']
+  verified: Scalars['Boolean']['input']
+}>
+
+export type AdminSetIdentityVerifiedMutation = { __typename?: 'Mutation'; verified?: boolean | null }
 
 export type AdminSyncIdentityMutationVariables = Exact<{
   identityId: Scalars['String']['input']
@@ -8459,6 +8472,11 @@ export const AdminDeleteIdentityDocument = gql`
     deleted: adminDeleteIdentity(identityId: $identityId)
   }
 `
+export const AdminSetIdentityVerifiedDocument = gql`
+  mutation adminSetIdentityVerified($identityId: String!, $verified: Boolean!) {
+    verified: adminSetIdentityVerified(identityId: $identityId, verified: $verified)
+  }
+`
 export const AdminSyncIdentityDocument = gql`
   mutation adminSyncIdentity($identityId: String!) {
     deleted: adminSyncIdentity(identityId: $identityId)
@@ -9169,6 +9187,7 @@ const AdminFindManyIdentityDocumentString = print(AdminFindManyIdentityDocument)
 const AdminFindUserByIdentityDocumentString = print(AdminFindUserByIdentityDocument)
 const AdminCreateIdentityDocumentString = print(AdminCreateIdentityDocument)
 const AdminDeleteIdentityDocumentString = print(AdminDeleteIdentityDocument)
+const AdminSetIdentityVerifiedDocumentString = print(AdminSetIdentityVerifiedDocument)
 const AdminSyncIdentityDocumentString = print(AdminSyncIdentityDocument)
 const UserFindManyIdentityDocumentString = print(UserFindManyIdentityDocument)
 const UserFindOneIdentityDocumentString = print(UserFindOneIdentityDocument)
@@ -10455,6 +10474,27 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'adminDeleteIdentity',
+        'mutation',
+        variables,
+      )
+    },
+    adminSetIdentityVerified(
+      variables: AdminSetIdentityVerifiedMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: AdminSetIdentityVerifiedMutation
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<AdminSetIdentityVerifiedMutation>(AdminSetIdentityVerifiedDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'adminSetIdentityVerified',
         'mutation',
         variables,
       )
