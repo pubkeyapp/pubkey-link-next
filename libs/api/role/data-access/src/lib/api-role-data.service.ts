@@ -8,13 +8,20 @@ import { RolePaging } from './entity/role.entity'
 export class ApiRoleDataService {
   constructor(private readonly core: ApiCoreService) {}
 
-  async create(input: Prisma.RoleUncheckedCreateInput) {
-    return this.core.data.role.create({ data: input })
+  async create(userId: string, input: Prisma.RoleUncheckedCreateInput) {
+    const created = await this.core.data.role.create({ data: input })
+    await this.core.logInfo(`[${created.name}] Role created`, {
+      roleId: created.id,
+      communityId: created.communityId,
+      userId,
+    })
+    return created
   }
 
-  async delete(roleId: string) {
+  async delete(userId: string, roleId: string) {
     await this.findOne(roleId)
     const deleted = await this.core.data.role.delete({ where: { id: roleId } })
+    await this.core.logInfo(`[${roleId}] Role deleted`, { communityId: deleted.communityId, userId })
     return !!deleted
   }
 

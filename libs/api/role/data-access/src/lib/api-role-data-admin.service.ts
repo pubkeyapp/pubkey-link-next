@@ -10,12 +10,12 @@ import { getRoleWhereAdminInput } from './helpers/get-role-where-admin.input'
 export class ApiRoleDataAdminService {
   constructor(private readonly data: ApiRoleDataService) {}
 
-  async createRole(input: AdminCreateRoleInput) {
-    return this.data.create(input)
+  async createRole(userId: string, input: AdminCreateRoleInput) {
+    return this.data.create(userId, input)
   }
 
-  async deleteRole(roleId: string) {
-    return this.data.delete(roleId)
+  async deleteRole(userId: string, roleId: string) {
+    return this.data.delete(userId, roleId)
   }
 
   async findManyRole(input: AdminFindManyRoleInput): Promise<RolePaging> {

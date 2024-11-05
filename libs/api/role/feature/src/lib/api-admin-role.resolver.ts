@@ -1,14 +1,13 @@
-import { Resolver } from '@nestjs/graphql'
-import { ApiRoleService } from '@pubkey-link/api-role-data-access'
-import { ApiAuthGraphQLAdminGuard } from '@pubkey-link/api-auth-data-access'
-import { Mutation, Query, Args } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { ApiAuthGraphQLAdminGuard, CtxUserId } from '@pubkey-link/api-auth-data-access'
 import {
   AdminCreateRoleInput,
   AdminFindManyRoleInput,
+  AdminUpdateRoleInput,
+  ApiRoleService,
   Role,
   RolePaging,
-  AdminUpdateRoleInput,
 } from '@pubkey-link/api-role-data-access'
 
 @Resolver()
@@ -17,13 +16,13 @@ export class ApiAdminRoleResolver {
   constructor(private readonly service: ApiRoleService) {}
 
   @Mutation(() => Role, { nullable: true })
-  adminCreateRole(@Args('input') input: AdminCreateRoleInput) {
-    return this.service.admin.createRole(input)
+  adminCreateRole(@CtxUserId() userId: string, @Args('input') input: AdminCreateRoleInput) {
+    return this.service.admin.createRole(userId, input)
   }
 
   @Mutation(() => Boolean, { nullable: true })
-  adminDeleteRole(@Args('roleId') roleId: string) {
-    return this.service.admin.deleteRole(roleId)
+  adminDeleteRole(@CtxUserId() userId: string, @Args('roleId') roleId: string) {
+    return this.service.admin.deleteRole(userId, roleId)
   }
 
   @Query(() => RolePaging)

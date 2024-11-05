@@ -38,10 +38,10 @@ export class ApiRoleResolverService {
       where: { enableSync: true },
     })
     if (!communities.filter((c) => c.enableSync).length) {
-      this.logger.warn(`syncAllCommunityRoles: No communities found with enableSync=true`)
+      this.logger.warn(`[GLOBAL] syncAllCommunityRoles: No communities found with enableSync=true`)
       return
     }
-    this.logger.verbose(`Validating roles of ${communities.length} communities`)
+    this.logger.verbose(`[GLOBAL] Validating roles of ${communities.length} communities`)
     for (const community of communities) {
       await this.syncCommunityRoles(community.id)
     }
@@ -50,7 +50,7 @@ export class ApiRoleResolverService {
   async syncCommunityRoles(communityId: string) {
     const community = await this.core.data.community.findUnique({ where: { id: communityId } })
     if (!community) {
-      throw new Error(`Community not found`)
+      throw new Error(`[${communityId}] Community not found`)
     }
     const startedAt = Date.now()
 
@@ -72,10 +72,10 @@ export class ApiRoleResolverService {
     }
 
     if (!conditions?.length || !users?.length) {
-      this.logger.debug(`syncCommunityRoles: No conditions or users found for community ${communityId}`)
+      this.logger.debug(`[${community.id}] syncCommunityRoles: No conditions or users found for community`)
       return result
     }
-    this.logger.verbose(`Validating ${conditions.length} conditions for ${users.length} users`)
+    this.logger.verbose(`[${community.id}] Validating ${conditions.length} conditions for ${users.length} users`)
 
     for (const user of users) {
       // We are now in the context of a user

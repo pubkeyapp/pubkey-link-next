@@ -28,10 +28,12 @@ export class ApiNetworkTokenDataService {
 
   private async ensureGenesisBlock() {
     if (!this.core.config.featureResolverSolanaValidator) {
-      this.logger.debug(`ensureGenesisBlock: Feature resolverSolanaValidator disabled, skipping genesis block check.`)
+      this.logger.debug(
+        `[GLOBAL] ensureGenesisBlock: Feature resolverSolanaValidator disabled, skipping genesis block check.`,
+      )
       return
     }
-    this.logger.debug(`ensureGenesisBlock: Ensuring genesis block for validators.`)
+    this.logger.debug(`[GLOBAL] ensureGenesisBlock: Ensuring genesis block for validators.`)
 
     const existing = await this.core.data.networkToken.findMany({ where: { type: NetworkTokenType.Validator } })
 
@@ -39,7 +41,9 @@ export class ApiNetworkTokenDataService {
       where: { cluster: { notIn: existing.map(({ cluster }) => cluster) } },
     })
 
-    this.logger.verbose(`ensureGenesisBlock: Found ${existing.length} existing tokens, adding ${networks.length} more.`)
+    this.logger.verbose(
+      `[GLOBAL] ensureGenesisBlock: Found ${existing.length} existing tokens, adding ${networks.length} more.`,
+    )
 
     for (const network of networks) {
       this.logger.verbose(`[${network.cluster}] ensureGenesisBlock: Ensuring genesis block for cluster.`)

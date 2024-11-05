@@ -165,7 +165,7 @@ model Log {
   relatedType        LogRelatedType?
   community          Community?        @relation(fields: [communityId], references: [id], onDelete: Cascade)
   communityId        String?
-  identity           Identity?         @relation(fields: [identityProvider, identityProviderId], references: [provider, providerId], onDelete: Cascade)
+  identity           Identity?         @relation(fields: [identityProvider, identityProviderId], references: [provider, providerId], onDelete: SetNull)
   identityProvider   IdentityProvider?
   identityProviderId String?
   bot                Bot?              @relation(fields: [botId], references: [id], onDelete: Cascade)

@@ -25,12 +25,12 @@ export class ApiRoleDataUserService {
 
   async createRole(userId: string, input: UserCreateRoleInput) {
     await this.core.ensureCommunityAdmin({ communityId: input.communityId, userId })
-    return this.data.create(input)
+    return this.data.create(userId, input)
   }
 
   async deleteRole(userId: string, roleId: string) {
     await this.data.ensureRoleAdmin({ userId, roleId })
-    return this.data.delete(roleId)
+    return this.data.delete(userId, roleId)
   }
 
   async findManyRole(userId: string, input: UserFindManyRoleInput): Promise<RolePaging> {
@@ -63,11 +63,13 @@ export class ApiRoleDataUserService {
     await this.data.ensureRoleAdmin({ userId, roleId: input.roleId })
     return this.condition.create(input)
   }
+
   async deleteRoleCondition(userId: string, roleConditionId: string) {
     const found = await this.condition.findOne(roleConditionId)
     await this.data.ensureRoleAdmin({ userId, roleId: found.roleId })
     return this.condition.deleteRoleCondition(roleConditionId)
   }
+
   async updateRoleCondition(userId: string, roleConditionId: string, input: UserUpdateRoleConditionInput) {
     const found = await this.condition.findOne(roleConditionId)
     await this.data.ensureRoleAdmin({ userId, roleId: found.roleId })
@@ -78,6 +80,7 @@ export class ApiRoleDataUserService {
     await this.data.ensureRoleAdmin({ userId, roleId: input.roleId })
     return this.permission.create(input)
   }
+
   async deleteRolePermission(userId: string, rolePermissionId: string) {
     const found = await this.permission.findOne(rolePermissionId)
     await this.data.ensureRoleAdmin({ userId, roleId: found.roleId })
