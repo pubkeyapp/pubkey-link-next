@@ -63,7 +63,7 @@ export class ApiNetworkProvisionService {
   private async provisionNetwork(input: Prisma.NetworkCreateInput) {
     const existing = await this.core.data.network.findUnique({ where: { cluster: input.cluster } })
     if (existing) {
-      this.logger.verbose(`Found network (${input.cluster}) name = ${input.name}, endpoint = ${input.endpoint}`)
+      this.logger.verbose(`[${input.cluster}] Found network ${input.name}, endpoint = ${input.endpoint.split('/?')[0]}`)
       return existing
     }
     this.logger.verbose(

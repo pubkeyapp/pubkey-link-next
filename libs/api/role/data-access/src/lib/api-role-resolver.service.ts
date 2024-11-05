@@ -133,15 +133,15 @@ export class ApiRoleResolverService {
       (c) => c.type === NetworkTokenType.Validator,
     )
     if (!hasValidatorCondition) {
-      this.logger.debug(`getVoteAccounts: No validator condition found for cluster ${cluster}`)
+      this.logger.debug(`[${cluster}] getVoteAccounts: No validator condition found for cluster.`)
       return []
     }
     try {
       const accounts = await this.network.cluster.getVoteAccounts(cluster)
-      this.logger.debug(`getVoteAccounts: Found ${accounts.length} accounts for cluster ${cluster}`)
+      this.logger.debug(`[${cluster}] getVoteAccounts: Found ${accounts.length} accounts for cluster.`)
       return accounts
     } catch (e) {
-      this.logger.error(`getVoteAccounts: Error getting vote accounts for cluster ${cluster}: ${e}`)
+      this.logger.error(`[${cluster}] getVoteAccounts: Error getting vote accounts for cluster.: ${e}`)
       return []
     }
   }

@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { OnEvent } from '@nestjs/event-emitter'
-import { NetworkCluster, NetworkTokenType, Prisma } from '@prisma/client'
+import { NetworkCluster, NetworkToken, NetworkTokenType, Prisma } from '@prisma/client'
 import { ApiCoreService, EVENT_APP_STARTED, PagingInputFields } from '@pubkey-link/api-core-data-access'
 import { ApiNetworkService, EVENT_NETWORKS_PROVISIONED } from '@pubkey-link/api-network-data-access'
 import { getNetworkTokenType } from '@pubkey-link/api-network-util'
@@ -28,9 +28,10 @@ export class ApiNetworkTokenDataService {
 
   private async ensureGenesisBlock() {
     if (!this.core.config.featureResolverSolanaValidator) {
+      this.logger.debug(`ensureGenesisBlock: Feature resolverSolanaValidator disabled, skipping genesis block check.`)
       return
     }
-    this.logger.verbose(`ensureGenesisBlock: Feature resolverSolanaValidator enabled, ensuring genesis block`)
+    this.logger.debug(`ensureGenesisBlock: Ensuring genesis block for validators.`)
 
     const existing = await this.core.data.networkToken.findMany({ where: { type: NetworkTokenType.Validator } })
 
@@ -38,14 +39,13 @@ export class ApiNetworkTokenDataService {
       where: { cluster: { notIn: existing.map(({ cluster }) => cluster) } },
     })
 
-    this.logger.log(
-      `ensureGenesisBlock: Found ${existing.length} existing validators, adding ${networks.length} new networks`,
-    )
+    this.logger.verbose(`ensureGenesisBlock: Found ${existing.length} existing tokens, adding ${networks.length} more.`)
+
     for (const network of networks) {
-      this.logger.verbose(`ensureGenesisBlock: Ensuring genesis block for cluster ${network.cluster}`)
+      this.logger.verbose(`[${network.cluster}] ensureGenesisBlock: Ensuring genesis block for cluster.`)
       const hash = await this.getClusterGenesisHash(network.cluster)
       if (hash) {
-        this.logger.debug(`ensureGenesisBlock: Found genesis hash for cluster ${network.cluster}: ${hash}`)
+        this.logger.debug(`[${network.cluster}] ensureGenesisBlock: Found genesis hash for cluster: ${hash}`)
         const data: Prisma.NetworkTokenCreateInput = {
           network: { connect: { cluster: network.cluster } },
           type: NetworkTokenType.Validator,
@@ -99,7 +99,7 @@ export class ApiNetworkTokenDataService {
       .withPages({ limit, page })
       .then(([data, meta]) => ({ data, meta }))
   }
-  async findOne(networkTokenId: string) {
+  async findOne(networkTokenId: string): Promise<NetworkToken> {
     const found = await this.core.data.networkToken.findUnique({ where: { id: networkTokenId } })
     if (!found) {
       throw new Error(`Network token ${networkTokenId} not found`)
@@ -123,7 +123,7 @@ export class ApiNetworkTokenDataService {
     const token = await this.findOne(networkTokenId)
 
     if (token.type === NetworkTokenType.Validator) {
-      this.logger.verbose(`Skipping metadata update for validator token ${token.id}`)
+      this.logger.verbose(`Skipping metadata update for validator token ${token.type} ${token.name}`)
       return token
     }
 

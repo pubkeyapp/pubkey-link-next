@@ -98,14 +98,14 @@ export class ApiNetworkClusterService {
     if (!this.connections.has(cluster)) {
       const network = await this.core.data.network.findUnique({ where: { cluster } })
       if (!network) {
-        throw new Error(`getConnection: Network not found for cluster: ${cluster}`)
+        throw new Error(`[${cluster}] getConnection: Network not found for cluster.`)
       }
       this.connections.set(cluster, new Connection(network.endpoint, 'confirmed'))
-      this.logger.verbose(`getConnection: Network created for cluster: ${cluster}`)
+      this.logger.verbose(`[${cluster}] getConnection: Network created for cluster.`)
     }
     const connection = this.connections.get(cluster)
     if (!connection) {
-      throw new Error(`getConnection: Error getting network for cluster: ${cluster}`)
+      throw new Error(`[${cluster}] getConnection: Error getting network for cluster.`)
     }
     return connection
   }
@@ -132,11 +132,11 @@ export class ApiNetworkClusterService {
           timeout: 2000,
         }),
       )
-      this.logger.verbose(`getTokenList: Token list created for cluster: ${cluster}`)
+      this.logger.verbose(`[${cluster}] getTokenList: Token list created for cluster`)
     }
     const list = this.tokenList.get(cluster)
     if (!list) {
-      throw new Error(`getTokenList: Error getting token list for cluster: ${cluster}`)
+      throw new Error(`[${cluster}] getTokenList: Error getting token list for cluster`)
     }
     return list
   }
@@ -151,14 +151,14 @@ export class ApiNetworkClusterService {
     if (!this.umis.has(cluster)) {
       const network = await this.core.data.network.findUnique({ where: { cluster } })
       if (!network) {
-        throw new Error(`getUmi: Network not found for cluster: ${cluster}`)
+        throw new Error(`[${cluster}] getUmi: Network not found for cluster.`)
       }
       this.umis.set(cluster, createUmi().use(web3JsRpc(network.endpoint, 'confirmed')).use(dasApi()))
-      this.logger.verbose(`getUmi: Network created for cluster: ${cluster}`)
+      this.logger.verbose(`[${cluster}] getUmi: Network created for cluster.`)
     }
     const umi = this.umis.get(cluster)
     if (!umi) {
-      throw new Error(`getUmi: Error getting network for cluster: ${cluster}`)
+      throw new Error(`[${cluster}] getUmi: Error getting network for cluster.`)
     }
     return umi
   }
