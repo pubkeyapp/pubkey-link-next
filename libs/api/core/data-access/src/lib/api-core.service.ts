@@ -32,6 +32,7 @@ export class ApiCoreService implements OnModuleInit {
     return this.data.community.create({
       data: {
         ...input,
+        enableSync: true,
         id,
         members: input.members
           ? input.members

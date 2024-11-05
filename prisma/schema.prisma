@@ -67,7 +67,7 @@ model Community {
   githubUrl   String?
   twitterUrl  String?
   telegramUrl String?
-  enableSync  Boolean           @default(false)
+  enableSync  Boolean           @default(true)
   featured    Boolean           @default(false)
   members     CommunityMember[]
   roles       Role[]
