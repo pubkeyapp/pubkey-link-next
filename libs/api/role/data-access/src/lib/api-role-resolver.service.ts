@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common'
 import { OnEvent } from '@nestjs/event-emitter'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import {
+  Community,
   CommunityMember,
   IdentityProvider,
   NetworkAsset,
@@ -56,13 +57,14 @@ export class ApiRoleResolverService {
     if (!community) {
       throw new Error(`Community not found`)
     }
-    await this.syncCommunityMembers(communityId)
     const startedAt = Date.now()
 
-    const [conditions, roleMap, users] = await Promise.all([
-      this.getRoleConditions({ communityId }),
-      this.getRoleMap({ communityId }),
-      this.getRoleValidationUsers({ communityId }),
+    const conditions = await this.getRoleConditions({ community })
+    await this.syncCommunityMembers({ community, conditions })
+
+    const [roleMap, users] = await Promise.all([
+      this.getRoleMap({ community }),
+      this.getRoleValidationUsers({ community }),
     ])
 
     const result = {
@@ -146,7 +148,9 @@ export class ApiRoleResolverService {
     }
   }
 
-  async syncCommunityMembers(communityId: string) {
+  async syncCommunityMembers({ community, conditions }: { community: Community; conditions: RoleCondition[] }) {
+    const communityId = community.id
+    const voteAccounts = await this.getVoteAccounts({ cluster: community.cluster, conditions })
     // We're looking for any tokens that are linked to the community
     const tokens = await this.core.data.networkToken
       .findMany({
@@ -155,7 +159,8 @@ export class ApiRoleResolverService {
       })
       .then((res) => res.map((r) => r.account))
 
-    if (!tokens.length) {
+    if (!tokens.length || !voteAccounts.length) {
+      this.logger.warn(`[${communityId}] No tokens or vote accounts found for community`)
       return
     }
 
@@ -169,13 +174,15 @@ export class ApiRoleResolverService {
       })
       .then((res) => res.map((r) => r.owner))
 
+    const solanaIds = [...new Set([...owners, ...voteAccounts])]
+
     // We need to get the users ids for the owners of the identified tokens
     const userIds = await this.core.data.user
       .findMany({
         where: {
           OR: [
-            { identities: { some: { provider: IdentityProvider.Solana, providerId: { in: owners } } } },
-            { identityGrants: { some: { provider: IdentityProvider.Solana, providerId: { in: owners } } } },
+            { identities: { some: { provider: IdentityProvider.Solana, providerId: { in: solanaIds } } } },
+            { identityGrants: { some: { provider: IdentityProvider.Solana, providerId: { in: solanaIds } } } },
           ],
         },
         select: { id: true },
@@ -196,10 +203,10 @@ export class ApiRoleResolverService {
     if (newMembers.length) {
       for (const newMember of newMembers) {
         await this.core.data.communityMember.create({ data: newMember })
-        await this.core.logInfo(`Member added`, { userId: newMember.userId, communityId })
+        await this.core.logInfo(`[${communityId}] Member added`, { userId: newMember.userId, communityId })
       }
 
-      this.logger.verbose(`Synced ${newMembers.length} members to community ${communityId}`)
+      this.logger.verbose(`[${communityId}] Synced ${newMembers.length} members to community`)
     }
 
     // Now delete any members that are no longer owners of the tokens
@@ -208,13 +215,13 @@ export class ApiRoleResolverService {
     if (deleteMembers.length) {
       for (const deleteMember of deleteMembers) {
         await this.core.data.communityMember.delete({ where: { id: deleteMember.id } })
-        await this.core.logInfo(`Member removed`, { userId: deleteMember.userId, communityId })
+        await this.core.logInfo(`[${communityId}] Member removed`, { userId: deleteMember.userId, communityId })
       }
-      this.logger.verbose(`Deleted ${deleteMembers.length} members from community ${communityId}`)
+      this.logger.verbose(`[${communityId}] Deleted ${deleteMembers.length} members from community`)
     }
 
     if (!newMembers.length && !deleteMembers.length) {
-      this.logger.verbose(`Members in community ${communityId} are in sync`)
+      this.logger.verbose(`[${communityId}] Members in community are in sync`)
     }
 
     return
@@ -423,10 +430,10 @@ export class ApiRoleResolverService {
     return context
   }
 
-  private async getRoleConditions({ communityId }: { communityId: string }): Promise<RoleCondition[]> {
+  private async getRoleConditions({ community }: { community: Community }): Promise<RoleCondition[]> {
     return this.core.data.roleCondition
       .findMany({
-        where: { role: { communityId } },
+        where: { role: { communityId: community.id } },
         select: {
           amount: true,
           amountMax: true,
@@ -451,14 +458,14 @@ export class ApiRoleResolverService {
       )
   }
 
-  private async getRoleMap({ communityId }: { communityId: string }): Promise<RoleMap> {
-    const roles = await this.core.data.role.findMany({ where: { communityId }, orderBy: { name: 'asc' } })
+  private async getRoleMap({ community }: { community: Community }): Promise<RoleMap> {
+    const roles = await this.core.data.role.findMany({ where: { communityId: community.id }, orderBy: { name: 'asc' } })
 
     return roles.reduce((acc, role) => ({ ...acc, [role.id]: role }), {} as RoleMap)
   }
 
-  private async getRoleValidationUsers({ communityId }: { communityId: string }): Promise<RoleValidationUser[]> {
-    return this.getCommunityUsers({ communityId })
+  private async getRoleValidationUsers({ community }: { community: Community }): Promise<RoleValidationUser[]> {
+    return this.getCommunityUsers({ community })
       .then((users) =>
         users.map((user) => {
           const discordId = user.identities.find((i) => i.provider === IdentityProvider.Discord)?.providerId
@@ -487,11 +494,11 @@ export class ApiRoleResolverService {
       })
   }
 
-  private async getCommunityUsers({ communityId }: { communityId: string }): Promise<CommunityUser[]> {
+  private async getCommunityUsers({ community }: { community: Community }): Promise<CommunityUser[]> {
     return this.core.data.user.findMany({
       where: {
         status: UserStatus.Active,
-        communities: { some: { communityId } },
+        communities: { some: { communityId: community.id } },
       },
       select: {
         id: true,
@@ -505,7 +512,7 @@ export class ApiRoleResolverService {
           select: { provider: true, providerId: true },
         },
         communities: {
-          where: { communityId },
+          where: { communityId: community.id },
         },
       },
       orderBy: { username: 'asc' },
@@ -515,14 +522,14 @@ export class ApiRoleResolverService {
   async getRoleSnapshot(roleId: string) {
     const role = await this.core.data.role.findUnique({
       where: { id: roleId },
-      include: { conditions: { include: { token: true } } },
+      include: { community: true, conditions: { include: { token: true } } },
     })
 
     if (!role?.conditions?.length) {
       return []
     }
     const conditions = role.conditions
-    const users = await this.getRoleValidationUsers({ communityId: role.communityId })
+    const users = await this.getRoleValidationUsers({ community: role.community })
 
     const result: {
       items: number
