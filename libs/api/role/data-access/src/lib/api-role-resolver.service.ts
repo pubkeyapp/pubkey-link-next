@@ -35,12 +35,7 @@ export class ApiRoleResolverService {
       return
     }
     const communities = await this.core.data.community.findMany({
-      where: {
-        bot: {
-          isNot: null,
-        },
-        enableSync: true,
-      },
+      where: { enableSync: true },
     })
     if (!communities.filter((c) => c.enableSync).length) {
       this.logger.warn(`syncAllCommunityRoles: No communities found with enableSync=true`)
