@@ -971,6 +971,7 @@ export type Query = {
   adminFindUserByIdentity?: Maybe<User>
   adminGetBackup?: Maybe<Scalars['JSON']['output']>
   adminGetBackups: Array<Scalars['String']['output']>
+  adminGetVoteAccounts: Array<Scalars['String']['output']>
   adminTableStats?: Maybe<Array<StatRecordGroup>>
   anonGetCommunities: Array<Community>
   anonRequestIdentityChallenge?: Maybe<IdentityChallenge>
@@ -1102,6 +1103,10 @@ export type QueryAdminFindUserByIdentityArgs = {
 
 export type QueryAdminGetBackupArgs = {
   name: Scalars['String']['input']
+}
+
+export type QueryAdminGetVoteAccountsArgs = {
+  networkId: Scalars['String']['input']
 }
 
 export type QueryAnonRequestIdentityChallengeArgs = {
@@ -5588,6 +5593,12 @@ export type AdminFindManyNetworkQuery = {
   }
 }
 
+export type AdminGetVoteAccountsQueryVariables = Exact<{
+  networkId: Scalars['String']['input']
+}>
+
+export type AdminGetVoteAccountsQuery = { __typename?: 'Query'; voteAccounts: Array<string> }
+
 export type AdminFindOneNetworkQueryVariables = Exact<{
   networkId: Scalars['String']['input']
 }>
@@ -8791,6 +8802,11 @@ export const AdminFindManyNetworkDocument = gql`
   ${NetworkDetailsFragmentDoc}
   ${PagingMetaDetailsFragmentDoc}
 `
+export const AdminGetVoteAccountsDocument = gql`
+  query adminGetVoteAccounts($networkId: String!) {
+    voteAccounts: adminGetVoteAccounts(networkId: $networkId)
+  }
+`
 export const AdminFindOneNetworkDocument = gql`
   query adminFindOneNetwork($networkId: String!) {
     item: adminFindOneNetwork(networkId: $networkId) {
@@ -9225,6 +9241,7 @@ const AdminUpdateNetworkTokenMetadataDocumentString = print(AdminUpdateNetworkTo
 const AdminDeleteNetworkTokenDocumentString = print(AdminDeleteNetworkTokenDocument)
 const UserFindManyNetworkTokenDocumentString = print(UserFindManyNetworkTokenDocument)
 const AdminFindManyNetworkDocumentString = print(AdminFindManyNetworkDocument)
+const AdminGetVoteAccountsDocumentString = print(AdminGetVoteAccountsDocument)
 const AdminFindOneNetworkDocumentString = print(AdminFindOneNetworkDocument)
 const AdminCreateNetworkDocumentString = print(AdminCreateNetworkDocument)
 const AdminUpdateNetworkDocumentString = print(AdminUpdateNetworkDocument)
@@ -11275,6 +11292,27 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'adminFindManyNetwork',
+        'query',
+        variables,
+      )
+    },
+    adminGetVoteAccounts(
+      variables: AdminGetVoteAccountsQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: AdminGetVoteAccountsQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<AdminGetVoteAccountsQuery>(AdminGetVoteAccountsDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'adminGetVoteAccounts',
         'query',
         variables,
       )

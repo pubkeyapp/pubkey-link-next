@@ -1,14 +1,13 @@
-import { Resolver } from '@nestjs/graphql'
-import { ApiNetworkService } from '@pubkey-link/api-network-data-access'
-import { ApiAuthGraphQLAdminGuard } from '@pubkey-link/api-auth-data-access'
-import { Mutation, Query, Args } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { ApiAuthGraphQLAdminGuard } from '@pubkey-link/api-auth-data-access'
 import {
   AdminCreateNetworkInput,
   AdminFindManyNetworkInput,
+  AdminUpdateNetworkInput,
+  ApiNetworkService,
   Network,
   NetworkPaging,
-  AdminUpdateNetworkInput,
 } from '@pubkey-link/api-network-data-access'
 
 @Resolver()
@@ -24,6 +23,11 @@ export class ApiAdminNetworkResolver {
   @Mutation(() => Boolean, { nullable: true })
   adminDeleteNetwork(@Args('networkId') networkId: string) {
     return this.service.admin.deleteNetwork(networkId)
+  }
+
+  @Query(() => [String])
+  adminGetVoteAccounts(@Args('networkId') networkId: string) {
+    return this.service.admin.getVoteAccounts(networkId)
   }
 
   @Query(() => NetworkPaging)

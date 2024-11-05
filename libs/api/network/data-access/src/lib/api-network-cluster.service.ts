@@ -144,7 +144,7 @@ export class ApiNetworkClusterService {
   async getVoteAccounts(cluster: NetworkCluster) {
     return this.getConnection(cluster)
       .then((conn) => conn.getVoteAccounts('confirmed'))
-      .then((accounts) => accounts.current.map((account) => account.nodePubkey))
+      .then((accounts) => accounts.current.map((account) => account.nodePubkey).sort())
   }
 
   async getUmi(cluster: NetworkCluster) {

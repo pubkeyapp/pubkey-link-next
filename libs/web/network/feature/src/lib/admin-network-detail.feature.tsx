@@ -6,6 +6,7 @@ import { NetworkUiItem, NetworkUiSyncBadge } from '@pubkey-link/web-network-ui'
 import { UiBack, UiDebugModal, UiError, UiLoader, UiPage, UiTabRoutes } from '@pubkey-ui/core'
 import { useParams } from 'react-router-dom'
 import { AdminNetworkDetailSettingsTab } from './admin-network-detail-settings.tab'
+import { AdminNetworkDetailVoteAccountsTab } from './admin-network-detail-vote-accounts.tab'
 
 export function AdminNetworkDetailFeature() {
   const { networkId } = useParams<{ networkId: string }>() as { networkId: string }
@@ -51,6 +52,11 @@ export function AdminNetworkDetailFeature() {
             path: 'assets',
             label: 'Assets',
             element: <AdminNetworkAssetFeature cluster={item.cluster} />,
+          },
+          {
+            path: 'vote-accounts',
+            label: 'Vote Accounts',
+            element: <AdminNetworkDetailVoteAccountsTab networkId={networkId} />,
           },
         ]}
       />
