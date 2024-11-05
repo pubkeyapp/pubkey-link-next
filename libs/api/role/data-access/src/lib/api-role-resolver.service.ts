@@ -55,7 +55,9 @@ export class ApiRoleResolverService {
     const startedAt = Date.now()
 
     const conditions = await this.getRoleConditions({ community })
-    await this.syncCommunityMembers({ community, conditions })
+    const voteAccounts = await this.getVoteAccounts({ cluster: community.cluster, conditions })
+
+    await this.syncCommunityMembers({ community, voteAccounts })
 
     const [roleMap, users] = await Promise.all([
       this.getRoleMap({ community }),
@@ -74,8 +76,6 @@ export class ApiRoleResolverService {
       return result
     }
     this.logger.verbose(`Validating ${conditions.length} conditions for ${users.length} users`)
-
-    const voteAccounts = await this.getVoteAccounts({ cluster: community.cluster, conditions })
 
     for (const user of users) {
       // We are now in the context of a user
@@ -143,19 +143,17 @@ export class ApiRoleResolverService {
     }
   }
 
-  async syncCommunityMembers({ community, conditions }: { community: Community; conditions: RoleCondition[] }) {
-    const communityId = community.id
-    const voteAccounts = await this.getVoteAccounts({ cluster: community.cluster, conditions })
+  async syncCommunityMembers({ community, voteAccounts }: { community: Community; voteAccounts: string[] }) {
     // We're looking for any tokens that are linked to the community
     const tokens = await this.core.data.networkToken
       .findMany({
-        where: { conditions: { some: { role: { communityId } } } },
+        where: { conditions: { some: { role: { communityId: community.id } } } },
         select: { account: true },
       })
       .then((res) => res.map((r) => r.account))
 
     if (!tokens.length || !voteAccounts.length) {
-      this.logger.warn(`[${communityId}] No tokens or vote accounts found for community`)
+      this.logger.warn(`[${community.id}] No tokens or vote accounts found for community`)
       return
     }
 
@@ -184,13 +182,13 @@ export class ApiRoleResolverService {
       })
       .then((res) => res.map((r) => r.id))
 
-    const existing = await this.core.data.communityMember.findMany({ where: { communityId } })
+    const existing = await this.core.data.communityMember.findMany({ where: { communityId: community.id } })
     const existingIds = existing.map((e) => e.userId)
 
     const newMembers: Prisma.CommunityMemberCreateManyInput[] = userIds
       .filter((id) => !existingIds.includes(id))
       .map((userId) => ({
-        communityId,
+        communityId: community.id,
         userId,
         admin: false,
       }))
@@ -198,10 +196,13 @@ export class ApiRoleResolverService {
     if (newMembers.length) {
       for (const newMember of newMembers) {
         await this.core.data.communityMember.create({ data: newMember })
-        await this.core.logInfo(`[${communityId}] Member added`, { userId: newMember.userId, communityId })
+        await this.core.logInfo(`[${community.id}] Member added`, {
+          userId: newMember.userId,
+          communityId: community.id,
+        })
       }
 
-      this.logger.verbose(`[${communityId}] Synced ${newMembers.length} members to community`)
+      this.logger.verbose(`[${community.id}] Synced ${newMembers.length} members to community`)
     }
 
     // Now delete any members that are no longer owners of the tokens
@@ -210,13 +211,16 @@ export class ApiRoleResolverService {
     if (deleteMembers.length) {
       for (const deleteMember of deleteMembers) {
         await this.core.data.communityMember.delete({ where: { id: deleteMember.id } })
-        await this.core.logInfo(`[${communityId}] Member removed`, { userId: deleteMember.userId, communityId })
+        await this.core.logInfo(`[${community.id}] Member removed`, {
+          userId: deleteMember.userId,
+          communityId: community.id,
+        })
       }
-      this.logger.verbose(`[${communityId}] Deleted ${deleteMembers.length} members from community`)
+      this.logger.verbose(`[${community.id}] Deleted ${deleteMembers.length} members from community`)
     }
 
     if (!newMembers.length && !deleteMembers.length) {
-      this.logger.verbose(`[${communityId}] Members in community are in sync`)
+      this.logger.verbose(`[${community.id}] Members in community are in sync`)
     }
 
     return
