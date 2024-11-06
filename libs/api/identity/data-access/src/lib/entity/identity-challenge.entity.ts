@@ -18,7 +18,7 @@ export class IdentityChallenge {
   challenge!: string
   @Field({ nullable: true })
   signature?: string
-  @Field()
+  @Field({ nullable: true })
   blockhash!: string
   @Field()
   userAgent!: string

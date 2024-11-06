@@ -380,7 +380,7 @@ export type Identity = {
 
 export type IdentityChallenge = {
   __typename?: 'IdentityChallenge'
-  blockhash: Scalars['String']['output']
+  blockhash?: Maybe<Scalars['String']['output']>
   challenge: Scalars['String']['output']
   createdAt: Scalars['DateTime']['output']
   id: Scalars['String']['output']
@@ -3841,7 +3841,7 @@ export type IdentityChallengeDetailsFragment = {
   providerId: string
   challenge: string
   signature?: string | null
-  blockhash: string
+  blockhash?: string | null
   userAgent: string
   verified: boolean
 }
@@ -3902,7 +3902,7 @@ export type AdminFindManyIdentityQuery = {
       providerId: string
       challenge: string
       signature?: string | null
-      blockhash: string
+      blockhash?: string | null
       userAgent: string
       verified: boolean
     }> | null
@@ -4188,7 +4188,7 @@ export type UserRequestIdentityChallengeQuery = {
     providerId: string
     challenge: string
     signature?: string | null
-    blockhash: string
+    blockhash?: string | null
     userAgent: string
     verified: boolean
   } | null
@@ -4209,7 +4209,7 @@ export type UserRequestIdentityChallengeCliQuery = {
     providerId: string
     challenge: string
     signature?: string | null
-    blockhash: string
+    blockhash?: string | null
     userAgent: string
     verified: boolean
   } | null
@@ -4230,7 +4230,7 @@ export type UserVerifyIdentityChallengeMutation = {
     providerId: string
     challenge: string
     signature?: string | null
-    blockhash: string
+    blockhash?: string | null
     userAgent: string
     verified: boolean
   } | null
@@ -4251,7 +4251,7 @@ export type UserVerifyIdentityChallengeCliMutation = {
     providerId: string
     challenge: string
     signature?: string | null
-    blockhash: string
+    blockhash?: string | null
     userAgent: string
     verified: boolean
   } | null
@@ -4297,7 +4297,7 @@ export type AnonRequestIdentityChallengeQuery = {
     providerId: string
     challenge: string
     signature?: string | null
-    blockhash: string
+    blockhash?: string | null
     userAgent: string
     verified: boolean
   } | null
@@ -4318,7 +4318,7 @@ export type AnonVerifyIdentityChallengeMutation = {
     providerId: string
     challenge: string
     signature?: string | null
-    blockhash: string
+    blockhash?: string | null
     userAgent: string
     verified: boolean
   } | null

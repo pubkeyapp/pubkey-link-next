@@ -84,7 +84,7 @@ export function IdentityProviderSolanaLink({ children, refresh }: { children: Re
   async function verifyAndSign({ useLedger, publicKey }: LinkSignOptions) {
     // Request challenge
     const request = await requestChallenge({ publicKey })
-    if (!request?.challenge) {
+    if (!request?.challenge || !request.blockhash) {
       return false
     }
     // Sign challenge
