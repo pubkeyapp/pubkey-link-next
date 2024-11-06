@@ -46,7 +46,9 @@ export class ApiNetworkAssetSyncService {
   async sync({ cluster, identity }: { cluster: NetworkCluster; identity: Identity }) {
     // If the last sync was less than 10 minutes ago, do not sync
     if ((identity.syncEnded?.getTime() ?? 0) > new Date().getTime() - this.assetTimeout) {
-      this.logger.log(`Identity ${identity.id} sync skipped, last sync less than 10 minutes ago`)
+      this.logger.log(
+        `[${cluster}] sync: Identity ${identity.providerId} sync skipped, last sync less than 10 minutes ago`,
+      )
       return true
     }
 
@@ -57,34 +59,35 @@ export class ApiNetworkAssetSyncService {
         jobId: `sync-${cluster}-${identity.providerId}`,
       },
     )
-
+    this.logger.debug(`[${cluster}] sync: Added job ${job.id} to sync identity ${identity.providerId}`)
     return !!job.id
   }
 
   async verify({ cluster, asset }: { cluster: NetworkCluster; asset: NetworkAsset }) {
     const job = await this.networkAssetVerifyQueue.add('verify', { cluster, asset })
-
+    this.logger.debug(`[${cluster}] verify: Added job ${job.id} to verify asset ${asset.account}`)
     return !!job.id
   }
 
   @Cron(CronExpression.EVERY_30_MINUTES)
   async syncAllNetworkAssets({ force = false } = {}) {
     if (!this.core.config.syncNetworkAssets && !force) {
-      this.logger.warn(`[GLOBAL] Network asset sync is disabled (SYNC_NETWORK_ASSETS!=true, force=${force})`)
+      this.logger.warn(`[GLOBAL] syncAllNetworkAssets: sync is disabled (SYNC_NETWORK_ASSETS!=true, force=${force})`)
       return true
     }
     if (!this.core.config.featureResolverSolanaFungible && !this.core.config.featureResolverSolanaNonFungible) {
       this.logger.warn(
-        `[GLOBAL] Network asset sync is disabled (FEATURE_RESOLVER_SOLANA_FUNGIBLE!=true and FEATURE_RESOLVER_SOLANA_NON_FUNGIBLE!=true)`,
+        `[GLOBAL] syncAllNetworkAssets: sync is disabled (FEATURE_RESOLVER_SOLANA_FUNGIBLE!=true and FEATURE_RESOLVER_SOLANA_NON_FUNGIBLE!=true)`,
       )
       return true
     }
 
     const cluster = this.network.cluster.getDefaultCluster()
+    this.logger.debug(`[${cluster}] syncAllNetworkAssets: selected default cluster`)
     const network = await this.core.data.network.findUnique({ where: { cluster } })
 
     if (!network?.enableSync && !force) {
-      this.logger.debug(`Network asset sync is disabled for ${cluster}`)
+      this.logger.debug(`[${cluster}] syncAllNetworkAssets: sync is disabled for cluster`)
       return true
     }
 
@@ -100,20 +103,20 @@ export class ApiNetworkAssetSyncService {
       include: { owner: true },
     })
     if (!identities.length) {
-      this.logger.log(`No identities to sync`)
+      this.logger.log(`[${cluster}] syncAllNetworkAssets: No identities to sync`)
       return true
     }
-    this.logger.log(`Queuing ${identities.length} identity syncs`)
+    this.logger.log(`[${cluster}] syncAllNetworkAssets: Queuing ${identities.length} identity syncs`)
     const jobs = identities.map((identity) => this.sync({ cluster, identity }))
     const results = await Promise.all(jobs)
-    this.logger.log(`Queued ${results.length} identity syncs`)
+    this.logger.log(`[${cluster}] syncAllNetworkAssets: Queued ${results.length} identity syncs`)
     return results.every((r) => r)
   }
 
   async cleanupNetworkAssets({ cluster }: { cluster: NetworkCluster }) {
     const assetCount = await this.core.data.networkAsset.count({ where: { cluster } })
     if (assetCount < 1) {
-      this.logger.log(`No assets to sync`)
+      this.logger.log(`[${cluster}] cleanupNetworkAssets: No assets to sync`)
       return true
     }
 
@@ -126,7 +129,9 @@ export class ApiNetworkAssetSyncService {
     ]
 
     this.logger.log(
-      `Queuing ${assetCount} assets to clean up, looking for ${tokens.length} token groups: ${tokens.join(', ')}`,
+      `[${cluster}] cleanupNetworkAssets: Queuing ${assetCount} assets to clean up, looking for ${
+        tokens.length
+      } token groups: ${tokens.join(', ')}`,
     )
 
     const assetsNotInAnyKnownTokenGroup = await this.core.data.networkAsset.findMany({
@@ -139,7 +144,7 @@ export class ApiNetworkAssetSyncService {
     if (assetsNotInAnyKnownTokenGroup.length > 0) {
       for (const asset of assetsNotInAnyKnownTokenGroup) {
         this.logger.log(
-          `cleanupNetworkAssets: Removing asset ${asset.account} ${asset.name} as it is not in any known token group`,
+          `[${cluster}] cleanupNetworkAssets: Removing asset ${asset.account} ${asset.name} as it is not in any known token group`,
         )
         await this.core.data.networkAsset.delete({ where: { id: asset.id } })
       }
@@ -153,15 +158,16 @@ export class ApiNetworkAssetSyncService {
   })
   async verifyAllNetworkAssets() {
     const cluster = this.network.cluster.getDefaultCluster()
+    this.logger.debug(`[${cluster}] verifyAllNetworkAssets: selected default cluster`)
     const assets = await this.core.data.networkAsset.findMany({ where: { cluster } })
     if (!assets.length) {
-      this.logger.log(`No assets to sync`)
+      this.logger.log(`${cluster} verifyAllNetworkAssets: No assets to sync`)
       return true
     }
-    this.logger.log(`Queuing ${assets.length} assets to verify`)
+    this.logger.log(`${cluster} verifyAllNetworkAssets: Queuing ${assets.length} assets to verify`)
     const jobs = assets.map((asset) => this.verify({ cluster, asset }))
     const results = await Promise.all(jobs)
-    this.logger.log(`Queued ${results.length} assets verified`)
+    this.logger.log(`${cluster} verifyAllNetworkAssets: Queued ${results.length} assets verified`)
 
     return results.every((r) => r)
   }
@@ -185,7 +191,7 @@ export class ApiNetworkAssetSyncService {
     const anybodiesTokens: NetworkToken[] = solanaNonFungibleTokens.filter((v) => v.vault?.length)
 
     this.logger.verbose(
-      `Syncing assets for ${owner} on ${cluster}, anybodiesTokens: ${anybodiesTokens.length}, solanaFungibleTokens: ${solanaFungibleTokens.length}, solanaNonFungibleTokens: ${solanaNonFungibleTokens.length},`,
+      `[${cluster}] syncIdentity: Syncing assets for ${owner} on ${cluster}, anybodiesTokens: ${anybodiesTokens.length}, solanaFungibleTokens: ${solanaFungibleTokens.length}, solanaNonFungibleTokens: ${solanaNonFungibleTokens.length},`,
     )
     const assets: NetworkAssetInput[] = await this.network.resolver.resolveNetworkAssets({
       cluster,
@@ -196,7 +202,7 @@ export class ApiNetworkAssetSyncService {
     })
     const assetIds = assets.map((a) => a.account)
 
-    this.logger.verbose(`Resolved ${assets.length} assets for ${owner} on ${cluster}`)
+    this.logger.verbose(`[${cluster}] syncIdentity: Resolved ${assets.length} assets for ${owner} on ${cluster}`)
     if (!assets.length) {
       return []
     }
@@ -221,7 +227,7 @@ export class ApiNetworkAssetSyncService {
     })
 
     if (removedIds.count > 0) {
-      await this.core.logInfo(`Removed ${removedIds.count} assets for ${owner} on ${cluster}`, {
+      await this.core.logInfo(`[${cluster}] syncIdentity: Removed ${removedIds.count} assets for ${owner}`, {
         identityProvider: IdentityProvider.Solana,
         identityProviderId: owner,
       })
@@ -233,7 +239,7 @@ export class ApiNetworkAssetSyncService {
   async verifyAsset({ cluster, asset: found }: { cluster: NetworkCluster; asset: NetworkAsset }): Promise<boolean> {
     const account = found.account
     const group = found.group ?? undefined
-    this.logger.verbose(`Verifying assets ${account} on ${cluster}`)
+    this.logger.verbose(`[${cluster}] verifyAsset: Verifying assets ${account} on ${cluster}`)
 
     // Get the asset from the cluster
     const [asset, accountInfo] = await Promise.all([
@@ -242,16 +248,16 @@ export class ApiNetworkAssetSyncService {
     ])
 
     if (!asset || !accountInfo) {
-      this.logger.warn(`${cluster} => ${account}: Asset or account info not found`)
+      this.logger.warn(`[${cluster}] verifyAsset: Asset or account info not found ${account}`)
       const deleted = await this.core.data.networkAsset.delete({ where: { account_cluster: { account, cluster } } })
-      this.logger.verbose(`${cluster} => ${account}: Deleted asset ${deleted.id}`)
+      this.logger.verbose(`[${cluster}] verifyAsset: Deleted asset ${deleted.id} ${account}`)
       return false
     }
     const isEqual = isNetworkAssetEqual({ found, asset })
-    this.logger.verbose(`${cluster} => ${account}: Asset found ${isEqual ? 'and' : 'but not'} equal`)
+    this.logger.verbose(`[${cluster}] verifyAsset: Asset found ${account} ${isEqual ? 'and' : 'but not'} equal`)
 
     if (isEqual) {
-      this.logger.verbose(`${cluster} => ${account}: Asset found, no update needed`)
+      this.logger.verbose(`[${cluster}] verifyAsset: Asset found ${account}, no update needed`)
       return true
     }
 
@@ -260,7 +266,7 @@ export class ApiNetworkAssetSyncService {
       data: asset,
     })
 
-    this.logger.verbose(`${cluster} => ${account}: Updated asset ${updated.id}`)
+    this.logger.verbose(`[${cluster}] verifyAsset: Updated asset ${account} ${updated.id}`)
     return true
   }
 
