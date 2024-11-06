@@ -3,6 +3,7 @@ import { AppFeature } from '@pubkey-link/sdk'
 import { AdminBotFeature } from '@pubkey-link/web-bot-feature'
 import { useAdminFindOneCommunity } from '@pubkey-link/web-community-data-access'
 import { AdminCommunityMemberFeature } from '@pubkey-link/web-community-member-feature'
+import { CommunityUiItem } from '@pubkey-link/web-community-ui'
 import { useAppConfig } from '@pubkey-link/web-core-data-access'
 import { AdminLogFeature } from '@pubkey-link/web-log-feature'
 import { AdminRoleFeature } from '@pubkey-link/web-role-feature'
@@ -58,7 +59,11 @@ export function AdminCommunityDetailFeature() {
 
   return (
     <UiPage
-      title={<Group>{item.name}</Group>}
+      title={
+        <Group>
+          <CommunityUiItem community={item} to={`/c/${item.id}`} />
+        </Group>
+      }
       leftAction={<UiBack />}
       rightAction={
         <Group>

@@ -5,7 +5,7 @@ import { useUserFindManyIdentity } from '@pubkey-link/web-identity-data-access'
 import { IdentityUiLinkButton, IdentityUiList, IdentityUiSolanaLinkCliButton } from '@pubkey-link/web-identity-ui'
 import { UiGroup, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 
-export function SettingsWalletsFeature() {
+export default function UserProfileTabIdentitiesSolana() {
   const { appConfig, hasFeature } = useAppConfig()
   const { user } = useAuth()
   const { deleteIdentity, updateIdentity, addIdentityGrant, removeIdentityGrant, items, query } =

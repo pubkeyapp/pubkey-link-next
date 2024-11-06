@@ -1,13 +1,11 @@
 import { UserCommunityFeature } from '@pubkey-link/web-community-feature'
 import { DashboardFeature } from '@pubkey-link/web-dashboard-feature'
-import { DevProfileRoutes } from '@pubkey-link/web-dev-feature'
 import { UserNetworkAssetDetailFeature } from '@pubkey-link/web-network-asset-feature'
-import { SettingsFeature } from '@pubkey-link/web-settings-feature'
 import { SolanaFeature } from '@pubkey-link/web-solana-feature'
-import { UserFeature } from '@pubkey-link/web-user-feature'
+import { UserListFeature, UserProfileFeature, UserProfileRedirectFeature } from '@pubkey-link/web-user-feature'
 import { UiDashboardItem } from '@pubkey-ui/core'
 import { IconSettings, IconUsers, IconUsersGroup } from '@tabler/icons-react'
-import { Navigate, RouteObject, useRoutes } from 'react-router-dom'
+import { RouteObject, useRoutes } from 'react-router-dom'
 
 const links: UiDashboardItem[] = [
   // User Dashboard Links are added by the web-crud generator
@@ -21,11 +19,10 @@ const routes: RouteObject[] = [
   { path: '/assets/:cluster/:account/*', element: <UserNetworkAssetDetailFeature /> },
   { path: '/c/*', element: <UserCommunityFeature /> },
   { path: '/dashboard', element: <DashboardFeature links={links} /> },
-  { path: '/settings/*', element: <SettingsFeature /> },
+  { path: '/settings/*', element: <UserProfileRedirectFeature to="settings" /> },
   { path: '/solana/*', element: <SolanaFeature /> },
-  { path: '/u/*', element: <UserFeature /> },
-  { path: '/p/*', element: <DevProfileRoutes /> },
-  { path: '/users', element: <Navigate to="/u" replace /> },
+  { path: '/u/*', element: <UserProfileFeature /> },
+  { path: '/users/*', element: <UserListFeature /> },
 ]
 
 export default function WebCoreRoutesUser() {

@@ -1,6 +1,7 @@
 export * from './lib/admin-community-ui-create-form'
 export * from './lib/admin-community-ui-table'
 export * from './lib/admin-community-ui-update-form'
+export * from './lib/community-ui-admin-icon'
 export * from './lib/community-ui-avatar'
 export * from './lib/community-ui-featured'
 export * from './lib/community-ui-featured-item'

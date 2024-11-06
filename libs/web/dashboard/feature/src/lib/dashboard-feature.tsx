@@ -9,7 +9,7 @@ export default function DashboardFeature({ links }: { links: UiDashboardItem[] }
   if (!user) return null
 
   return user?.status === UserStatus.Active ? (
-    <Navigate to="/c" />
+    <Navigate to="/u" replace />
   ) : (
     <UiContainer>
       <UiDashboardGrid links={links} />

@@ -29,7 +29,7 @@ export function AdminNetworkTokenCreateFeature({ cluster }: { cluster: NetworkCl
   }
 
   return (
-    <UiPage leftAction={<UiBack />} title="Create NetworkToken">
+    <UiPage leftAction={<UiBack />} title="Create Network Token">
       <UiCard>
         <UiStack>
           <UiAddressInput address={account} setAddress={setAccount} />

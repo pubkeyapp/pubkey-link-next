@@ -1,9 +1,8 @@
-import { UserUpdateUserInput } from '@pubkey-link/sdk'
 import { useUserProfile } from '@pubkey-link/web-user-data-access'
 import { UserUiToggleDeveloperMode, UserUiTogglePrivateMode, UserUiUpdateForm } from '@pubkey-link/web-user-ui'
 import { UiCard, UiLoader, UiStack, UiWarning } from '@pubkey-ui/core'
 
-export default function ProfileSettingsUpdateFeature() {
+export default function UserProfileTabSettings() {
   const { isLoading, updateUser, user } = useUserProfile()
 
   if (isLoading) {
@@ -14,9 +13,6 @@ export default function ProfileSettingsUpdateFeature() {
     return <UiWarning message="User not found." />
   }
 
-  function submit(input: UserUpdateUserInput) {
-    return updateUser(input).then((res) => !!res)
-  }
   return (
     <UiCard title="Settings">
       <UiStack>

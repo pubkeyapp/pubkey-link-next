@@ -1,6 +1,6 @@
 import { Badge, Group } from '@mantine/core'
 import { useUserFindOneCommunity } from '@pubkey-link/web-community-data-access'
-import { CommunityUiItem } from '@pubkey-link/web-community-ui'
+import { CommunityUiAdminIcon, CommunityUiItem } from '@pubkey-link/web-community-ui'
 import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { NetworkUiClusterBadge } from '@pubkey-link/web-network-ui'
 import { UiBack, UiContainer, UiError, UiGroup, UiLoader, UiStack } from '@pubkey-ui/core'
@@ -36,6 +36,7 @@ export function UserCommunityDetailFeature() {
             />
           </Group>
           <Group>
+            <CommunityUiAdminIcon community={item} />
             <AppUiDebugModal data={{ item, communityAdmin, communityId, member }} />
             <NetworkUiClusterBadge cluster={item.cluster} />
           </Group>

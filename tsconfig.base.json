@@ -85,7 +85,6 @@
       "@pubkey-link/web-role-data-access": ["libs/web/role/data-access/src/index.ts"],
       "@pubkey-link/web-role-feature": ["libs/web/role/feature/src/index.ts"],
       "@pubkey-link/web-role-ui": ["libs/web/role/ui/src/index.ts"],
-      "@pubkey-link/web-settings-feature": ["libs/web/settings/feature/src/index.ts"],
       "@pubkey-link/web-snapshot-data-access": ["libs/web/snapshot/data-access/src/index.ts"],
       "@pubkey-link/web-snapshot-feature": ["libs/web/snapshot/feature/src/index.ts"],
       "@pubkey-link/web-snapshot-ui": ["libs/web/snapshot/ui/src/index.ts"],

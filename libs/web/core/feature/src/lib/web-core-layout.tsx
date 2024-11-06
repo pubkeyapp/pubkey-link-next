@@ -12,9 +12,8 @@ export function WebCoreLayout({ children }: { children: ReactNode }) {
   const [opened, { toggle }] = useDisclosure(false)
   const links: UiHeaderLink[] = useMemo(() => {
     const items: UiHeaderLink[] = [
+      { link: `/u`, label: 'Profile' },
       { link: '/c', label: 'Communities' },
-      { link: `${user?.profileUrl}`, label: 'Profile' },
-      { link: '/settings', label: 'Settings' },
     ]
     if (isAdmin) {
       items.push({ link: '/admin', label: 'Admin' })
