@@ -1,7 +1,8 @@
 import { Card, Group, Stack, Text } from '@mantine/core'
-import { NetworkAsset } from '@pubkey-link/sdk'
+import { getNetworkAssetGroupUrl, NetworkAsset } from '@pubkey-link/sdk'
 import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
-import { UiAnchor, type UiAnchorProps, UiGroup } from '@pubkey-ui/core'
+import { UiAnchor, type UiAnchorProps } from '@pubkey-ui/core'
+import { NetworkAssetOwnerUiExplorerIcon } from './network-asset-owner-ui-explorer-icon'
 import { NetworkAssetUiAvatar } from './network-asset-ui-avatar'
 import { NetworkAssetUiExplorerIcon } from './network-asset-ui-explorer-icon'
 import { NetworkAssetUiImage } from './network-asset-ui-image'
@@ -30,21 +31,22 @@ export function NetworkAssetUiItem({
           )}
         </UiAnchor>
       </Card.Section>
-      <Card.Section mt="md" p="xs">
-        <UiGroup wrap="nowrap" w="100%" align="start">
-          <Stack gap={0}>
-            <Text fz="xs" fw={500}>
-              {networkAsset?.name}
-            </Text>
-            <Text fz="sm" c="dimmed">
+      <Card.Section p="xs">
+        <Stack gap="xs" w="100%">
+          <Text fz="xs" fw={500}>
+            {networkAsset?.name}
+          </Text>
+          <Group wrap="nowrap" justify="space-between">
+            <UiAnchor to={getNetworkAssetGroupUrl(networkAsset)} fz="sm" c="dimmed" target="_blank">
               {networkAsset?.symbol}
-            </Text>
-          </Stack>
-          <Group wrap="nowrap" gap="xs">
-            <NetworkAssetUiExplorerIcon asset={networkAsset} />
-            <AppUiDebugModal data={networkAsset} />
+            </UiAnchor>
+            <Group wrap="nowrap" gap={4}>
+              <NetworkAssetOwnerUiExplorerIcon asset={networkAsset} label="Asset Owner" />
+              <NetworkAssetUiExplorerIcon asset={networkAsset} label="Asset" />
+              <AppUiDebugModal data={networkAsset} />
+            </Group>
           </Group>
-        </UiGroup>
+        </Stack>
       </Card.Section>
     </Card>
   )

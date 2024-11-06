@@ -18,7 +18,8 @@ export function getNetworkAssetWhereUserInput(
       { name: { contains: input.search, mode: 'insensitive' } },
       { group: { contains: input.search, mode: 'insensitive' } },
       { owner: { contains: input.search, mode: 'insensitive' } },
-      { name: { contains: input.search, mode: 'insensitive' } },
+      { balance: { contains: input.search, mode: 'insensitive' } },
+      { account: { contains: input.search, mode: 'insensitive' } },
     ]
   }
 

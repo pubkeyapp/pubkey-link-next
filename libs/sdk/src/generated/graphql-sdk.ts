@@ -859,6 +859,7 @@ export type NetworkAsset = {
   cluster: NetworkCluster
   createdAt?: Maybe<Scalars['DateTime']['output']>
   decimals: Scalars['Int']['output']
+  explorerUrl: Scalars['String']['output']
   group?: Maybe<Scalars['String']['output']>
   id: Scalars['String']['output']
   imageUrl?: Maybe<Scalars['String']['output']>
@@ -4406,6 +4407,7 @@ export type LogDetailsFragment = {
     owner: string
     group?: string | null
     imageUrl?: string | null
+    explorerUrl: string
     metadata?: any | null
     attributes?: any | null
   } | null
@@ -4578,6 +4580,7 @@ export type UserFindManyLogQuery = {
         owner: string
         group?: string | null
         imageUrl?: string | null
+        explorerUrl: string
         metadata?: any | null
         attributes?: any | null
       } | null
@@ -4760,6 +4763,7 @@ export type UserFindOneLogQuery = {
       owner: string
       group?: string | null
       imageUrl?: string | null
+      explorerUrl: string
       metadata?: any | null
       attributes?: any | null
     } | null
@@ -4933,6 +4937,7 @@ export type AdminFindManyLogQuery = {
         owner: string
         group?: string | null
         imageUrl?: string | null
+        explorerUrl: string
         metadata?: any | null
         attributes?: any | null
       } | null
@@ -5115,6 +5120,7 @@ export type AdminFindOneLogQuery = {
       owner: string
       group?: string | null
       imageUrl?: string | null
+      explorerUrl: string
       metadata?: any | null
       attributes?: any | null
     } | null
@@ -5239,6 +5245,7 @@ export type NetworkAssetDetailsFragment = {
   owner: string
   group?: string | null
   imageUrl?: string | null
+  explorerUrl: string
   metadata?: any | null
   attributes?: any | null
 }
@@ -5270,6 +5277,7 @@ export type UserFindManyNetworkAssetQuery = {
       owner: string
       group?: string | null
       imageUrl?: string | null
+      explorerUrl: string
       metadata?: any | null
       attributes?: any | null
     }>
@@ -5312,6 +5320,7 @@ export type UserFindOneNetworkAssetQuery = {
     owner: string
     group?: string | null
     imageUrl?: string | null
+    explorerUrl: string
     metadata?: any | null
     attributes?: any | null
   } | null
@@ -5344,6 +5353,7 @@ export type AdminFindManyNetworkAssetQuery = {
       owner: string
       group?: string | null
       imageUrl?: string | null
+      explorerUrl: string
       metadata?: any | null
       attributes?: any | null
     }>
@@ -5385,6 +5395,7 @@ export type AdminFindOneNetworkAssetQuery = {
     owner: string
     group?: string | null
     imageUrl?: string | null
+    explorerUrl: string
     metadata?: any | null
     attributes?: any | null
   } | null
@@ -8000,6 +8011,7 @@ export const NetworkAssetDetailsFragmentDoc = gql`
     owner
     group
     imageUrl
+    explorerUrl
     metadata
     attributes
   }

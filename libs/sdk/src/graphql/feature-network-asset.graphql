@@ -16,6 +16,7 @@ fragment NetworkAssetDetails on NetworkAsset {
   owner
   group
   imageUrl
+  explorerUrl
   metadata
   attributes
 }

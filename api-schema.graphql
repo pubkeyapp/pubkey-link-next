@@ -530,6 +530,7 @@ type NetworkAsset {
   cluster: NetworkCluster!
   createdAt: DateTime
   decimals: Int!
+  explorerUrl: String!
   group: String
   id: String!
   imageUrl: String

@@ -1,8 +1,7 @@
 import { Anchor, Badge, Group, ScrollArea } from '@mantine/core'
 import { Log, LogLevel } from '@pubkey-link/sdk'
-import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { UserUiAvatarLoader } from '@pubkey-link/web-user-ui'
-import { UiTime, useUiColorScheme } from '@pubkey-ui/core'
+import { UiDebugModal, UiTime, useUiColorScheme } from '@pubkey-ui/core'
 import { DataTable, DataTableProps } from 'mantine-datatable'
 import { Link } from 'react-router-dom'
 
@@ -57,7 +56,7 @@ export function UserLogUiTable({
             accessor: 'user',
             width: '60px',
             title: 'User',
-            render: (item) => <UserUiAvatarLoader userId={item.userId} size="sm" />,
+            render: (item) => (item.userId ? <UserUiAvatarLoader userId={item.userId} size="sm" /> : null),
           },
           {
             width: '75px',
@@ -66,8 +65,8 @@ export function UserLogUiTable({
             textAlign: 'right',
             render: (item) => (
               <Group gap="xs" justify="right">
-                <AppUiDebugModal disabled={!item.data} data={item.data} />
-                <AppUiDebugModal data={item} />
+                <UiDebugModal disabled={!item.data} data={item.data} />
+                <UiDebugModal data={item} />
               </Group>
             ),
           },

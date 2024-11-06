@@ -10,7 +10,7 @@ export function NetworkUiSelectCluster({
 }) {
   return (
     <UiSelectEnum<NetworkCluster>
-      style={{ width: 140 }}
+      style={{ width: 160 }}
       value={value}
       setValue={(value) => setValue(value ?? NetworkCluster.SolanaMainnet)}
       clearable
