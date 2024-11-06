@@ -150,30 +150,31 @@ export class ApiCoreService implements OnModuleInit {
   private async log(message: string, input: CoreLogInput) {
     return this.data.log.create({ data: { ...input, message } })
   }
+
   async logError(message: string, input?: Omit<CoreLogInput, 'level'>) {
     if (this.config.isDevelopment) {
-      this.logger.error({ message, input }, 'ApiCoreService.logError')
+      this.logger.error(`${message} ${JSON.stringify(input)}`, 'ApiCoreService.logError')
     }
     return this.log(message, { ...input, level: LogLevel.Error })
   }
 
   async logInfo(message: string, input?: Omit<CoreLogInput, 'level'>) {
     if (this.config.isDevelopment) {
-      this.logger.log({ message, input }, 'ApiCoreService.logInfo')
+      this.logger.log(`${message} ${JSON.stringify(input)}`, 'ApiCoreService.logInfo')
     }
     return this.log(message, { ...input, level: LogLevel.Info })
   }
 
   async logVerbose(message: string, input?: Omit<CoreLogInput, 'level'>) {
     if (this.config.isDevelopment) {
-      this.logger.verbose({ message, input }, 'ApiCoreService.logVerbose')
+      this.logger.verbose(`${message} ${JSON.stringify(input)}`, 'ApiCoreService.logVerbose')
     }
     return this.log(message, { ...input, level: LogLevel.Verbose })
   }
 
   async logWarning(message: string, input?: Omit<CoreLogInput, 'level'>) {
     if (this.config.isDevelopment) {
-      this.logger.warn({ message, input }, 'ApiCoreService.logWarning')
+      this.logger.warn(`${message} ${JSON.stringify(input)}`, 'ApiCoreService.logWarning')
     }
     return this.log(message, { ...input, level: LogLevel.Warning })
   }

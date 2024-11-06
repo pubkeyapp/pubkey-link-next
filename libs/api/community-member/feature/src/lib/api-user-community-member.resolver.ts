@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { ApiAuthGraphQLUserGuard, CtxUserId } from '@pubkey-link/api-auth-data-access'
+import { ApiAuthGraphQLUserGuard, CtxUser, CtxUserId } from '@pubkey-link/api-auth-data-access'
 import {
   ApiCommunityMemberService,
   CommunityMember,
@@ -9,6 +9,7 @@ import {
   UserFindManyCommunityMemberInput,
   UserUpdateCommunityMemberInput,
 } from '@pubkey-link/api-community-member-data-access'
+import { User } from '@pubkey-link/api-user-data-access'
 
 @Resolver()
 @UseGuards(ApiAuthGraphQLUserGuard)
@@ -17,16 +18,16 @@ export class ApiUserCommunityMemberResolver {
 
   @Mutation(() => CommunityMember, { nullable: true })
   userAddCommunityMember(
-    @CtxUserId() userId: string,
+    @CtxUser() user: User,
     @Args('communityId') communityId: string,
     @Args('input') input: UserAddCommunityMemberInput,
   ) {
-    return this.service.user.addCommunityMember(userId, communityId, input)
+    return this.service.user.addCommunityMember(user, communityId, input)
   }
 
   @Mutation(() => Boolean, { nullable: true })
-  userRemoveCommunityMember(@CtxUserId() userId: string, @Args('communityMemberId') communityMemberId: string) {
-    return this.service.user.removeCommunityMember(userId, communityMemberId)
+  userRemoveCommunityMember(@CtxUser() user: User, @Args('communityMemberId') communityMemberId: string) {
+    return this.service.user.removeCommunityMember(user, communityMemberId)
   }
 
   @Query(() => CommunityMember, { nullable: true })
@@ -46,10 +47,10 @@ export class ApiUserCommunityMemberResolver {
 
   @Mutation(() => CommunityMember, { nullable: true })
   userUpdateCommunityMember(
-    @CtxUserId() userId: string,
+    @CtxUser() user: User,
     @Args('communityMemberId') communityMemberId: string,
     @Args('input') input: UserUpdateCommunityMemberInput,
   ) {
-    return this.service.user.updateCommunityMember(userId, communityMemberId, input)
+    return this.service.user.updateCommunityMember(user, communityMemberId, input)
   }
 }

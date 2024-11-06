@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { User } from '@pubkey-link/api-user-data-access'
 import { ApiCommunityMemberDataService } from './api-community-member-data.service'
 import { AdminAddCommunityMemberInput } from './dto/admin-add-community-member-input'
 import { AdminFindManyCommunityMemberInput } from './dto/admin-find-many-community-member.input'
@@ -10,12 +11,12 @@ import { getCommunityMemberWhereAdminInput } from './helpers/get-community-membe
 export class ApiCommunityMemberDataAdminService {
   constructor(private readonly data: ApiCommunityMemberDataService) {}
 
-  addCommunityMember(communityId: string, input: AdminAddCommunityMemberInput) {
-    return this.data.add({ ...input, communityId })
+  async addCommunityMember(actor: User, communityId: string, input: AdminAddCommunityMemberInput) {
+    return this.data.add({ actor, input: { ...input, communityId } })
   }
 
-  async removeCommunityMember(communityMemberId: string) {
-    return this.data.remove(communityMemberId)
+  async removeCommunityMember(actor: User, communityMemberId: string) {
+    return this.data.remove({ actor, communityMemberId })
   }
 
   async findManyCommunityMember(input: AdminFindManyCommunityMemberInput): Promise<CommunityMemberPaging> {
@@ -32,7 +33,7 @@ export class ApiCommunityMemberDataAdminService {
     return this.data.findOne(communityMemberId)
   }
 
-  async updateCommunityMember(communityMemberId: string, input: AdminUpdateCommunityMemberInput) {
-    return this.data.update(communityMemberId, input)
+  async updateCommunityMember(actor: User, communityMemberId: string, input: AdminUpdateCommunityMemberInput) {
+    return this.data.update({ actor, communityMemberId, input })
   }
 }

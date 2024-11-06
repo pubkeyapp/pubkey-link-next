@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { ApiCoreService } from '@pubkey-link/api-core-data-access'
+import { User } from '@pubkey-link/api-user-data-access'
 import { ApiCommunityMemberDataService } from './api-community-member-data.service'
 import { UserAddCommunityMemberInput } from './dto/user-add-community-member-input'
 import { UserFindManyCommunityMemberInput } from './dto/user-find-many-community-member.input'
@@ -11,15 +12,14 @@ import { getCommunityMemberWhereUserInput } from './helpers/get-community-member
 export class ApiCommunityMemberDataUserService {
   constructor(private readonly core: ApiCoreService, private readonly data: ApiCommunityMemberDataService) {}
 
-  async addCommunityMember(userId: string, communityId: string, input: UserAddCommunityMemberInput) {
-    await this.core.ensureCommunityAdmin({ communityId, userId })
-
-    return this.data.add({ ...input, communityId })
+  async addCommunityMember(actor: User, communityId: string, input: UserAddCommunityMemberInput) {
+    await this.core.ensureCommunityAdmin({ communityId, userId: actor.id })
+    return this.data.add({ actor, input: { ...input, communityId } })
   }
 
-  async removeCommunityMember(userId: string, communityMemberId: string) {
-    await this.data.ensureCommunityMemberAdmin({ communityMemberId, userId })
-    return this.data.remove(communityMemberId)
+  async removeCommunityMember(actor: User, communityMemberId: string) {
+    await this.data.ensureCommunityMemberAdmin({ communityMemberId, userId: actor.id })
+    return this.data.remove({ actor, communityMemberId })
   }
 
   async findManyCommunityMember(
@@ -42,9 +42,9 @@ export class ApiCommunityMemberDataUserService {
     return member
   }
 
-  async updateCommunityMember(userId: string, communityMemberId: string, input: UserUpdateCommunityMemberInput) {
-    await this.data.ensureCommunityMemberAdmin({ communityMemberId, userId })
-    return this.data.update(communityMemberId, input)
+  async updateCommunityMember(actor: User, communityMemberId: string, input: UserUpdateCommunityMemberInput) {
+    await this.data.ensureCommunityMemberAdmin({ communityMemberId, userId: actor.id })
+    return this.data.update({ actor, communityMemberId, input })
   }
 
   async getCommunityMember({ communityId, userId }: { communityId: string; userId: string }) {

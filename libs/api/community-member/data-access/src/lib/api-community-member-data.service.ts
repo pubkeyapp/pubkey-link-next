@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { ApiCoreService, PagingInputFields } from '@pubkey-link/api-core-data-access'
+import { User } from '@pubkey-link/api-user-data-access'
 import { CommunityMemberPaging } from './entity/community-member.entity'
 
 @Injectable()
 export class ApiCommunityMemberDataService {
   constructor(private readonly core: ApiCoreService) {}
 
-  async add(input: Prisma.CommunityMemberUncheckedCreateInput) {
-    return this.core.data.communityMember.create({ data: input })
+  async add({ actor, input }: { actor: User; input: Prisma.CommunityMemberUncheckedCreateInput }) {
+    const res = await this.core.data.communityMember.create({ data: input })
+    await this.core.logInfo(`${actor.username} added member`, { communityId: res.communityId, userId: res.userId })
+    return res
   }
 
   async ensureCommunityMemberAccess({ communityMemberId, userId }: { communityMemberId: string; userId: string }) {
@@ -36,9 +39,10 @@ export class ApiCommunityMemberDataService {
     })
   }
 
-  async remove(communityMemberId: string) {
-    const deleted = await this.core.data.communityMember.delete({ where: { id: communityMemberId } })
-    return !!deleted
+  async remove({ actor, communityMemberId }: { actor: User; communityMemberId: string }) {
+    const res = await this.core.data.communityMember.delete({ where: { id: communityMemberId } })
+    await this.core.logInfo(`${actor.username} removed member`, { communityId: res.communityId, userId: res.userId })
+    return !!res
   }
 
   async findMany({
@@ -60,7 +64,21 @@ export class ApiCommunityMemberDataService {
     return found
   }
 
-  async update(communityMemberId: string, input: Prisma.CommunityMemberUpdateInput) {
-    return this.core.data.communityMember.update({ where: { id: communityMemberId }, data: input })
+  async update({
+    actor,
+    communityMemberId,
+    input,
+  }: {
+    actor: User
+    communityMemberId: string
+    input: Prisma.CommunityMemberUpdateInput
+  }) {
+    const res = await this.core.data.communityMember.update({ where: { id: communityMemberId }, data: input })
+    await this.core.logInfo(`${actor.username} updated member`, {
+      communityId: res.communityId,
+      userId: res.userId,
+      data: JSON.stringify(input, null, 2),
+    })
+    return res
   }
 }

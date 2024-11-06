@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { ApiAuthGraphQLAdminGuard } from '@pubkey-link/api-auth-data-access'
+import { ApiAuthGraphQLAdminGuard, CtxUser } from '@pubkey-link/api-auth-data-access'
 import {
   AdminAddCommunityMemberInput,
   AdminFindManyCommunityMemberInput,
@@ -9,6 +9,7 @@ import {
   CommunityMember,
   CommunityMemberPaging,
 } from '@pubkey-link/api-community-member-data-access'
+import { User } from '@pubkey-link/api-user-data-access'
 
 @Resolver()
 @UseGuards(ApiAuthGraphQLAdminGuard)
@@ -17,15 +18,16 @@ export class ApiAdminCommunityMemberResolver {
 
   @Mutation(() => CommunityMember, { nullable: true })
   adminAddCommunityMember(
+    @CtxUser() user: User,
     @Args('communityId') communityId: string,
     @Args('input') input: AdminAddCommunityMemberInput,
   ) {
-    return this.service.admin.addCommunityMember(communityId, input)
+    return this.service.admin.addCommunityMember(user, communityId, input)
   }
 
   @Mutation(() => Boolean, { nullable: true })
-  adminRemoveCommunityMember(@Args('communityMemberId') communityMemberId: string) {
-    return this.service.admin.removeCommunityMember(communityMemberId)
+  adminRemoveCommunityMember(@CtxUser() user: User, @Args('communityMemberId') communityMemberId: string) {
+    return this.service.admin.removeCommunityMember(user, communityMemberId)
   }
 
   @Query(() => CommunityMemberPaging)
@@ -40,9 +42,10 @@ export class ApiAdminCommunityMemberResolver {
 
   @Mutation(() => CommunityMember, { nullable: true })
   adminUpdateCommunityMember(
+    @CtxUser() user: User,
     @Args('communityMemberId') communityMemberId: string,
     @Args('input') input: AdminUpdateCommunityMemberInput,
   ) {
-    return this.service.admin.updateCommunityMember(communityMemberId, input)
+    return this.service.admin.updateCommunityMember(user, communityMemberId, input)
   }
 }
