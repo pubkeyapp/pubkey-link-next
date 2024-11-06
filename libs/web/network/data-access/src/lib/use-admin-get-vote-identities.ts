@@ -2,13 +2,13 @@ import { useSdk } from '@pubkey-link/web-core-data-access'
 import { toastError } from '@pubkey-ui/core'
 import { useQuery } from '@tanstack/react-query'
 
-export function useAdminGetVoteAccounts({ networkId }: { networkId: string }) {
+export function useAdminGetVoteIdentities({ networkId }: { networkId: string }) {
   const sdk = useSdk()
   return useQuery({
-    queryKey: ['admin', 'getVoteAccounts', { networkId }],
+    queryKey: ['admin', 'getVoteIdentities', { networkId }],
     queryFn: () =>
       sdk
-        .adminGetVoteAccounts({ networkId })
+        .adminGetVoteIdentities({ networkId })
         .then((res) => res.data)
         .catch((err) => {
           toastError(`${err}`)

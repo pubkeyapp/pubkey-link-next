@@ -36,11 +36,11 @@ export class ApiNetworkDataAdminService {
     return this.data.update(networkId, input)
   }
 
-  async getVoteAccounts(networkId: string) {
+  async getVoteIdentities(networkId: string) {
     const network = await this.data.findOne(networkId)
     if (!network) {
       throw new Error(`Network ${networkId} not found`)
     }
-    return this.cluster.getVoteAccounts(network.cluster)
+    return this.cluster.getVoteIdentities(network.cluster)
   }
 }

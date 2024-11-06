@@ -55,9 +55,9 @@ export class ApiRoleResolverService {
     const startedAt = Date.now()
 
     const conditions = await this.getRoleConditions({ community })
-    const voteAccounts = await this.getVoteAccounts({ cluster: community.cluster, conditions })
+    const voteIdentities = await this.getVoteIdentities({ cluster: community.cluster, conditions })
 
-    await this.syncCommunityMembers({ communityId, voteAccounts })
+    await this.syncCommunityMembers({ communityId, voteIdentities })
 
     const [roleMap, users] = await Promise.all([
       this.getRoleMap({ community }),
@@ -83,8 +83,8 @@ export class ApiRoleResolverService {
 
       // Now we want to loop over each condition and check the assets
       for (const condition of conditions) {
-        if (condition.token?.type === NetworkTokenType.Validator && voteAccounts.length) {
-          if (voteAccounts.find((va) => resolved.solanaIds.includes(va))) {
+        if (condition.token?.type === NetworkTokenType.Validator && voteIdentities.length) {
+          if (voteIdentities.find((identitiy) => resolved.solanaIds.includes(identitiy))) {
             resolved.conditions.push(condition)
           }
         } else {
@@ -128,25 +128,25 @@ export class ApiRoleResolverService {
     return Promise.resolve(result)
   }
 
-  async getVoteAccounts({ cluster, conditions }: { cluster: NetworkCluster; conditions: RoleCondition[] }) {
+  async getVoteIdentities({ cluster, conditions }: { cluster: NetworkCluster; conditions: RoleCondition[] }) {
     const hasValidatorCondition: RoleCondition | undefined = conditions.find(
       (c) => c.type === NetworkTokenType.Validator,
     )
     if (!hasValidatorCondition) {
-      this.logger.debug(`[${cluster}] getVoteAccounts: No validator condition found for cluster.`)
+      this.logger.debug(`[${cluster}] getVoteIdentities: No validator condition found for cluster.`)
       return []
     }
     try {
-      const accounts = await this.network.cluster.getVoteAccounts(cluster)
-      this.logger.debug(`[${cluster}] getVoteAccounts: Found ${accounts.length} accounts for cluster.`)
+      const accounts = await this.network.cluster.getVoteIdentities(cluster)
+      this.logger.debug(`[${cluster}] getVoteIdentities: Found ${accounts.length} identities for cluster.`)
       return accounts
     } catch (e) {
-      this.logger.error(`[${cluster}] getVoteAccounts: Error getting vote accounts for cluster.: ${e}`)
+      this.logger.error(`[${cluster}] getVoteIdentities: Error getting vote identities for cluster.: ${e}`)
       return []
     }
   }
 
-  async syncCommunityMembers({ communityId, voteAccounts }: { communityId: string; voteAccounts: string[] }) {
+  async syncCommunityMembers({ communityId, voteIdentities }: { communityId: string; voteIdentities: string[] }) {
     // We're looking for any tokens that are linked to the community
     const tokens = await this.core.data.networkToken
       .findMany({
@@ -155,9 +155,9 @@ export class ApiRoleResolverService {
       })
       .then((res) => res.map((r) => r.account))
 
-    if (!tokens.length && !voteAccounts.length) {
+    if (!tokens.length && !voteIdentities.length) {
       this.logger.warn(
-        `[${communityId}] syncCommunityMembers: No tokens holders nor vote account identities found for community`,
+        `[${communityId}] syncCommunityMembers: No tokens holders nor vote identities found for community`,
       )
       return
     }
@@ -172,10 +172,10 @@ export class ApiRoleResolverService {
       })
       .then((res) => res.map((r) => r.owner))
 
-    const solanaIds = [...new Set([...owners, ...voteAccounts])]
+    const solanaIds = [...new Set([...owners, ...voteIdentities])]
 
     this.logger.debug(
-      `[${communityId}] syncCommunityMembers: Accounts: total = ${solanaIds.length}, tokens = ${tokens.length}, vote accounts = ${voteAccounts.length}`,
+      `[${communityId}] syncCommunityMembers: Accounts: total = ${solanaIds.length}, tokens = ${tokens.length}, vote identities = ${voteIdentities.length}`,
     )
 
     // We need to get the users ids for the owners of the identified tokens

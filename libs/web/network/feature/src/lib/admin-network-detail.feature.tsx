@@ -1,18 +1,43 @@
 import { Button, Group } from '@mantine/core'
+import { NetworkResolver } from '@pubkey-link/sdk'
+import { useAppConfig } from '@pubkey-link/web-core-data-access'
 import { AdminNetworkAssetFeature } from '@pubkey-link/web-network-asset-feature'
 import { useAdminFindOneNetwork } from '@pubkey-link/web-network-data-access'
 import { AdminNetworkTokenFeature } from '@pubkey-link/web-network-token-feature'
 import { NetworkUiItem, NetworkUiSyncBadge } from '@pubkey-link/web-network-ui'
-import { UiBack, UiDebugModal, UiError, UiLoader, UiPage, UiTabRoutes } from '@pubkey-ui/core'
+import { UiBack, UiDebugModal, UiError, UiLoader, UiPage, UiTabRoute, UiTabRoutes } from '@pubkey-ui/core'
 import { useParams } from 'react-router-dom'
 import { AdminNetworkDetailSettingsTab } from './admin-network-detail-settings.tab'
-import { AdminNetworkDetailVoteAccountsTab } from './admin-network-detail-vote-accounts.tab'
+import { AdminNetworkDetailVoteIdentitiesTab } from './admin-network-detail-vote-identities-tab'
 
 export function AdminNetworkDetailFeature() {
   const { networkId } = useParams<{ networkId: string }>() as { networkId: string }
+  const { hasResolver } = useAppConfig()
   const { item, query, cleanupNetworkAssets, syncNetworkAssets, verifyNetworkAssets } = useAdminFindOneNetwork({
     networkId,
   })
+
+  const tabs: UiTabRoute[] = [
+    { path: 'tokens', label: 'Tokens', element: item ? <AdminNetworkTokenFeature cluster={item.cluster} /> : null },
+    {
+      path: 'settings',
+      label: 'Settings',
+      element: <AdminNetworkDetailSettingsTab networkId={networkId} />,
+    },
+    {
+      path: 'assets',
+      label: 'Assets',
+      element: item ? <AdminNetworkAssetFeature cluster={item.cluster} /> : null,
+    },
+  ]
+
+  if (hasResolver(NetworkResolver.SolanaValidator)) {
+    tabs.push({
+      path: 'vote-identities',
+      label: 'Vote Identities',
+      element: <AdminNetworkDetailVoteIdentitiesTab networkId={networkId} />,
+    })
+  }
 
   if (query.isLoading) {
     return <UiLoader />
@@ -40,26 +65,7 @@ export function AdminNetworkDetailFeature() {
         </Group>
       }
     >
-      <UiTabRoutes
-        tabs={[
-          { path: 'tokens', label: 'Tokens', element: <AdminNetworkTokenFeature cluster={item.cluster} /> },
-          {
-            path: 'settings',
-            label: 'Settings',
-            element: <AdminNetworkDetailSettingsTab networkId={networkId} />,
-          },
-          {
-            path: 'assets',
-            label: 'Assets',
-            element: <AdminNetworkAssetFeature cluster={item.cluster} />,
-          },
-          {
-            path: 'vote-accounts',
-            label: 'Vote Accounts',
-            element: <AdminNetworkDetailVoteAccountsTab networkId={networkId} />,
-          },
-        ]}
-      />
+      <UiTabRoutes tabs={tabs} />
     </UiPage>
   )
 }

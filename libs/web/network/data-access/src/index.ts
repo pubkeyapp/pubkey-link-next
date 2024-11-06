@@ -1,6 +1,6 @@
 export * from './lib/use-admin-find-many-network'
 export * from './lib/use-admin-find-one-network'
-export * from './lib/use-admin-get-vote-accounts'
+export * from './lib/use-admin-get-vote-identities'
 export * from './lib/use-user-get-enabled-network-clusters'
 export * from './lib/use-user-get-token-accounts'
 export * from './lib/use-user-get-token-metadata'

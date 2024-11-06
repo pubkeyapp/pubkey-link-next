@@ -23,8 +23,8 @@ query adminFindManyNetwork($input: AdminFindManyNetworkInput!) {
   }
 }
 
-query adminGetVoteAccounts($networkId: String!) {
-  voteAccounts: adminGetVoteAccounts(networkId: $networkId)
+query adminGetVoteIdentities($networkId: String!) {
+  items: adminGetVoteIdentities(networkId: $networkId)
 }
 
 query adminFindOneNetwork($networkId: String!) {

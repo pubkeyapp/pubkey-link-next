@@ -141,9 +141,9 @@ export class ApiNetworkClusterService {
     return list
   }
 
-  async getVoteAccounts(cluster: NetworkCluster) {
+  async getVoteIdentities(cluster: NetworkCluster) {
     return this.getConnection(cluster)
-      .then((conn) => conn.getVoteAccounts('confirmed'))
+      .then((conn) => conn.getVoteAccounts(conn.commitment))
       .then((accounts) => accounts.current.map((account) => account.nodePubkey).sort())
   }
 

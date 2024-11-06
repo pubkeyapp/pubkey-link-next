@@ -637,7 +637,7 @@ type Query {
   adminFindUserByIdentity(provider: IdentityProvider!, providerId: String!): User
   adminGetBackup(name: String!): JSON
   adminGetBackups: [String!]!
-  adminGetVoteAccounts(networkId: String!): [String!]!
+  adminGetVoteIdentities(networkId: String!): [String!]!
   adminTableStats: [StatRecordGroup!]
   anonGetCommunities: [Community!]!
   anonRequestIdentityChallenge(input: RequestIdentityChallengeInput!): IdentityChallenge

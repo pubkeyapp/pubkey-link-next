@@ -26,8 +26,8 @@ export class ApiAdminNetworkResolver {
   }
 
   @Query(() => [String])
-  adminGetVoteAccounts(@Args('networkId') networkId: string) {
-    return this.service.admin.getVoteAccounts(networkId)
+  adminGetVoteIdentities(@Args('networkId') networkId: string) {
+    return this.service.admin.getVoteIdentities(networkId)
   }
 
   @Query(() => NetworkPaging)
