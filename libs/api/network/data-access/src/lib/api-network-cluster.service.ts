@@ -141,10 +141,28 @@ export class ApiNetworkClusterService {
     return list
   }
 
-  async getVoteIdentities(cluster: NetworkCluster) {
+  async getVoteIdentities(cluster: NetworkCluster, voteAccountDistance = 432000) {
     return this.getConnection(cluster)
-      .then((conn) => conn.getVoteAccounts(conn.commitment))
-      .then((accounts) => accounts.current.map((account) => account.nodePubkey).sort())
+      .then((conn) =>
+        Promise.all([
+          // We need to get the slot to calculate if the vote account is delinquent
+          conn.getSlot(conn.commitment),
+          // We need to get the vote accounts
+          conn
+            .getVoteAccounts(conn.commitment)
+            // ...and merge the current and delinquent accounts
+            .then((accounts) => [...accounts.current, ...accounts.delinquent]),
+        ]),
+      )
+      .then(([slot, voteAccounts]) =>
+        voteAccounts
+          // Filter out the vote accounts that are not delinquent
+          .filter((accounts) => accounts.lastVote < slot - voteAccountDistance)
+          // Map the vote accounts to the node pubkey
+          .map((account) => account.nodePubkey)
+          // Sort the vote accounts
+          .sort(),
+      )
   }
 
   async getUmi(cluster: NetworkCluster) {
