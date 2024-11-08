@@ -18,7 +18,10 @@ export function IdentityUiSolanaLoginWizard({
     }
   }, [active, connected])
   async function request(useLedger: boolean) {
-    return verifyAndSign({ publicKey: publicKey!.toString(), useLedger })
+    if (!publicKey) {
+      return false
+    }
+    return verifyAndSign({ publicKey: publicKey.toString(), useLedger })
       .catch((err) => {
         console.log('Error verifying identity', err)
         toastError('Error verifying identity')

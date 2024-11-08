@@ -1,6 +1,6 @@
 import { Group, HoverCard, Stack, Text } from '@mantine/core'
 import { Identity } from '@pubkey-link/sdk'
-import { IdentityUiIcon } from '@pubkey-link/web-identity-ui'
+import { IdentityUiIcon } from './identity-ui-icon'
 import { IdentityUiIconItem } from './identity-ui-icon-item'
 
 export function IdentityUiIconGroupItem({ identity }: { identity: Identity }) {

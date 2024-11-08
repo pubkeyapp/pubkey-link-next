@@ -1,9 +1,10 @@
 import { Group, Stack } from '@mantine/core'
 import { ellipsify, Identity } from '@pubkey-link/sdk'
 import { IdentityUiAvatar } from '@pubkey-link/web-core-ui'
-import { IdentityUiProviderTag, IdentityUiVerified } from '@pubkey-link/web-identity-ui'
 import { UiAnchor, UiAvatarProps, UiCopy, UiGroup, UiStack } from '@pubkey-ui/core'
 import { ReactNode } from 'react'
+import { IdentityUiProviderTag } from './identity-ui-provider-tag'
+import { IdentityUiVerified } from './identity-ui-verified'
 
 export function IdentityUiIconItem({
   action,

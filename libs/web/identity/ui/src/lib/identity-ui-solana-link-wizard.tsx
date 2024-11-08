@@ -22,9 +22,12 @@ export function IdentityUiSolanaLinkWizard({
   }, [active, connected])
 
   async function request(useLedger: boolean) {
+    if (!publicKey) {
+      return false
+    }
     const walletName = wallet?.adapter.name
     const name = `${ellipsify(publicKey?.toBase58(), 6)} (${walletName})`
-    return linkAndSign({ publicKey: publicKey!.toString(), useLedger, name })
+    return linkAndSign({ publicKey: publicKey.toString(), useLedger, name })
       .catch((err) => {
         console.log('Error linking identity', err)
         toastError('Error linking identity')
