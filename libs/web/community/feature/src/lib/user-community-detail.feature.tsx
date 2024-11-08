@@ -25,7 +25,7 @@ export function UserCommunityDetailFeature() {
       <UiStack gap="lg">
         <UiGroup>
           <Group>
-            <UiBack />
+            <UiBack to="/" />
             <CommunityUiItem
               community={item}
               title={

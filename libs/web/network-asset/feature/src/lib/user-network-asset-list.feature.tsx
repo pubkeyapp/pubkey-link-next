@@ -57,7 +57,7 @@ export default function UserNetworkAssetListFeature({
   const placeholder = type === NetworkTokenType.NonFungible ? 'Search collectibles' : 'Search tokens'
 
   return (
-    <UiStack>
+    <UiStack gap="lg">
       <Group>
         <UiSearchField placeholder={placeholder} setSearch={setSearch} />
         {!hideCluster && <NetworkUiSelectCluster value={cluster} setValue={setCluster} />}
@@ -66,7 +66,7 @@ export default function UserNetworkAssetListFeature({
       {query.isLoading ? (
         <UiLoader />
       ) : items?.length ? (
-        <UiStack>
+        <UiStack gap="lg">
           {groups.map((group) => (
             <UiStack key={group.token.id}>
               <UiGroup wrap="nowrap" align="center">

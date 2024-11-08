@@ -1,51 +1,52 @@
-import { ActionIcon, Group } from '@mantine/core'
+import { ActionIcon, Box, Group, Tooltip, UnstyledButton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useAuth } from '@pubkey-link/web-auth-data-access'
-import { AppLogo, UiHeaderProfile } from '@pubkey-link/web-core-ui'
-import { UiHeader, UiHeaderLink, UiLayout, UiLoader } from '@pubkey-ui/core'
-import { IconBug, IconSettings } from '@tabler/icons-react'
-import { ReactNode, Suspense, useMemo } from 'react'
+import { AppLogo, AppUiHeader, AppUiThemeSwitch } from '@pubkey-link/web-core-ui'
+import { UiAvatar, UiLoader } from '@pubkey-ui/core'
+import { IconLogout, IconShield } from '@tabler/icons-react'
+import { ReactNode, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 
 export function WebCoreLayout({ children }: { children: ReactNode }) {
-  const { isAdmin, isDeveloper, user } = useAuth()
+  const { isAdmin, user, logout } = useAuth()
   const [opened, { toggle }] = useDisclosure(false)
-  const links: UiHeaderLink[] = useMemo(() => {
-    const items: UiHeaderLink[] = [
-      { link: `/u`, label: 'Profile' },
-      { link: '/c', label: 'Communities' },
-    ]
-    if (isAdmin) {
-      items.push({ link: '/admin', label: 'Admin' })
-    }
-    return items
-  }, [isAdmin, user])
   return (
-    <UiLayout
-      header={
-        <UiHeader
-          logoSmall={<AppLogo height={28} />}
-          logo={<AppLogo height={28} />}
-          opened={opened}
-          toggle={toggle}
-          links={links}
-          profile={
-            <Group gap="xs">
-              {isAdmin && isDeveloper && (
-                <ActionIcon component={Link} to="/admin/development" variant="light" size="lg">
-                  <IconBug />
+    <Box>
+      <AppUiHeader
+        logoSmall={<AppLogo height={28} />}
+        logo={<AppLogo height={28} />}
+        opened={opened}
+        toggle={toggle}
+        links={[]}
+        profile={
+          <Group gap="xs" wrap="nowrap">
+            <AppUiThemeSwitch />
+            {isAdmin && (
+              <Tooltip label={'Admin Dashboard'} withArrow position="top">
+                <ActionIcon component={Link} to="/admin" variant="light" size="lg">
+                  <IconShield />
                 </ActionIcon>
-              )}
-              <ActionIcon component={Link} to="/settings" variant="light" size="lg">
-                <IconSettings />
+              </Tooltip>
+            )}
+            <Tooltip label={'Logout'} withArrow position="top">
+              <ActionIcon onClick={logout} variant="light" size="lg">
+                <IconLogout />
               </ActionIcon>
-              <UiHeaderProfile />
-            </Group>
-          }
-        />
-      }
-    >
+            </Tooltip>
+            <UnstyledButton component={Link} to={user?.profileUrl ?? ''}>
+              <UiAvatar
+                url={user?.avatarUrl}
+                name={`${user?.username}`}
+                alt={user?.username ?? 'User Avatar'}
+                radius={100}
+                size={34}
+              />
+            </UnstyledButton>
+          </Group>
+        }
+      />
+
       <Suspense fallback={<UiLoader mt="xl" size="xl" type="dots" />}>{children}</Suspense>
-    </UiLayout>
+    </Box>
   )
 }

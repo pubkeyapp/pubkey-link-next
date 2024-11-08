@@ -11,6 +11,7 @@ export function useUserGetCommunities({ username }: { username: string }) {
   const items = query.data?.items ?? []
 
   return {
+    isLoading: query.isLoading,
     items,
     query,
   }

@@ -21,6 +21,7 @@ export function useUserFindManyCommunity(props?: Partial<UserFindManyCommunityIn
   return {
     items,
     query,
+    isLoading: query.isLoading,
     pagination: {
       page,
       setPage,

@@ -4,7 +4,7 @@ import { UiCard } from '@pubkey-ui/core'
 
 export default function UserProfileTabCollectibles({ username }: { username: string }) {
   return (
-    <UiCard title="Collectibles">
+    <UiCard>
       <UserNetworkAssetFeature username={username} type={NetworkTokenType.NonFungible} />
     </UiCard>
   )

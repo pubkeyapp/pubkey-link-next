@@ -4,7 +4,7 @@ import { UiCard } from '@pubkey-ui/core'
 
 export default function UserProfileTabTokens({ username }: { username: string }) {
   return (
-    <UiCard title="Tokens">
+    <UiCard>
       <UserNetworkAssetFeature username={username} type={NetworkTokenType.Fungible} />
     </UiCard>
   )

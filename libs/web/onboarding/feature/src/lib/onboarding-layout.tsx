@@ -22,7 +22,7 @@ export function OnboardingLayout({ children }: { children: ReactNode }) {
               </Button>
               <UiAvatar
                 url={user?.avatarUrl}
-                name={user?.username}
+                name={`${user?.username}`}
                 alt={user?.username ?? 'User Avatar'}
                 radius={100}
                 size={34}

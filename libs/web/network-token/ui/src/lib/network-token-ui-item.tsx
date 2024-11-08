@@ -48,10 +48,12 @@ export function NetworkTokenUiItem({
             account
           ) : (
             <Group gap={4} wrap="nowrap">
-              <UiCopy text={networkToken.account} tooltip="Copy account address" />
-              <NetworkTokenUiExplorerIcon token={{ ...networkToken, cluster: networkToken.cluster ?? cluster }} />
+              <UiCopy text={networkToken.account} tooltip="Copy token address" />
+              <NetworkTokenUiExplorerIcon
+                token={{ ...networkToken, cluster: networkToken.cluster ?? cluster }}
+                label="View token on Explorer"
+              />
               <AppUiDebugModal data={networkToken} />
-              {account}
             </Group>
           )}
         </Stack>

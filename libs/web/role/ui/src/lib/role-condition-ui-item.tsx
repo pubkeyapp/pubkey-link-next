@@ -6,9 +6,9 @@ import {
 } from '@pubkey-link/resolvers'
 import { NetworkTokenType } from '@pubkey-link/sdk'
 import { UiIconAvatar } from '@pubkey-link/web-core-ui'
+import { getNetworkTokenTypeIcon } from '@pubkey-link/web-network-token-ui'
 import { UiAnchor, type UiAnchorProps } from '@pubkey-ui/core'
 import { ReactNode } from 'react'
-import { getNetworkTokenTypeIcon } from '@pubkey-link/web-network-token-ui'
 
 export function RoleConditionUiItem({
   anchorProps,
@@ -45,6 +45,11 @@ export function RoleConditionUiItem({
 
 export function RoleConditionUiAvatar({ type }: { type?: NetworkTokenType | null }) {
   return (
-    <UiIconAvatar icon={getNetworkTokenTypeIcon(type)} name={type} size="md" color={getNetworkTokenTypeColor(type)} />
+    <UiIconAvatar
+      icon={getNetworkTokenTypeIcon(type)}
+      name={`${type}`}
+      size="md"
+      color={getNetworkTokenTypeColor(type)}
+    />
   )
 }

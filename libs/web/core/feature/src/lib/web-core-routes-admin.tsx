@@ -1,3 +1,5 @@
+import { ActionIcon, Group, Tooltip } from '@mantine/core'
+import { useAuth } from '@pubkey-link/web-auth-data-access'
 import { AdminCommunityFeature } from '@pubkey-link/web-community-feature'
 import { DevAdminRoutes } from '@pubkey-link/web-dev-feature'
 import { AdminLogFeature } from '@pubkey-link/web-log-feature'
@@ -6,6 +8,7 @@ import { AdminUserFeature } from '@pubkey-link/web-user-feature'
 import { AdminVerifyFeature } from '@pubkey-link/web-verify-feature'
 import { UiContainer, UiDashboardGrid, UiDashboardItem, UiNotFound } from '@pubkey-ui/core'
 import {
+  IconBug,
   IconChartBar,
   IconCheckupList,
   IconFileText,
@@ -14,7 +17,7 @@ import {
   IconUsersGroup,
 } from '@tabler/icons-react'
 import { lazy } from 'react'
-import { Navigate, RouteObject, useRoutes } from 'react-router-dom'
+import { Link, Navigate, RouteObject, useRoutes } from 'react-router-dom'
 
 const AdminStatsFeature = lazy(() => import('./web-core-admin-stats'))
 
@@ -40,6 +43,7 @@ const routes: RouteObject[] = [
 ]
 
 export default function WebCoreRoutesAdmin() {
+  const { isDeveloper } = useAuth()
   return useRoutes([
     { index: true, element: <Navigate to="dashboard" replace /> },
     {
@@ -47,6 +51,15 @@ export default function WebCoreRoutesAdmin() {
       element: (
         <UiContainer>
           <UiDashboardGrid links={links} />
+          <Group justify="center" mt="lg">
+            {isDeveloper && (
+              <Tooltip label={'Developer Playground'} withArrow position="top">
+                <ActionIcon component={Link} to="/admin/development" variant="light" size="lg">
+                  <IconBug />
+                </ActionIcon>
+              </Tooltip>
+            )}
+          </Group>
         </UiContainer>
       ),
     },

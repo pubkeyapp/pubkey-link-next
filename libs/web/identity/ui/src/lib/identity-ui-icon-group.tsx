@@ -4,7 +4,7 @@ import { IdentityUiIconGroupItem } from './identity-ui-icon-group-item'
 
 export function IdentityUiIconGroup({ identities }: { identities: Identity[] }) {
   return (
-    <Group>
+    <Group justify="center">
       {identities
         .sort((a, b) => (a.provider > b.provider ? 1 : -1))
         .sort((a, b) => (a.providerId > b.providerId ? 1 : -1))
