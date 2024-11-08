@@ -154,15 +154,24 @@ export class ApiNetworkClusterService {
             .then((accounts) => [...accounts.current, ...accounts.delinquent]),
         ]),
       )
-      .then(([slot, voteAccounts]) =>
-        voteAccounts
-          // Filter out the vote accounts that are not delinquent
-          .filter((accounts) => accounts.lastVote < slot - voteAccountDistance)
-          // Map the vote accounts to the node pubkey
-          .map((account) => account.nodePubkey)
-          // Sort the vote accounts
-          .sort(),
-      )
+      .then(([slot, voteAccounts]) => {
+        // We need to get the minimum slot to calculate if the vote account is delinquent.
+        // It's based on:
+        // - The current slot
+        // - Minus the vote account distance
+        // - And should never be below zero
+        const lastVoteLimit = Math.max(slot - voteAccountDistance, 0)
+
+        return (
+          voteAccounts
+            // Filter out the vote accounts that are not delinquent
+            .filter((accounts) => accounts.lastVote >= lastVoteLimit)
+            // Map the vote accounts to the node pubkey
+            .map((account) => account.nodePubkey)
+            // Sort the vote accounts
+            .sort()
+        )
+      })
   }
 
   async getUmi(cluster: NetworkCluster) {
