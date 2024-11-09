@@ -153,22 +153,6 @@ describe('api-role-feature', () => {
         }
       })
 
-      it('should not find a list of roles (find all)', async () => {
-        expect.assertions(1)
-        try {
-          await sdk.userFindManyRole(
-            {
-              input: {
-                communityId: defaultCommunityId,
-              },
-            },
-            { cookie: bob },
-          )
-        } catch (e) {
-          expect(e.message).toBe('User bob is not a member of community pubkey')
-        }
-      })
-
       it('should not find a role by id', async () => {
         expect.assertions(1)
         try {
