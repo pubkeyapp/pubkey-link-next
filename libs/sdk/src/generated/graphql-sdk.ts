@@ -1259,6 +1259,7 @@ export type Role = {
   conditions?: Maybe<Array<RoleCondition>>
   createdAt?: Maybe<Scalars['DateTime']['output']>
   id: Scalars['String']['output']
+  member?: Maybe<CommunityMember>
   name: Scalars['String']['output']
   permissions?: Maybe<Array<RolePermission>>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
@@ -1968,6 +1969,30 @@ export type UserFindManyBotRolesQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }> | null
     serverRole?: {
       __typename?: 'DiscordRole'
@@ -2224,80 +2249,6 @@ export type CommunityMemberDetailsFragment = {
     updatedAt?: Date | null
     username?: string | null
   } | null
-  roles?: Array<{
-    __typename?: 'Role'
-    createdAt?: Date | null
-    id: string
-    communityId: string
-    name: string
-    updatedAt?: Date | null
-    viewUrl?: string | null
-    conditions?: Array<{
-      __typename?: 'RoleCondition'
-      createdAt?: Date | null
-      id: string
-      type: NetworkTokenType
-      amount?: string | null
-      amountMax?: string | null
-      filters?: any | null
-      config?: any | null
-      tokenId?: string | null
-      roleId?: string | null
-      updatedAt?: Date | null
-      valid?: boolean | null
-      token?: {
-        __typename?: 'NetworkToken'
-        id: string
-        createdAt?: Date | null
-        updatedAt?: Date | null
-        cluster: NetworkCluster
-        type: NetworkTokenType
-        account: string
-        program: string
-        name: string
-        mintList?: Array<string> | null
-        vault?: string | null
-        symbol?: string | null
-        description?: string | null
-        imageUrl?: string | null
-        metadataUrl?: string | null
-        raw?: any | null
-      } | null
-      asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
-    }> | null
-    permissions?: Array<{
-      __typename?: 'RolePermission'
-      createdAt?: Date | null
-      id: string
-      updatedAt?: Date | null
-      botId?: string | null
-      roleId?: string | null
-      botRole?: {
-        __typename?: 'BotRole'
-        botId?: string | null
-        createdAt?: Date | null
-        id: string
-        serverId?: string | null
-        updatedAt?: Date | null
-        serverRoleId?: string | null
-        serverRole?: {
-          __typename?: 'DiscordRole'
-          id: string
-          name: string
-          managed: boolean
-          color: number
-          position: number
-        } | null
-        server?: {
-          __typename?: 'DiscordServer'
-          id: string
-          name: string
-          icon?: string | null
-          permissions?: Array<string> | null
-        } | null
-      } | null
-    }> | null
-  }> | null
 }
 
 export type AdminFindManyCommunityMemberQueryVariables = Exact<{
@@ -2316,21 +2267,6 @@ export type AdminFindManyCommunityMemberQuery = {
       admin: boolean
       updatedAt?: Date | null
       userId: string
-      user?: {
-        __typename?: 'User'
-        avatarUrl?: string | null
-        createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
-        lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
-        status?: UserStatus | null
-        updatedAt?: Date | null
-        username?: string | null
-      } | null
       roles?: Array<{
         __typename?: 'Role'
         createdAt?: Date | null
@@ -2404,7 +2340,46 @@ export type AdminFindManyCommunityMemberQuery = {
             } | null
           } | null
         }> | null
+        member?: {
+          __typename?: 'CommunityMember'
+          communityId: string
+          createdAt?: Date | null
+          id: string
+          admin: boolean
+          updatedAt?: Date | null
+          userId: string
+          user?: {
+            __typename?: 'User'
+            avatarUrl?: string | null
+            createdAt?: Date | null
+            developer?: boolean | null
+            private?: boolean | null
+            lastLogin?: Date | null
+            id: string
+            name?: string | null
+            profileUrl: string
+            role?: UserRole | null
+            status?: UserStatus | null
+            updatedAt?: Date | null
+            username?: string | null
+          } | null
+        } | null
       }> | null
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
     }>
     meta: {
       __typename?: 'PagingMeta'
@@ -2433,21 +2408,6 @@ export type AdminFindOneCommunityMemberQuery = {
     admin: boolean
     updatedAt?: Date | null
     userId: string
-    user?: {
-      __typename?: 'User'
-      avatarUrl?: string | null
-      createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
-      lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
-      status?: UserStatus | null
-      updatedAt?: Date | null
-      username?: string | null
-    } | null
     roles?: Array<{
       __typename?: 'Role'
       createdAt?: Date | null
@@ -2521,7 +2481,46 @@ export type AdminFindOneCommunityMemberQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }> | null
+    user?: {
+      __typename?: 'User'
+      avatarUrl?: string | null
+      createdAt?: Date | null
+      developer?: boolean | null
+      private?: boolean | null
+      lastLogin?: Date | null
+      id: string
+      name?: string | null
+      profileUrl: string
+      role?: UserRole | null
+      status?: UserStatus | null
+      updatedAt?: Date | null
+      username?: string | null
+    } | null
   } | null
 }
 
@@ -2540,21 +2539,6 @@ export type AdminAddCommunityMemberMutation = {
     admin: boolean
     updatedAt?: Date | null
     userId: string
-    user?: {
-      __typename?: 'User'
-      avatarUrl?: string | null
-      createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
-      lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
-      status?: UserStatus | null
-      updatedAt?: Date | null
-      username?: string | null
-    } | null
     roles?: Array<{
       __typename?: 'Role'
       createdAt?: Date | null
@@ -2628,7 +2612,46 @@ export type AdminAddCommunityMemberMutation = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }> | null
+    user?: {
+      __typename?: 'User'
+      avatarUrl?: string | null
+      createdAt?: Date | null
+      developer?: boolean | null
+      private?: boolean | null
+      lastLogin?: Date | null
+      id: string
+      name?: string | null
+      profileUrl: string
+      role?: UserRole | null
+      status?: UserStatus | null
+      updatedAt?: Date | null
+      username?: string | null
+    } | null
   } | null
 }
 
@@ -2647,21 +2670,6 @@ export type AdminUpdateCommunityMemberMutation = {
     admin: boolean
     updatedAt?: Date | null
     userId: string
-    user?: {
-      __typename?: 'User'
-      avatarUrl?: string | null
-      createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
-      lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
-      status?: UserStatus | null
-      updatedAt?: Date | null
-      username?: string | null
-    } | null
     roles?: Array<{
       __typename?: 'Role'
       createdAt?: Date | null
@@ -2735,7 +2743,46 @@ export type AdminUpdateCommunityMemberMutation = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }> | null
+    user?: {
+      __typename?: 'User'
+      avatarUrl?: string | null
+      createdAt?: Date | null
+      developer?: boolean | null
+      private?: boolean | null
+      lastLogin?: Date | null
+      id: string
+      name?: string | null
+      profileUrl: string
+      role?: UserRole | null
+      status?: UserStatus | null
+      updatedAt?: Date | null
+      username?: string | null
+    } | null
   } | null
 }
 
@@ -2759,21 +2806,6 @@ export type UserGetCommunityMemberQuery = {
     admin: boolean
     updatedAt?: Date | null
     userId: string
-    user?: {
-      __typename?: 'User'
-      avatarUrl?: string | null
-      createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
-      lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
-      status?: UserStatus | null
-      updatedAt?: Date | null
-      username?: string | null
-    } | null
     roles?: Array<{
       __typename?: 'Role'
       createdAt?: Date | null
@@ -2847,7 +2879,46 @@ export type UserGetCommunityMemberQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }> | null
+    user?: {
+      __typename?: 'User'
+      avatarUrl?: string | null
+      createdAt?: Date | null
+      developer?: boolean | null
+      private?: boolean | null
+      lastLogin?: Date | null
+      id: string
+      name?: string | null
+      profileUrl: string
+      role?: UserRole | null
+      status?: UserStatus | null
+      updatedAt?: Date | null
+      username?: string | null
+    } | null
   } | null
 }
 
@@ -2867,21 +2938,6 @@ export type UserFindManyCommunityMemberQuery = {
       admin: boolean
       updatedAt?: Date | null
       userId: string
-      user?: {
-        __typename?: 'User'
-        avatarUrl?: string | null
-        createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
-        lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
-        status?: UserStatus | null
-        updatedAt?: Date | null
-        username?: string | null
-      } | null
       roles?: Array<{
         __typename?: 'Role'
         createdAt?: Date | null
@@ -2955,7 +3011,46 @@ export type UserFindManyCommunityMemberQuery = {
             } | null
           } | null
         }> | null
+        member?: {
+          __typename?: 'CommunityMember'
+          communityId: string
+          createdAt?: Date | null
+          id: string
+          admin: boolean
+          updatedAt?: Date | null
+          userId: string
+          user?: {
+            __typename?: 'User'
+            avatarUrl?: string | null
+            createdAt?: Date | null
+            developer?: boolean | null
+            private?: boolean | null
+            lastLogin?: Date | null
+            id: string
+            name?: string | null
+            profileUrl: string
+            role?: UserRole | null
+            status?: UserStatus | null
+            updatedAt?: Date | null
+            username?: string | null
+          } | null
+        } | null
       }> | null
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
     }>
     meta: {
       __typename?: 'PagingMeta'
@@ -2984,21 +3079,6 @@ export type UserFindOneCommunityMemberQuery = {
     admin: boolean
     updatedAt?: Date | null
     userId: string
-    user?: {
-      __typename?: 'User'
-      avatarUrl?: string | null
-      createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
-      lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
-      status?: UserStatus | null
-      updatedAt?: Date | null
-      username?: string | null
-    } | null
     roles?: Array<{
       __typename?: 'Role'
       createdAt?: Date | null
@@ -3072,7 +3152,46 @@ export type UserFindOneCommunityMemberQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }> | null
+    user?: {
+      __typename?: 'User'
+      avatarUrl?: string | null
+      createdAt?: Date | null
+      developer?: boolean | null
+      private?: boolean | null
+      lastLogin?: Date | null
+      id: string
+      name?: string | null
+      profileUrl: string
+      role?: UserRole | null
+      status?: UserStatus | null
+      updatedAt?: Date | null
+      username?: string | null
+    } | null
   } | null
 }
 
@@ -3091,21 +3210,6 @@ export type UserAddCommunityMemberMutation = {
     admin: boolean
     updatedAt?: Date | null
     userId: string
-    user?: {
-      __typename?: 'User'
-      avatarUrl?: string | null
-      createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
-      lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
-      status?: UserStatus | null
-      updatedAt?: Date | null
-      username?: string | null
-    } | null
     roles?: Array<{
       __typename?: 'Role'
       createdAt?: Date | null
@@ -3179,7 +3283,46 @@ export type UserAddCommunityMemberMutation = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }> | null
+    user?: {
+      __typename?: 'User'
+      avatarUrl?: string | null
+      createdAt?: Date | null
+      developer?: boolean | null
+      private?: boolean | null
+      lastLogin?: Date | null
+      id: string
+      name?: string | null
+      profileUrl: string
+      role?: UserRole | null
+      status?: UserStatus | null
+      updatedAt?: Date | null
+      username?: string | null
+    } | null
   } | null
 }
 
@@ -3198,21 +3341,6 @@ export type UserUpdateCommunityMemberMutation = {
     admin: boolean
     updatedAt?: Date | null
     userId: string
-    user?: {
-      __typename?: 'User'
-      avatarUrl?: string | null
-      createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
-      lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
-      status?: UserStatus | null
-      updatedAt?: Date | null
-      username?: string | null
-    } | null
     roles?: Array<{
       __typename?: 'Role'
       createdAt?: Date | null
@@ -3286,7 +3414,46 @@ export type UserUpdateCommunityMemberMutation = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }> | null
+    user?: {
+      __typename?: 'User'
+      avatarUrl?: string | null
+      createdAt?: Date | null
+      developer?: boolean | null
+      private?: boolean | null
+      lastLogin?: Date | null
+      id: string
+      name?: string | null
+      profileUrl: string
+      role?: UserRole | null
+      status?: UserStatus | null
+      updatedAt?: Date | null
+      username?: string | null
+    } | null
   } | null
 }
 
@@ -3454,6 +3621,104 @@ export type AnonGetCommunitiesQuery = {
     telegramUrl?: string | null
     updatedAt?: Date | null
     cluster: NetworkCluster
+    roles?: Array<{
+      __typename?: 'Role'
+      createdAt?: Date | null
+      id: string
+      communityId: string
+      name: string
+      updatedAt?: Date | null
+      viewUrl?: string | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
+      conditions?: Array<{
+        __typename?: 'RoleCondition'
+        createdAt?: Date | null
+        id: string
+        type: NetworkTokenType
+        amount?: string | null
+        amountMax?: string | null
+        filters?: any | null
+        config?: any | null
+        tokenId?: string | null
+        roleId?: string | null
+        updatedAt?: Date | null
+        valid?: boolean | null
+        token?: {
+          __typename?: 'NetworkToken'
+          id: string
+          createdAt?: Date | null
+          updatedAt?: Date | null
+          cluster: NetworkCluster
+          type: NetworkTokenType
+          account: string
+          program: string
+          name: string
+          mintList?: Array<string> | null
+          vault?: string | null
+          symbol?: string | null
+          description?: string | null
+          imageUrl?: string | null
+          metadataUrl?: string | null
+          raw?: any | null
+        } | null
+        asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
+      }> | null
+      permissions?: Array<{
+        __typename?: 'RolePermission'
+        createdAt?: Date | null
+        id: string
+        updatedAt?: Date | null
+        botId?: string | null
+        roleId?: string | null
+        botRole?: {
+          __typename?: 'BotRole'
+          botId?: string | null
+          createdAt?: Date | null
+          id: string
+          serverId?: string | null
+          updatedAt?: Date | null
+          serverRoleId?: string | null
+          serverRole?: {
+            __typename?: 'DiscordRole'
+            id: string
+            name: string
+            managed: boolean
+            color: number
+            position: number
+          } | null
+          server?: {
+            __typename?: 'DiscordServer'
+            id: string
+            name: string
+            icon?: string | null
+            permissions?: Array<string> | null
+          } | null
+        } | null
+      }> | null
+    }> | null
   }>
 }
 
@@ -3552,6 +3817,30 @@ export type UserGetCommunitiesQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }> | null
   }>
 }
@@ -3653,6 +3942,30 @@ export type UserFindManyCommunityQuery = {
             } | null
           } | null
         }> | null
+        member?: {
+          __typename?: 'CommunityMember'
+          communityId: string
+          createdAt?: Date | null
+          id: string
+          admin: boolean
+          updatedAt?: Date | null
+          userId: string
+          user?: {
+            __typename?: 'User'
+            avatarUrl?: string | null
+            createdAt?: Date | null
+            developer?: boolean | null
+            private?: boolean | null
+            lastLogin?: Date | null
+            id: string
+            name?: string | null
+            profileUrl: string
+            role?: UserRole | null
+            status?: UserStatus | null
+            updatedAt?: Date | null
+            username?: string | null
+          } | null
+        } | null
       }> | null
     }>
     meta: {
@@ -4484,6 +4797,30 @@ export type LogDetailsFragment = {
         } | null
       } | null
     }> | null
+    member?: {
+      __typename?: 'CommunityMember'
+      communityId: string
+      createdAt?: Date | null
+      id: string
+      admin: boolean
+      updatedAt?: Date | null
+      userId: string
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
+    } | null
   } | null
   user?: {
     __typename?: 'User'
@@ -4657,6 +4994,30 @@ export type UserFindManyLogQuery = {
             } | null
           } | null
         }> | null
+        member?: {
+          __typename?: 'CommunityMember'
+          communityId: string
+          createdAt?: Date | null
+          id: string
+          admin: boolean
+          updatedAt?: Date | null
+          userId: string
+          user?: {
+            __typename?: 'User'
+            avatarUrl?: string | null
+            createdAt?: Date | null
+            developer?: boolean | null
+            private?: boolean | null
+            lastLogin?: Date | null
+            id: string
+            name?: string | null
+            profileUrl: string
+            role?: UserRole | null
+            status?: UserStatus | null
+            updatedAt?: Date | null
+            username?: string | null
+          } | null
+        } | null
       } | null
       user?: {
         __typename?: 'User'
@@ -4840,6 +5201,30 @@ export type UserFindOneLogQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     } | null
     user?: {
       __typename?: 'User'
@@ -5014,6 +5399,30 @@ export type AdminFindManyLogQuery = {
             } | null
           } | null
         }> | null
+        member?: {
+          __typename?: 'CommunityMember'
+          communityId: string
+          createdAt?: Date | null
+          id: string
+          admin: boolean
+          updatedAt?: Date | null
+          userId: string
+          user?: {
+            __typename?: 'User'
+            avatarUrl?: string | null
+            createdAt?: Date | null
+            developer?: boolean | null
+            private?: boolean | null
+            lastLogin?: Date | null
+            id: string
+            name?: string | null
+            profileUrl: string
+            role?: UserRole | null
+            status?: UserStatus | null
+            updatedAt?: Date | null
+            username?: string | null
+          } | null
+        } | null
       } | null
       user?: {
         __typename?: 'User'
@@ -5197,6 +5606,30 @@ export type AdminFindOneLogQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     } | null
     user?: {
       __typename?: 'User'
@@ -5849,6 +6282,30 @@ export type RoleDetailsFragment = {
       } | null
     } | null
   }> | null
+  member?: {
+    __typename?: 'CommunityMember'
+    communityId: string
+    createdAt?: Date | null
+    id: string
+    admin: boolean
+    updatedAt?: Date | null
+    userId: string
+    user?: {
+      __typename?: 'User'
+      avatarUrl?: string | null
+      createdAt?: Date | null
+      developer?: boolean | null
+      private?: boolean | null
+      lastLogin?: Date | null
+      id: string
+      name?: string | null
+      profileUrl: string
+      role?: UserRole | null
+      status?: UserStatus | null
+      updatedAt?: Date | null
+      username?: string | null
+    } | null
+  } | null
 }
 
 export type RoleConditionDetailsFragment = {
@@ -5999,6 +6456,30 @@ export type AdminFindManyRoleQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }>
     meta: {
       __typename?: 'PagingMeta'
@@ -6092,6 +6573,30 @@ export type AdminFindOneRoleQuery = {
         } | null
       } | null
     }> | null
+    member?: {
+      __typename?: 'CommunityMember'
+      communityId: string
+      createdAt?: Date | null
+      id: string
+      admin: boolean
+      updatedAt?: Date | null
+      userId: string
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
+    } | null
   } | null
 }
 
@@ -6174,6 +6679,30 @@ export type AdminCreateRoleMutation = {
         } | null
       } | null
     }> | null
+    member?: {
+      __typename?: 'CommunityMember'
+      communityId: string
+      createdAt?: Date | null
+      id: string
+      admin: boolean
+      updatedAt?: Date | null
+      userId: string
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
+    } | null
   } | null
 }
 
@@ -6257,6 +6786,30 @@ export type AdminUpdateRoleMutation = {
         } | null
       } | null
     }> | null
+    member?: {
+      __typename?: 'CommunityMember'
+      communityId: string
+      createdAt?: Date | null
+      id: string
+      admin: boolean
+      updatedAt?: Date | null
+      userId: string
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
+    } | null
   } | null
 }
 
@@ -6347,6 +6900,30 @@ export type UserFindManyRoleQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     }>
     meta: {
       __typename?: 'PagingMeta'
@@ -6440,6 +7017,30 @@ export type UserFindOneRoleQuery = {
       } | null
       asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
     }> | null
+    member?: {
+      __typename?: 'CommunityMember'
+      communityId: string
+      createdAt?: Date | null
+      id: string
+      admin: boolean
+      updatedAt?: Date | null
+      userId: string
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
+    } | null
   } | null
 }
 
@@ -6522,6 +7123,30 @@ export type UserCreateRoleMutation = {
         } | null
       } | null
     }> | null
+    member?: {
+      __typename?: 'CommunityMember'
+      communityId: string
+      createdAt?: Date | null
+      id: string
+      admin: boolean
+      updatedAt?: Date | null
+      userId: string
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
+    } | null
   } | null
 }
 
@@ -6686,6 +7311,30 @@ export type UserUpdateRoleMutation = {
         } | null
       } | null
     }> | null
+    member?: {
+      __typename?: 'CommunityMember'
+      communityId: string
+      createdAt?: Date | null
+      id: string
+      admin: boolean
+      updatedAt?: Date | null
+      userId: string
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
+    } | null
   } | null
 }
 
@@ -6835,6 +7484,30 @@ export type SnapshotDetailsFragment = {
         } | null
       } | null
     }> | null
+    member?: {
+      __typename?: 'CommunityMember'
+      communityId: string
+      createdAt?: Date | null
+      id: string
+      admin: boolean
+      updatedAt?: Date | null
+      userId: string
+      user?: {
+        __typename?: 'User'
+        avatarUrl?: string | null
+        createdAt?: Date | null
+        developer?: boolean | null
+        private?: boolean | null
+        lastLogin?: Date | null
+        id: string
+        name?: string | null
+        profileUrl: string
+        role?: UserRole | null
+        status?: UserStatus | null
+        updatedAt?: Date | null
+        username?: string | null
+      } | null
+    } | null
   } | null
 }
 
@@ -6940,6 +7613,30 @@ export type UserFindManySnapshotQuery = {
             } | null
           } | null
         }> | null
+        member?: {
+          __typename?: 'CommunityMember'
+          communityId: string
+          createdAt?: Date | null
+          id: string
+          admin: boolean
+          updatedAt?: Date | null
+          userId: string
+          user?: {
+            __typename?: 'User'
+            avatarUrl?: string | null
+            createdAt?: Date | null
+            developer?: boolean | null
+            private?: boolean | null
+            lastLogin?: Date | null
+            id: string
+            name?: string | null
+            profileUrl: string
+            role?: UserRole | null
+            status?: UserStatus | null
+            updatedAt?: Date | null
+            username?: string | null
+          } | null
+        } | null
       } | null
     }>
     meta: {
@@ -7054,6 +7751,30 @@ export type UserFindOneSnapshotQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     } | null
   } | null
 }
@@ -7144,6 +7865,30 @@ export type UserCreateSnapshotMutation = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     } | null
   } | null
 }
@@ -7242,6 +7987,30 @@ export type AdminFindManySnapshotQuery = {
             } | null
           } | null
         }> | null
+        member?: {
+          __typename?: 'CommunityMember'
+          communityId: string
+          createdAt?: Date | null
+          id: string
+          admin: boolean
+          updatedAt?: Date | null
+          userId: string
+          user?: {
+            __typename?: 'User'
+            avatarUrl?: string | null
+            createdAt?: Date | null
+            developer?: boolean | null
+            private?: boolean | null
+            lastLogin?: Date | null
+            id: string
+            name?: string | null
+            profileUrl: string
+            role?: UserRole | null
+            status?: UserStatus | null
+            updatedAt?: Date | null
+            username?: string | null
+          } | null
+        } | null
       } | null
     }>
     meta: {
@@ -7356,6 +8125,30 @@ export type AdminFindOneSnapshotQuery = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     } | null
   } | null
 }
@@ -7446,6 +8239,30 @@ export type AdminCreateSnapshotMutation = {
           } | null
         } | null
       }> | null
+      member?: {
+        __typename?: 'CommunityMember'
+        communityId: string
+        createdAt?: Date | null
+        id: string
+        admin: boolean
+        updatedAt?: Date | null
+        userId: string
+        user?: {
+          __typename?: 'User'
+          avatarUrl?: string | null
+          createdAt?: Date | null
+          developer?: boolean | null
+          private?: boolean | null
+          lastLogin?: Date | null
+          id: string
+          name?: string | null
+          profileUrl: string
+          role?: UserRole | null
+          status?: UserStatus | null
+          updatedAt?: Date | null
+          username?: string | null
+        } | null
+      } | null
     } | null
   } | null
 }
@@ -7734,6 +8551,71 @@ export const DiscordChannelDetailsFragmentDoc = gql`
     type
   }
 `
+export const CommunityDetailsFragmentDoc = gql`
+  fragment CommunityDetails on Community {
+    createdAt
+    id
+    name
+    enableSync
+    featured
+    avatarUrl
+    description
+    websiteUrl
+    discordUrl
+    githubUrl
+    twitterUrl
+    telegramUrl
+    updatedAt
+    cluster
+  }
+`
+export const AppConfigDetailsFragmentDoc = gql`
+  fragment AppConfigDetails on AppConfig {
+    appLogoUrlDark
+    appLogoUrlLight
+    appThemeBackground
+    appThemeColor
+    authLinkProviders
+    authLoginProviders
+    features
+    resolvers
+  }
+`
+export const PagingMetaDetailsFragmentDoc = gql`
+  fragment PagingMetaDetails on PagingMeta {
+    currentPage
+    isFirstPage
+    isLastPage
+    nextPage
+    pageCount
+    previousPage
+    totalCount
+  }
+`
+export const IdentitySummaryFragmentDoc = gql`
+  fragment IdentitySummary on Identity {
+    avatarUrl
+    id
+    name
+    provider
+    providerId
+    verified
+  }
+`
+export const IdentityChallengeDetailsFragmentDoc = gql`
+  fragment IdentityChallengeDetails on IdentityChallenge {
+    id
+    createdAt
+    updatedAt
+    provider
+    providerId
+    challenge
+    signature
+    blockhash
+    userAgent
+    verified
+  }
+`
 export const UserDetailsFragmentDoc = gql`
   fragment UserDetails on User {
     avatarUrl
@@ -7748,6 +8630,80 @@ export const UserDetailsFragmentDoc = gql`
     status
     updatedAt
     username
+  }
+`
+export const IdentityGrantDetailsFragmentDoc = gql`
+  fragment IdentityGrantDetails on IdentityGrant {
+    createdAt
+    id
+    granteeId
+    grantee {
+      ...UserDetails
+    }
+    provider
+    providerId
+    updatedAt
+  }
+  ${UserDetailsFragmentDoc}
+`
+export const BotDetailsFragmentDoc = gql`
+  fragment BotDetails on Bot {
+    avatarUrl
+    communityId
+    createdAt
+    developersUrl
+    id
+    inviteUrl
+    name
+    redirectUrl
+    redirectUrlSet
+    started
+    status
+    updatedAt
+    verificationUrl
+    verificationUrlSet
+  }
+`
+export const IdentityDetailsFragmentDoc = gql`
+  fragment IdentityDetails on Identity {
+    avatarUrl
+    createdAt
+    syncStarted
+    syncEnded
+    expired
+    id
+    name
+    ownerId
+    profile
+    provider
+    providerId
+    updatedAt
+    url
+    verified
+  }
+`
+export const NetworkAssetDetailsFragmentDoc = gql`
+  fragment NetworkAssetDetails on NetworkAsset {
+    id
+    createdAt
+    updatedAt
+    cluster
+    resolver
+    type
+    account
+    balance
+    name
+    symbol
+    program
+    decimals
+    mint
+    burnt
+    owner
+    group
+    imageUrl
+    explorerUrl
+    metadata
+    attributes
   }
 `
 export const NetworkTokenDetailsFragmentDoc = gql`
@@ -7841,6 +8797,20 @@ export const RolePermissionDetailsFragmentDoc = gql`
   }
   ${BotRoleDetailsFragmentDoc}
 `
+export const CommunityMemberDetailsFragmentDoc = gql`
+  fragment CommunityMemberDetails on CommunityMember {
+    communityId
+    createdAt
+    id
+    admin
+    updatedAt
+    user {
+      ...UserDetails
+    }
+    userId
+  }
+  ${UserDetailsFragmentDoc}
+`
 export const RoleDetailsFragmentDoc = gql`
   fragment RoleDetails on Role {
     createdAt
@@ -7853,168 +8823,15 @@ export const RoleDetailsFragmentDoc = gql`
     permissions {
       ...RolePermissionDetails
     }
+    member {
+      ...CommunityMemberDetails
+    }
     updatedAt
     viewUrl
   }
   ${RoleConditionDetailsFragmentDoc}
   ${RolePermissionDetailsFragmentDoc}
-`
-export const CommunityMemberDetailsFragmentDoc = gql`
-  fragment CommunityMemberDetails on CommunityMember {
-    communityId
-    createdAt
-    id
-    admin
-    updatedAt
-    user {
-      ...UserDetails
-    }
-    roles {
-      ...RoleDetails
-    }
-    userId
-  }
-  ${UserDetailsFragmentDoc}
-  ${RoleDetailsFragmentDoc}
-`
-export const CommunityDetailsFragmentDoc = gql`
-  fragment CommunityDetails on Community {
-    createdAt
-    id
-    name
-    enableSync
-    featured
-    avatarUrl
-    description
-    websiteUrl
-    discordUrl
-    githubUrl
-    twitterUrl
-    telegramUrl
-    updatedAt
-    cluster
-  }
-`
-export const AppConfigDetailsFragmentDoc = gql`
-  fragment AppConfigDetails on AppConfig {
-    appLogoUrlDark
-    appLogoUrlLight
-    appThemeBackground
-    appThemeColor
-    authLinkProviders
-    authLoginProviders
-    features
-    resolvers
-  }
-`
-export const PagingMetaDetailsFragmentDoc = gql`
-  fragment PagingMetaDetails on PagingMeta {
-    currentPage
-    isFirstPage
-    isLastPage
-    nextPage
-    pageCount
-    previousPage
-    totalCount
-  }
-`
-export const IdentitySummaryFragmentDoc = gql`
-  fragment IdentitySummary on Identity {
-    avatarUrl
-    id
-    name
-    provider
-    providerId
-    verified
-  }
-`
-export const IdentityChallengeDetailsFragmentDoc = gql`
-  fragment IdentityChallengeDetails on IdentityChallenge {
-    id
-    createdAt
-    updatedAt
-    provider
-    providerId
-    challenge
-    signature
-    blockhash
-    userAgent
-    verified
-  }
-`
-export const IdentityGrantDetailsFragmentDoc = gql`
-  fragment IdentityGrantDetails on IdentityGrant {
-    createdAt
-    id
-    granteeId
-    grantee {
-      ...UserDetails
-    }
-    provider
-    providerId
-    updatedAt
-  }
-  ${UserDetailsFragmentDoc}
-`
-export const BotDetailsFragmentDoc = gql`
-  fragment BotDetails on Bot {
-    avatarUrl
-    communityId
-    createdAt
-    developersUrl
-    id
-    inviteUrl
-    name
-    redirectUrl
-    redirectUrlSet
-    started
-    status
-    updatedAt
-    verificationUrl
-    verificationUrlSet
-  }
-`
-export const IdentityDetailsFragmentDoc = gql`
-  fragment IdentityDetails on Identity {
-    avatarUrl
-    createdAt
-    syncStarted
-    syncEnded
-    expired
-    id
-    name
-    ownerId
-    profile
-    provider
-    providerId
-    updatedAt
-    url
-    verified
-  }
-`
-export const NetworkAssetDetailsFragmentDoc = gql`
-  fragment NetworkAssetDetails on NetworkAsset {
-    id
-    createdAt
-    updatedAt
-    cluster
-    resolver
-    type
-    account
-    balance
-    name
-    symbol
-    program
-    decimals
-    mint
-    burnt
-    owner
-    group
-    imageUrl
-    explorerUrl
-    metadata
-    attributes
-  }
+  ${CommunityMemberDetailsFragmentDoc}
 `
 export const LogDetailsFragmentDoc = gql`
   fragment LogDetails on Log {
@@ -8323,6 +9140,9 @@ export const AdminFindManyCommunityMemberDocument = gql`
     paging: adminFindManyCommunityMember(input: $input) {
       data {
         ...CommunityMemberDetails
+        roles {
+          ...RoleDetails
+        }
       }
       meta {
         ...PagingMetaDetails
@@ -8330,31 +9150,44 @@ export const AdminFindManyCommunityMemberDocument = gql`
     }
   }
   ${CommunityMemberDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
   ${PagingMetaDetailsFragmentDoc}
 `
 export const AdminFindOneCommunityMemberDocument = gql`
   query adminFindOneCommunityMember($communityMemberId: String!) {
     item: adminFindOneCommunityMember(communityMemberId: $communityMemberId) {
       ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
     }
   }
   ${CommunityMemberDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
 `
 export const AdminAddCommunityMemberDocument = gql`
   mutation adminAddCommunityMember($communityId: String!, $input: AdminAddCommunityMemberInput!) {
     created: adminAddCommunityMember(communityId: $communityId, input: $input) {
       ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
     }
   }
   ${CommunityMemberDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
 `
 export const AdminUpdateCommunityMemberDocument = gql`
   mutation adminUpdateCommunityMember($communityMemberId: String!, $input: AdminUpdateCommunityMemberInput!) {
     updated: adminUpdateCommunityMember(communityMemberId: $communityMemberId, input: $input) {
       ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
     }
   }
   ${CommunityMemberDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
 `
 export const AdminRemoveCommunityMemberDocument = gql`
   mutation adminRemoveCommunityMember($communityMemberId: String!) {
@@ -8365,15 +9198,22 @@ export const UserGetCommunityMemberDocument = gql`
   query userGetCommunityMember($communityId: String!) {
     member: userGetCommunityMember(communityId: $communityId) {
       ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
     }
   }
   ${CommunityMemberDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
 `
 export const UserFindManyCommunityMemberDocument = gql`
   query userFindManyCommunityMember($input: UserFindManyCommunityMemberInput!) {
     paging: userFindManyCommunityMember(input: $input) {
       data {
         ...CommunityMemberDetails
+        roles {
+          ...RoleDetails
+        }
       }
       meta {
         ...PagingMetaDetails
@@ -8381,31 +9221,44 @@ export const UserFindManyCommunityMemberDocument = gql`
     }
   }
   ${CommunityMemberDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
   ${PagingMetaDetailsFragmentDoc}
 `
 export const UserFindOneCommunityMemberDocument = gql`
   query userFindOneCommunityMember($communityMemberId: String!) {
     item: userFindOneCommunityMember(communityMemberId: $communityMemberId) {
       ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
     }
   }
   ${CommunityMemberDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
 `
 export const UserAddCommunityMemberDocument = gql`
   mutation userAddCommunityMember($communityId: String!, $input: UserAddCommunityMemberInput!) {
     created: userAddCommunityMember(communityId: $communityId, input: $input) {
       ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
     }
   }
   ${CommunityMemberDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
 `
 export const UserUpdateCommunityMemberDocument = gql`
   mutation userUpdateCommunityMember($communityMemberId: String!, $input: UserUpdateCommunityMemberInput!) {
     updated: userUpdateCommunityMember(communityMemberId: $communityMemberId, input: $input) {
       ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
     }
   }
   ${CommunityMemberDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
 `
 export const UserRemoveCommunityMemberDocument = gql`
   mutation userRemoveCommunityMember($communityMemberId: String!) {
@@ -8459,9 +9312,17 @@ export const AnonGetCommunitiesDocument = gql`
   query anonGetCommunities {
     items: anonGetCommunities {
       ...CommunityDetails
+      roles {
+        ...RoleDetails
+        member {
+          ...CommunityMemberDetails
+        }
+      }
     }
   }
   ${CommunityDetailsFragmentDoc}
+  ${RoleDetailsFragmentDoc}
+  ${CommunityMemberDetailsFragmentDoc}
 `
 export const UserGetCommunitiesDocument = gql`
   query userGetCommunities($username: String!) {

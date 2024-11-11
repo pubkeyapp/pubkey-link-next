@@ -42,17 +42,24 @@ export class ApiCommunityDataService {
   async getCommunities(username: string) {
     return this.core.data.community.findMany({
       where: {
-        roles: {
-          some: { members: { some: { member: { user: { username } } } } },
-        },
+        // Ensure that the role has at least one condition
+        roles: { some: { conditions: { some: {} } } },
       },
       include: {
         roles: {
-          where: { members: { some: { member: { user: { username } } } } },
-          include: { conditions: { include: { token: true } } },
+          // Ensure that the role has at least one condition
+          where: { conditions: { some: {} } },
+          include: {
+            conditions: { include: { token: true } },
+            members: {
+              where: { member: { user: { username } } },
+              include: { member: true },
+            },
+          },
           orderBy: { name: 'asc' },
         },
       },
+      orderBy: { name: 'asc' },
     })
   }
 

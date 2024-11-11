@@ -25,6 +25,7 @@ export class ApiUserCommunityResolver {
   userDeleteCommunity(@CtxUserId() actorId: string, @Args('communityId') communityId: string) {
     return this.service.user.deleteCommunity(actorId, communityId)
   }
+
   @Query(() => [Community])
   userGetCommunities(@CtxUser() actor: User, @Args('username') username: string) {
     return this.service.user.getCommunities(actor, username)

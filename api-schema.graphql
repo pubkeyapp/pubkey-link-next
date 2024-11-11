@@ -689,6 +689,7 @@ type Role {
   conditions: [RoleCondition!]
   createdAt: DateTime
   id: String!
+  member: CommunityMember
   name: String!
   permissions: [RolePermission!]
   updatedAt: DateTime

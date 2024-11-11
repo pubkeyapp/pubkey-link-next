@@ -9,6 +9,9 @@ fragment RoleDetails on Role {
   permissions {
     ...RolePermissionDetails
   }
+  member {
+    ...CommunityMemberDetails
+  }
   updatedAt
   viewUrl
 }

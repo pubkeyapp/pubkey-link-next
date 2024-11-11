@@ -7,9 +7,6 @@ fragment CommunityMemberDetails on CommunityMember {
   user {
     ...UserDetails
   }
-  roles {
-    ...RoleDetails
-  }
   userId
 }
 
@@ -17,6 +14,9 @@ query adminFindManyCommunityMember($input: AdminFindManyCommunityMemberInput!) {
   paging: adminFindManyCommunityMember(input: $input) {
     data {
       ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
     }
     meta {
       ...PagingMetaDetails
@@ -27,17 +27,26 @@ query adminFindManyCommunityMember($input: AdminFindManyCommunityMemberInput!) {
 query adminFindOneCommunityMember($communityMemberId: String!) {
   item: adminFindOneCommunityMember(communityMemberId: $communityMemberId) {
     ...CommunityMemberDetails
+    roles {
+      ...RoleDetails
+    }
   }
 }
 
 mutation adminAddCommunityMember($communityId: String!, $input: AdminAddCommunityMemberInput!) {
   created: adminAddCommunityMember(communityId: $communityId, input: $input) {
     ...CommunityMemberDetails
+    roles {
+      ...RoleDetails
+    }
   }
 }
 mutation adminUpdateCommunityMember($communityMemberId: String!, $input: AdminUpdateCommunityMemberInput!) {
   updated: adminUpdateCommunityMember(communityMemberId: $communityMemberId, input: $input) {
     ...CommunityMemberDetails
+    roles {
+      ...RoleDetails
+    }
   }
 }
 
@@ -48,6 +57,9 @@ mutation adminRemoveCommunityMember($communityMemberId: String!) {
 query userGetCommunityMember($communityId: String!) {
   member: userGetCommunityMember(communityId: $communityId) {
     ...CommunityMemberDetails
+    roles {
+      ...RoleDetails
+    }
   }
 }
 
@@ -55,6 +67,9 @@ query userFindManyCommunityMember($input: UserFindManyCommunityMemberInput!) {
   paging: userFindManyCommunityMember(input: $input) {
     data {
       ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
     }
     meta {
       ...PagingMetaDetails
@@ -65,18 +80,27 @@ query userFindManyCommunityMember($input: UserFindManyCommunityMemberInput!) {
 query userFindOneCommunityMember($communityMemberId: String!) {
   item: userFindOneCommunityMember(communityMemberId: $communityMemberId) {
     ...CommunityMemberDetails
+    roles {
+      ...RoleDetails
+    }
   }
 }
 
 mutation userAddCommunityMember($communityId: String!, $input: UserAddCommunityMemberInput!) {
   created: userAddCommunityMember(communityId: $communityId, input: $input) {
     ...CommunityMemberDetails
+    roles {
+      ...RoleDetails
+    }
   }
 }
 
 mutation userUpdateCommunityMember($communityMemberId: String!, $input: UserUpdateCommunityMemberInput!) {
   updated: userUpdateCommunityMember(communityMemberId: $communityMemberId, input: $input) {
     ...CommunityMemberDetails
+    roles {
+      ...RoleDetails
+    }
   }
 }
 

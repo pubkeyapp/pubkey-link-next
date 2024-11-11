@@ -51,6 +51,12 @@ mutation adminDeleteCommunity($communityId: String!) {
 query anonGetCommunities {
   items: anonGetCommunities {
     ...CommunityDetails
+    roles {
+      ...RoleDetails
+      member {
+        ...CommunityMemberDetails
+      }
+    }
   }
 }
 
