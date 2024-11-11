@@ -1,7 +1,7 @@
 import { Box, Paper, Text } from '@mantine/core'
 import { Community } from '@pubkey-link/sdk'
 import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
-import { RoleUiListWithAssets } from '@pubkey-link/web-role-ui'
+import { RoleUiList } from '@pubkey-link/web-role-ui'
 import { UiGroup, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 import { Suspense } from 'react'
 import { CommunityUiItem } from './community-ui-item'
@@ -37,7 +37,7 @@ export function CommunityUiListItem({
               Roles assigned to {isAuthUser ? 'you' : username}
             </Text>
             {rolesAssigned?.length ? (
-              <RoleUiListWithAssets mt="xs" roles={rolesAssigned} username={username} />
+              <RoleUiList mt="xs" roles={rolesAssigned} username={username} withAssets />
             ) : (
               <UiInfo
                 mt="xs"
@@ -51,9 +51,13 @@ export function CommunityUiListItem({
               Available roles
             </Text>
             {rolesAvailable?.length ? (
-              <RoleUiListWithAssets mt="xs" roles={rolesAvailable} username={username} />
+              <RoleUiList mt="xs" roles={rolesAvailable} username={username} />
             ) : (
-              <UiInfo message="No inactive roles." />
+              <UiInfo
+                mt="xs"
+                title="All roles are assigned"
+                message={`${isAuthUser ? 'You have' : `${username} has`} all available roles assigned.`}
+              />
             )}
           </Box>
         </Suspense>

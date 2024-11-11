@@ -2,7 +2,7 @@ import { Button } from '@mantine/core'
 import { Community } from '@pubkey-link/sdk'
 import { useAuth } from '@pubkey-link/web-auth-data-access'
 import { useUserFindManyRole } from '@pubkey-link/web-role-data-access'
-import { RoleUiListWithAssets } from '@pubkey-link/web-role-ui'
+import { RoleUiList } from '@pubkey-link/web-role-ui'
 import { UiCard, UiGroup, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 import { Link } from 'react-router-dom'
 
@@ -18,7 +18,7 @@ export function CommunityDashboardMemberCardRoles({ community }: { community: Co
         {query.isLoading ? (
           <UiLoader />
         ) : filtered?.length ? (
-          <RoleUiListWithAssets mt="xs" roles={filtered ?? []} username={user?.username as string} />
+          <RoleUiList mt="xs" roles={filtered ?? []} username={user?.username as string} />
         ) : (
           <UiInfo
             title="No roles found."

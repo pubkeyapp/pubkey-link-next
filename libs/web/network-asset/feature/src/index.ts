@@ -4,3 +4,4 @@ export const AdminNetworkAssetFeature = lazy(() => import('./lib/admin-network-a
 export const NetworkAssetDetailFeature = lazy(() => import('./lib/network-asset-detail-feature'))
 export const UserNetworkAssetDetailFeature = lazy(() => import('./lib/user-network-asset-detail.feature'))
 export const UserNetworkAssetFeature = lazy(() => import('./lib/user-network-asset-list.feature'))
+export const UserNetworkAssetSlimFeature = lazy(() => import('./lib/user-network-asset-list-slim.feature'))
