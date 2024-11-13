@@ -65,7 +65,7 @@ export default function UserNetworkAssetListFeature({
 
       {query.isLoading ? (
         <UiLoader />
-      ) : items?.length ? (
+      ) : groups?.length ? (
         <UiStack gap="lg">
           {groups.map((group) => (
             <UiStack key={group.token.id}>
@@ -86,8 +86,19 @@ export default function UserNetworkAssetListFeature({
           ))}
         </UiStack>
       ) : (
-        <UiInfo message={`No ${type ? type : ''} assets found${cluster ? ` on cluster ${cluster}` : ''}.`} />
+        <UiInfo message={`No ${type ? typeName(type) : 'assets'} found${cluster ? ` on cluster ${cluster}` : ''}.`} />
       )}
     </UiStack>
   )
+}
+
+function typeName(type: NetworkTokenType) {
+  switch (type) {
+    case NetworkTokenType.Fungible:
+      return 'tokens'
+    case NetworkTokenType.NonFungible:
+      return 'collectibles'
+    default:
+      return type
+  }
 }
