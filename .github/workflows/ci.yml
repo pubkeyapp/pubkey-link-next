@@ -15,7 +15,7 @@ env:
 jobs:
   main:
     name: Nx Cloud - Main Job
-    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.13.0
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.15.0
     with:
       node-version: 20.10.0
       pnpm-version: 9.3.0
@@ -33,7 +33,7 @@ jobs:
 
   agents:
     name: Nx Cloud - Agents
-    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.13.0
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.15.0
     with:
       node-version: 20.10.0
       pnpm-version: 9.3.0
