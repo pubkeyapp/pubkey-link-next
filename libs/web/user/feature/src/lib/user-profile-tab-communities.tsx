@@ -11,7 +11,7 @@ export default function UserProfileTabCommunities({ isAuthUser, username }: { is
   ) : (
     <UiInfo
       title="No communities found."
-      message={`${isAuthUser ? 'You have' : `${username} has`} is not a member of any communities`}
+      message={`${isAuthUser ? 'You are' : `${username} is`} not a member of any communities`}
     />
   )
 }
