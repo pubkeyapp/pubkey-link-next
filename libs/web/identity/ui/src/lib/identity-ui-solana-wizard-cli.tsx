@@ -1,6 +1,6 @@
 import { Badge, Button, Stepper, StepperProps, TextInput } from '@mantine/core'
 import { useVerifyChallengeCli } from '@pubkey-link/web-identity-data-access'
-import { UiGroup, useUiBreakpoints } from '@pubkey-ui/core'
+import { UiCopy, UiGroup, useUiBreakpoints } from '@pubkey-ui/core'
 import { PublicKey } from '@solana/web3.js'
 import { IconCheck } from '@tabler/icons-react'
 import { useMemo, useState } from 'react'
@@ -116,13 +116,17 @@ export function IdentityUiSolanaWizardCli({ refresh, ...props }: IdentityUiSolan
 }
 
 function PublicKeyInput({ publicKey, setPublicKey }: { publicKey: string; setPublicKey: (publicKey: string) => void }) {
+  const placeholder = `solana address -k ~/path/to/validator-keypair.json`
   return (
     <TextInput
       label="Public Key"
       description="Enter the public key of the wallet you want to link."
       value={publicKey}
       onChange={(e) => setPublicKey(e.target.value.trim())}
-      placeholder="solana address -k ~/path/to/keypair.json"
+      placeholder={placeholder}
+      rightSection={
+        <UiCopy mr="xs" text={placeholder} tooltip="Copy command" size="sm" variant="light" color="brand" ml="xs" />
+      }
     />
   )
 }
