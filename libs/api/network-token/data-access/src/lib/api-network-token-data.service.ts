@@ -54,10 +54,10 @@ export class ApiNetworkTokenDataService {
           network: { connect: { cluster: network.cluster } },
           type: NetworkTokenType.Validator,
           account: hash,
-          name: `${network.cluster.replace('Solana', 'Solana ')} Genesis`,
+          name: `${network.cluster.replace('Solana', 'Solana ')}`,
+          description: `Genesis Hash for ${network.cluster.replace('Solana', 'Solana ')}`,
           program: SystemProgram.programId.toBase58(),
         }
-
         await this.core.data.networkToken.create({ data })
         this.logger.log(
           `ensureGenesisHash: Created Genesis Block for cluster ${network.cluster} with genesis hash ${hash}`,
