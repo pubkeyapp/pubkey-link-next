@@ -1,10 +1,10 @@
 import { Accordion, Text } from '@mantine/core'
-import { Community, NetworkToken, Role } from '@pubkey-link/sdk'
+import { Community, Role } from '@pubkey-link/sdk'
 
 import { RoleConditionUiItem, RoleConditionUiPanel } from '@pubkey-link/web-role-ui'
 import { UiStack } from '@pubkey-ui/core'
 
-export function UserRoleConditionListFeature(props: { role: Role; community: Community; tokens: NetworkToken[] }) {
+export function UserRoleConditionListFeature(props: { role: Role; community: Community }) {
   const conditions = props.role.conditions ?? []
   return (
     <UiStack>

@@ -4,9 +4,11 @@ import { UiSelectEnum } from '@pubkey-ui/core'
 export function NetworkUiSelectCluster({
   value,
   setValue,
+  options = getEnumOptions(NetworkCluster),
 }: {
   value: NetworkCluster | undefined
   setValue: (role: NetworkCluster) => void
+  options?: { label: string; value: NetworkCluster }[]
 }) {
   return (
     <UiSelectEnum<NetworkCluster>
@@ -16,7 +18,7 @@ export function NetworkUiSelectCluster({
       clearable
       placeholder="Filter by cluster"
       options={[
-        ...getEnumOptions(NetworkCluster).map(({ label, value }) => ({
+        ...options.map(({ label, value }) => ({
           value,
           label: label.replace('Solana', 'Solana '),
         })),

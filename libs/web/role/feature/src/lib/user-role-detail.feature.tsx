@@ -2,7 +2,6 @@ import { Group, Text } from '@mantine/core'
 import { Community } from '@pubkey-link/sdk'
 import { useUserFindOneBot } from '@pubkey-link/web-bot-data-access'
 import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
-import { useUserFindManyNetworkToken } from '@pubkey-link/web-network-token-data-access'
 import { useUserFindOneRole } from '@pubkey-link/web-role-data-access'
 import { RoleConditionUiAddButton, RoleUiItem } from '@pubkey-link/web-role-ui'
 import { UiAnchor, UiBack, UiCard, UiCardTitle, UiError, UiGroup, UiLoader, UiStack, UiWarning } from '@pubkey-ui/core'
@@ -14,7 +13,6 @@ import { UserRoleDetailSettingsTab } from './user-role-detail-settings.tab'
 export function UserRoleDetailFeature({ community }: { community: Community }) {
   const { roleId } = useParams<{ roleId: string }>() as { roleId: string }
   const { item, query } = useUserFindOneRole({ roleId })
-  const { items: tokens } = useUserFindManyNetworkToken({ cluster: community.cluster, limit: 100 })
   const { query: botQuery, item: bot } = useUserFindOneBot({ communityId: community.id })
 
   const isLoading = query.isLoading || botQuery.isLoading
@@ -35,7 +33,7 @@ export function UserRoleDetailFeature({ community }: { community: Community }) {
           title={
             <UiGroup>
               <UiCardTitle>Conditions</UiCardTitle>
-              <RoleConditionUiAddButton community={community} tokens={tokens} role={item} />
+              <RoleConditionUiAddButton community={community} role={item} />
             </UiGroup>
           }
         >

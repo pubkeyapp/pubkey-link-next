@@ -1,10 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql'
-import { NetworkCluster } from '@pubkey-link/api-network-data-access'
 
 @InputType()
 export class AdminCreateCommunityInput {
-  @Field(() => NetworkCluster)
-  cluster!: NetworkCluster
   @Field()
   name!: string
   @Field({ nullable: true })

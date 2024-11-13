@@ -71,7 +71,7 @@ model Community {
   featured    Boolean           @default(false)
   members     CommunityMember[]
   roles       Role[]
-  cluster     NetworkCluster
+  cluster     NetworkCluster? // This field is deprecated and will be removed in a future version
   bot         Bot?
   logs        Log[]
 

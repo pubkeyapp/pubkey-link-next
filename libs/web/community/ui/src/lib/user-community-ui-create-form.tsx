@@ -1,18 +1,9 @@
 import { Button, Group } from '@mantine/core'
-import { NetworkCluster, UserCreateCommunityInput } from '@pubkey-link/sdk'
-import { formFieldSelect, formFieldText, UiForm, UiFormField } from '@pubkey-ui/core'
-import { useDefaultFormCluster } from './use-default-form-cluster'
+import { UserCreateCommunityInput } from '@pubkey-link/sdk'
+import { formFieldText, UiForm, UiFormField } from '@pubkey-ui/core'
 
-export function UserCommunityUiCreateForm({
-  clusters = [],
-  submit,
-}: {
-  clusters: NetworkCluster[]
-  submit: (res: UserCreateCommunityInput) => Promise<boolean>
-}) {
-  const cluster = useDefaultFormCluster(clusters)
+export function UserCommunityUiCreateForm({ submit }: { submit: (res: UserCreateCommunityInput) => Promise<boolean> }) {
   const model: UserCreateCommunityInput = {
-    cluster,
     avatarUrl: '',
     description: '',
     discordUrl: '',
@@ -24,11 +15,6 @@ export function UserCommunityUiCreateForm({
   }
 
   const fields: UiFormField<UserCreateCommunityInput>[] = [
-    formFieldSelect('cluster', {
-      label: 'Cluster',
-      required: true,
-      options: clusters?.map((value) => ({ value, label: value })),
-    }),
     formFieldText('name', { label: 'Name', required: true }),
     formFieldText('description', { label: 'Description' }),
     formFieldText('avatarUrl', { label: 'Avatar Url' }),

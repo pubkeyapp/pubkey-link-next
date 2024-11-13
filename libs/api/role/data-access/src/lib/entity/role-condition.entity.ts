@@ -24,7 +24,7 @@ export class RoleCondition {
   @Field(() => GraphQLJSON, { nullable: true })
   filters?: Prisma.JsonValue | null
   @Field({ nullable: true })
-  token?: NetworkToken | null
+  token!: NetworkToken
   role?: Role | null
   @Field({ nullable: true })
   tokenId?: string | null

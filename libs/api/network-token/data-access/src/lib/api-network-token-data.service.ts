@@ -54,7 +54,7 @@ export class ApiNetworkTokenDataService {
           network: { connect: { cluster: network.cluster } },
           type: NetworkTokenType.Validator,
           account: hash,
-          name: `Solana Genesis`,
+          name: `${network.cluster.replace('Solana', 'Solana ')} Genesis`,
           program: SystemProgram.programId.toBase58(),
         }
 

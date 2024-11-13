@@ -2,7 +2,6 @@ import { Badge, Group } from '@mantine/core'
 import { useUserFindOneCommunity } from '@pubkey-link/web-community-data-access'
 import { CommunityUiAdminIcon, CommunityUiItem } from '@pubkey-link/web-community-ui'
 import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
-import { NetworkUiClusterBadge } from '@pubkey-link/web-network-ui'
 import { UiBack, UiContainer, UiError, UiGroup, UiLoader, UiStack } from '@pubkey-ui/core'
 import { useParams } from 'react-router-dom'
 import { CommunityDashboardMemberCardRoles } from './community-dashboard-member-card-roles'
@@ -38,7 +37,6 @@ export function UserCommunityDetailFeature() {
           <Group>
             <CommunityUiAdminIcon community={item} />
             <AppUiDebugModal data={{ item, communityAdmin, communityId, member }} />
-            <NetworkUiClusterBadge cluster={item.cluster} />
           </Group>
         </UiGroup>
         {member?.admin ? (

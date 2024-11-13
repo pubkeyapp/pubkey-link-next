@@ -1,8 +1,7 @@
 import { Accordion, Grid, NavLink } from '@mantine/core'
-import { Community, NetworkToken, Role } from '@pubkey-link/sdk'
+import { Community, Role } from '@pubkey-link/sdk'
 import { useAdminFindOneCommunity } from '@pubkey-link/web-community-data-access'
 import { CommunityUiItem } from '@pubkey-link/web-community-ui'
-import { useAdminFindManyNetworkToken } from '@pubkey-link/web-network-token-data-access'
 import { useAdminFindManyRole, useUserFindOneRole } from '@pubkey-link/web-role-data-access'
 import {
   RoleConditionUiCreateWizard,
@@ -40,10 +39,9 @@ export function DevConditionWizardDetail() {
 
 export function DevConditionWizardDetailGrid({ community, roles }: { community: Community; roles: Role[] }) {
   const { pathname } = useLocation()
-  const { items } = useAdminFindManyNetworkToken({ cluster: community.cluster })
   const routes = useRoutes([
     { path: '', element: <UiInfo message="Select a role to continue" /> },
-    { path: ':roleId', element: <RoleDetails community={community} roles={roles ?? []} tokens={items} /> },
+    { path: ':roleId', element: <RoleDetails community={community} /> },
   ])
 
   return (
@@ -69,7 +67,7 @@ export function DevConditionWizardDetailGrid({ community, roles }: { community: 
   )
 }
 
-function RoleDetails({ community, roles, tokens }: { community: Community; roles: Role[]; tokens: NetworkToken[] }) {
+function RoleDetails({ community }: { community: Community }) {
   const { roleId } = useParams() as { roleId: string }
   const { item: role, query } = useUserFindOneRole({ roleId })
 
@@ -86,7 +84,7 @@ function RoleDetails({ community, roles, tokens }: { community: Community; roles
       <UiCard>
         <UiCardTitle>Conditions</UiCardTitle>
       </UiCard>
-      <RoleConditionUiCreateWizard role={role} community={community} tokens={tokens} />
+      <RoleConditionUiCreateWizard role={role} community={community} />
       {role.conditions?.length ? (
         <Accordion multiple variant="separated">
           {role.conditions.map((condition) => (

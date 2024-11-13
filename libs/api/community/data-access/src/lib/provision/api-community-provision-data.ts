@@ -152,7 +152,6 @@ const PK_BOT: Prisma.BotCreateWithoutCommunityInput = {
 
 export const provisionCommunities: Prisma.CommunityCreateInput[] = [
   {
-    cluster: NetworkCluster.SolanaCustom,
     name: 'localhost',
     featured: true,
     enableSync: true,
@@ -170,7 +169,6 @@ export const provisionCommunities: Prisma.CommunityCreateInput[] = [
     },
   },
   {
-    cluster,
     name: 'PubKey',
     featured: true,
     enableSync: true,
@@ -232,7 +230,6 @@ export const provisionCommunities: Prisma.CommunityCreateInput[] = [
     },
   },
   {
-    cluster,
     id: 'deanslist',
     name: "Dean's List",
     featured: true,
@@ -278,7 +275,6 @@ export const provisionCommunities: Prisma.CommunityCreateInput[] = [
     },
   },
   {
-    cluster,
     name: 'Marinade',
     description: 'A DAO with a staking protocol built on Solana',
     avatarUrl: 'https://avatars.githubusercontent.com/u/81361338?v=4',
@@ -303,7 +299,6 @@ export const provisionCommunities: Prisma.CommunityCreateInput[] = [
     },
   },
   {
-    cluster,
     id: 'legends-of-sol',
     name: 'Legends of SOL',
     featured: true,

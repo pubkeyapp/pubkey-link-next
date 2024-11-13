@@ -38,7 +38,6 @@ export type AdminCreateBotInput = {
 
 export type AdminCreateCommunityInput = {
   avatarUrl?: InputMaybe<Scalars['String']['input']>
-  cluster: NetworkCluster
   description?: InputMaybe<Scalars['String']['input']>
   discordUrl?: InputMaybe<Scalars['String']['input']>
   githubUrl?: InputMaybe<Scalars['String']['input']>
@@ -292,7 +291,6 @@ export enum BotStatus {
 export type Community = {
   __typename?: 'Community'
   avatarUrl?: Maybe<Scalars['String']['output']>
-  cluster: NetworkCluster
   createdAt?: Maybe<Scalars['DateTime']['output']>
   description?: Maybe<Scalars['String']['output']>
   discordUrl?: Maybe<Scalars['String']['output']>
@@ -1396,7 +1394,6 @@ export type UserCreateBotInput = {
 
 export type UserCreateCommunityInput = {
   avatarUrl?: InputMaybe<Scalars['String']['input']>
-  cluster: NetworkCluster
   description?: InputMaybe<Scalars['String']['input']>
   discordUrl?: InputMaybe<Scalars['String']['input']>
   githubUrl?: InputMaybe<Scalars['String']['input']>
@@ -3478,7 +3475,6 @@ export type CommunityDetailsFragment = {
   twitterUrl?: string | null
   telegramUrl?: string | null
   updatedAt?: Date | null
-  cluster: NetworkCluster
 }
 
 export type AdminFindManyCommunityQueryVariables = Exact<{
@@ -3504,7 +3500,6 @@ export type AdminFindManyCommunityQuery = {
       twitterUrl?: string | null
       telegramUrl?: string | null
       updatedAt?: Date | null
-      cluster: NetworkCluster
     }>
     meta: {
       __typename?: 'PagingMeta'
@@ -3540,7 +3535,6 @@ export type AdminFindOneCommunityQuery = {
     twitterUrl?: string | null
     telegramUrl?: string | null
     updatedAt?: Date | null
-    cluster: NetworkCluster
   } | null
 }
 
@@ -3565,7 +3559,6 @@ export type AdminCreateCommunityMutation = {
     twitterUrl?: string | null
     telegramUrl?: string | null
     updatedAt?: Date | null
-    cluster: NetworkCluster
   } | null
 }
 
@@ -3591,7 +3584,6 @@ export type AdminUpdateCommunityMutation = {
     twitterUrl?: string | null
     telegramUrl?: string | null
     updatedAt?: Date | null
-    cluster: NetworkCluster
   } | null
 }
 
@@ -3620,7 +3612,6 @@ export type AnonGetCommunitiesQuery = {
     twitterUrl?: string | null
     telegramUrl?: string | null
     updatedAt?: Date | null
-    cluster: NetworkCluster
     roles?: Array<{
       __typename?: 'Role'
       createdAt?: Date | null
@@ -3743,7 +3734,6 @@ export type UserGetCommunitiesQuery = {
     twitterUrl?: string | null
     telegramUrl?: string | null
     updatedAt?: Date | null
-    cluster: NetworkCluster
     roles?: Array<{
       __typename?: 'Role'
       createdAt?: Date | null
@@ -3868,7 +3858,6 @@ export type UserFindManyCommunityQuery = {
       twitterUrl?: string | null
       telegramUrl?: string | null
       updatedAt?: Date | null
-      cluster: NetworkCluster
       roles?: Array<{
         __typename?: 'Role'
         createdAt?: Date | null
@@ -4002,7 +3991,6 @@ export type UserFindOneCommunityQuery = {
     twitterUrl?: string | null
     telegramUrl?: string | null
     updatedAt?: Date | null
-    cluster: NetworkCluster
   } | null
 }
 
@@ -4027,7 +4015,6 @@ export type UserCreateCommunityMutation = {
     twitterUrl?: string | null
     telegramUrl?: string | null
     updatedAt?: Date | null
-    cluster: NetworkCluster
   } | null
 }
 
@@ -4053,7 +4040,6 @@ export type UserUpdateCommunityMutation = {
     twitterUrl?: string | null
     telegramUrl?: string | null
     updatedAt?: Date | null
-    cluster: NetworkCluster
   } | null
 }
 
@@ -8566,7 +8552,6 @@ export const CommunityDetailsFragmentDoc = gql`
     twitterUrl
     telegramUrl
     updatedAt
-    cluster
   }
 `
 export const AppConfigDetailsFragmentDoc = gql`
@@ -13165,7 +13150,6 @@ export function AdminCreateBotInputSchema(): z.ZodObject<Properties<AdminCreateB
 export function AdminCreateCommunityInputSchema(): z.ZodObject<Properties<AdminCreateCommunityInput>> {
   return z.object({
     avatarUrl: z.string().nullish(),
-    cluster: NetworkClusterSchema,
     description: z.string().nullish(),
     discordUrl: z.string().nullish(),
     githubUrl: z.string().nullish(),
@@ -13427,7 +13411,6 @@ export function UserCreateBotInputSchema(): z.ZodObject<Properties<UserCreateBot
 export function UserCreateCommunityInputSchema(): z.ZodObject<Properties<UserCreateCommunityInput>> {
   return z.object({
     avatarUrl: z.string().nullish(),
-    cluster: NetworkClusterSchema,
     description: z.string().nullish(),
     discordUrl: z.string().nullish(),
     githubUrl: z.string().nullish(),

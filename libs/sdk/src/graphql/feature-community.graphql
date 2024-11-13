@@ -12,7 +12,6 @@ fragment CommunityDetails on Community {
   twitterUrl
   telegramUrl
   updatedAt
-  cluster
 }
 
 query adminFindManyCommunity($input: AdminFindManyCommunityInput!) {

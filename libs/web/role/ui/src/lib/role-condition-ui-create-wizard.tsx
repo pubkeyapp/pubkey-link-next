@@ -1,41 +1,37 @@
 import { Box, Button, Group, Stepper } from '@mantine/core'
 import { modals } from '@mantine/modals'
-import { Community, NetworkToken, NetworkTokenType, Role } from '@pubkey-link/sdk'
+import { Community, NetworkCluster, NetworkToken, NetworkTokenType, Role } from '@pubkey-link/sdk'
 import { useAppConfig } from '@pubkey-link/web-core-data-access'
+import { useUserGetEnabledNetworkClusters } from '@pubkey-link/web-network-data-access'
+import { useUserFindManyNetworkToken } from '@pubkey-link/web-network-token-data-access'
 import { NetworkTokenUiItem } from '@pubkey-link/web-network-token-ui'
+import { NetworkUiSelectCluster } from '@pubkey-link/web-network-ui'
 import { useUserFindOneRole } from '@pubkey-link/web-role-data-access'
-import { toastError, UiCard, UiInfo, UiInfoTable, UiStack } from '@pubkey-ui/core'
+import { UiCard, UiInfo, UiInfoTable, UiStack } from '@pubkey-ui/core'
 import { useMemo, useState } from 'react'
 import { RoleConditionUiItem } from './role-condition-ui-item'
 import { RoleConditionUiNavLink } from './role-condition-ui-nav-link'
 import { RoleConditionUiTypeForm } from './role-condition-ui-type-form'
 
-export function RoleConditionUiCreateWizard(props: { role: Role; community: Community; tokens: NetworkToken[] }) {
-  const { query, createRoleCondition } = useUserFindOneRole({ roleId: props.role.id })
+export function RoleConditionUiCreateWizard(props: { role: Role; community: Community }) {
   const [networkTokenType, setNetworkTokenType] = useState<NetworkTokenType | undefined>(undefined)
-  const { enabledTokenTypes } = useAppConfig()
   const [networkToken, setNetworkToken] = useState<NetworkToken | undefined>(undefined)
-  const tokens: NetworkToken[] = useMemo(() => {
-    if (networkTokenType === NetworkTokenType.Fungible) {
-      return props.tokens.filter((token) => token.type === NetworkTokenType.Fungible)
-    }
-    if (networkTokenType === NetworkTokenType.NonFungible) {
-      return props.tokens.filter((token) => token.type === NetworkTokenType.NonFungible)
-    }
-    if (networkTokenType === NetworkTokenType.Validator) {
-      const filtered = props.tokens.filter((token) => token.type === NetworkTokenType.Validator)
-
-      if (filtered.length === 0) {
-        toastError('No validators found')
-      }
-      if (filtered.length === 1) {
-        setNetworkToken(filtered[0])
-      }
-
-      return filtered
-    }
-    return []
-  }, [networkTokenType, props.tokens])
+  const {
+    items: clusterTokens,
+    cluster,
+    setCluster,
+  } = useUserFindManyNetworkToken({ cluster: NetworkCluster.SolanaMainnet, limit: 100 })
+  const { query, createRoleCondition } = useUserFindOneRole({ roleId: props.role.id })
+  const clusterOptionsQuery = useUserGetEnabledNetworkClusters()
+  const clusterOptions: NetworkCluster[] = useMemo(
+    () => (clusterOptionsQuery?.data?.clusters ?? []).sort(),
+    [clusterOptionsQuery.data],
+  )
+  const { enabledTokenTypes } = useAppConfig()
+  const tokens: NetworkToken[] = useMemo(
+    () => clusterTokens.filter((token) => token.type === networkTokenType),
+    [networkTokenType, clusterTokens],
+  )
 
   async function addCondition(tokenId: string) {
     createRoleCondition({ roleId: props.role.id, tokenId })
@@ -86,12 +82,26 @@ export function RoleConditionUiCreateWizard(props: { role: Role; community: Comm
                   <Box px="sm" py="xs">
                     <RoleConditionUiItem type={networkTokenType} />
                   </Box>
-                  <RoleConditionUiTypeForm
-                    networkToken={networkToken}
-                    setNetworkToken={setNetworkToken}
-                    type={networkTokenType}
-                    tokens={tokens.sort((a, b) => a.name.localeCompare(b.name))}
+                  <NetworkUiSelectCluster
+                    value={cluster}
+                    setValue={setCluster}
+                    options={clusterOptions.map((cluster) => ({
+                      label: cluster.replace('Solana', 'Solana '),
+                      value: cluster,
+                    }))}
                   />
+                  {tokens.length ? (
+                    <RoleConditionUiTypeForm
+                      networkToken={networkToken}
+                      setNetworkToken={setNetworkToken}
+                      type={networkTokenType}
+                      tokens={tokens.sort((a, b) => a.name.localeCompare(b.name))}
+                    />
+                  ) : (
+                    <UiInfo
+                      message={`No ${networkTokenType} tokens found on ${cluster?.replace('Solana', 'Solana ')}`}
+                    />
+                  )}
                 </UiStack>
               ) : (
                 <UiInfo message="Select a condition type" />

@@ -511,7 +511,7 @@ export class ApiBotInstancesService {
     await discordBot.sendChannel(botServer.botChannel, {
       embeds: [
         {
-          title: `Configuration for ${discordBot.client?.user?.username} in ${bot.community.name} (${bot.community.cluster})`,
+          title: `Configuration for ${discordBot.client?.user?.username} in ${bot.community.name}`,
           fields: [
             { name: 'Requester', value: `<@${identity.providerId}>` },
             { name: `Bot`, value: `<@${discordBot.client?.user?.id}>` },

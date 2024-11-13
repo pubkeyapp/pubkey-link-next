@@ -52,8 +52,8 @@ export class CommandService {
       return
     }
     console.log(`Found ${res.data.paging.meta.totalCount} communities`)
-    for (const { id, name, description, cluster } of res.data.paging.data) {
-      console.log(`- [${cluster}] [${id}] ${name} - ${description}`)
+    for (const { id, name, description } of res.data.paging.data) {
+      console.log(`- [${id}] ${name} - ${description}`)
     }
   }
 

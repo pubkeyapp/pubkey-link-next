@@ -9,7 +9,6 @@ export class ApiCommunityDataService {
 
   async create(userId: string, input: Prisma.CommunityCreateInput) {
     this.core.config.ensureFeature(AppFeature.CommunityCreate)
-    await this.core.ensureNetworkCluster(input.cluster)
     const created = await this.core.createCommunity({ userId, input })
     await this.core.logInfo(`[${created.id}] Community created`, { userId, communityId: created.id })
     return created

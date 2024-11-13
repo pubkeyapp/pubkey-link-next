@@ -1,6 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 import { PagingResponse } from '@pubkey-link/api-core-data-access'
-import { NetworkCluster } from '@pubkey-link/api-network-data-access'
 import { Role } from '@pubkey-link/api-role-data-access'
 
 @ObjectType()
@@ -31,8 +30,6 @@ export class Community {
   twitterUrl?: string | null
   @Field({ nullable: true })
   telegramUrl?: string | null
-  @Field(() => NetworkCluster)
-  cluster!: NetworkCluster
   @Field(() => [Role], { nullable: true })
   roles?: Role[]
 }

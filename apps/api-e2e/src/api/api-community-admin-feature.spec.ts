@@ -3,11 +3,9 @@ import {
   AdminFindManyCommunityInput,
   AdminUpdateCommunityInput,
   Community,
-  NetworkCluster,
 } from '@pubkey-link/sdk'
 import { getAliceCookie, getBobCookie, sdk, uniqueId } from '../support'
 
-const defaultCluster = NetworkCluster.SolanaMainnet
 describe('api-community-feature', () => {
   describe('api-community-admin-resolver', () => {
     const communityName = uniqueId('acme-community')
@@ -21,7 +19,6 @@ describe('api-community-feature', () => {
       const created = await sdk.adminCreateCommunity(
         {
           input: {
-            cluster: defaultCluster,
             name: communityName,
           },
         },
@@ -33,7 +30,6 @@ describe('api-community-feature', () => {
     describe('authorized', () => {
       it('should create a community', async () => {
         const input: AdminCreateCommunityInput = {
-          cluster: defaultCluster,
           name: uniqueId('community'),
         }
 
@@ -48,7 +44,6 @@ describe('api-community-feature', () => {
 
       it('should update a community', async () => {
         const createInput: AdminCreateCommunityInput = {
-          cluster: defaultCluster,
           name: uniqueId('community'),
         }
         const createdRes = await sdk.adminCreateCommunity({ input: createInput }, { cookie: alice })
@@ -64,7 +59,7 @@ describe('api-community-feature', () => {
       })
 
       it('should find a list of communities (find all)', async () => {
-        const createInput: AdminCreateCommunityInput = { cluster: defaultCluster, name: uniqueId('community') }
+        const createInput: AdminCreateCommunityInput = { name: uniqueId('community') }
         const createdRes = await sdk.adminCreateCommunity({ input: createInput }, { cookie: alice })
         const communityId = createdRes.data.created.id
 
@@ -81,7 +76,7 @@ describe('api-community-feature', () => {
       })
 
       it('should find a list of communities (find new one)', async () => {
-        const createInput: AdminCreateCommunityInput = { cluster: defaultCluster, name: uniqueId('community') }
+        const createInput: AdminCreateCommunityInput = { name: uniqueId('community') }
         const createdRes = await sdk.adminCreateCommunity({ input: createInput }, { cookie: alice })
         const communityId = createdRes.data.created.id
 
@@ -97,7 +92,7 @@ describe('api-community-feature', () => {
       })
 
       it('should find a community by id', async () => {
-        const createInput: AdminCreateCommunityInput = { cluster: defaultCluster, name: uniqueId('community') }
+        const createInput: AdminCreateCommunityInput = { name: uniqueId('community') }
         const createdRes = await sdk.adminCreateCommunity({ input: createInput }, { cookie: alice })
         const communityId = createdRes.data.created.id
 
@@ -107,7 +102,7 @@ describe('api-community-feature', () => {
       })
 
       it('should delete a community', async () => {
-        const createInput: AdminCreateCommunityInput = { cluster: defaultCluster, name: uniqueId('community') }
+        const createInput: AdminCreateCommunityInput = { name: uniqueId('community') }
         const createdRes = await sdk.adminCreateCommunity({ input: createInput }, { cookie: alice })
         const communityId = createdRes.data.created.id
 
@@ -124,7 +119,7 @@ describe('api-community-feature', () => {
     describe('unauthorized', () => {
       it('should not create a community', async () => {
         expect.assertions(1)
-        const input: AdminCreateCommunityInput = { cluster: defaultCluster, name: uniqueId('community') }
+        const input: AdminCreateCommunityInput = { name: uniqueId('community') }
 
         try {
           await sdk.adminCreateCommunity({ input }, { cookie: bob })

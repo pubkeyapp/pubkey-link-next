@@ -21,7 +21,6 @@ xdescribe('api-community-feature', () => {
       const created = await sdk.userCreateCommunity(
         {
           input: {
-            cluster: defaultCluster,
             name: communityName,
           },
         },
@@ -33,7 +32,6 @@ xdescribe('api-community-feature', () => {
     describe('authorized', () => {
       it('should create a community', async () => {
         const input: UserCreateCommunityInput = {
-          cluster: defaultCluster,
           name: uniqueId('community'),
         }
 
@@ -48,7 +46,6 @@ xdescribe('api-community-feature', () => {
 
       it('should update a community', async () => {
         const createInput: UserCreateCommunityInput = {
-          cluster: defaultCluster,
           name: uniqueId('community'),
         }
         const createdRes = await sdk.userCreateCommunity({ input: createInput }, { cookie: alice })
@@ -65,7 +62,6 @@ xdescribe('api-community-feature', () => {
 
       it('should find a list of communities (find all)', async () => {
         const createInput: UserCreateCommunityInput = {
-          cluster: defaultCluster,
           name: uniqueId('community'),
         }
         const createdRes = await sdk.userCreateCommunity({ input: createInput }, { cookie: alice })
@@ -83,7 +79,6 @@ xdescribe('api-community-feature', () => {
 
       it('should find a list of communities (find new one)', async () => {
         const createInput: UserCreateCommunityInput = {
-          cluster: defaultCluster,
           name: uniqueId('community'),
         }
         const createdRes = await sdk.userCreateCommunity({ input: createInput }, { cookie: alice })
@@ -102,7 +97,6 @@ xdescribe('api-community-feature', () => {
 
       it('should find a community by id', async () => {
         const createInput: UserCreateCommunityInput = {
-          cluster: defaultCluster,
           name: uniqueId('community'),
         }
         const createdRes = await sdk.userCreateCommunity({ input: createInput }, { cookie: alice })
@@ -115,7 +109,6 @@ xdescribe('api-community-feature', () => {
 
       it('should delete a community', async () => {
         const createInput: UserCreateCommunityInput = {
-          cluster: defaultCluster,
           name: uniqueId('community'),
         }
         const createdRes = await sdk.userCreateCommunity({ input: createInput }, { cookie: alice })
@@ -135,7 +128,6 @@ xdescribe('api-community-feature', () => {
       it('should not create a community', async () => {
         expect.assertions(1)
         const input: UserCreateCommunityInput = {
-          cluster: defaultCluster,
           name: uniqueId('community'),
         }
 

@@ -40,9 +40,7 @@ export function NetworkTokenUiItem({
               {networkToken?.name}
             </Text>
             <NetworkTokenUiTypeBadge type={networkToken.type} />
-            {networkToken.cluster === NetworkCluster.SolanaMainnet ? null : (
-              <NetworkUiClusterBadge cluster={networkToken.cluster} size="xs" style={{ textTransform: 'inherit' }} />
-            )}
+            <NetworkUiClusterBadge cluster={networkToken.cluster} size="xs" style={{ textTransform: 'inherit' }} />
           </Group>
           {to ? (
             account

@@ -16,7 +16,6 @@ input AdminCreateBotInput {
 
 input AdminCreateCommunityInput {
   avatarUrl: String
-  cluster: NetworkCluster!
   description: String
   discordUrl: String
   githubUrl: String
@@ -264,7 +263,6 @@ enum BotStatus {
 
 type Community {
   avatarUrl: String
-  cluster: NetworkCluster!
   createdAt: DateTime
   description: String
   discordUrl: String
@@ -814,7 +812,6 @@ input UserCreateBotInput {
 
 input UserCreateCommunityInput {
   avatarUrl: String
-  cluster: NetworkCluster!
   description: String
   discordUrl: String
   githubUrl: String

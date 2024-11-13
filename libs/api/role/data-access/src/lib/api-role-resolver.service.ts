@@ -55,7 +55,7 @@ export class ApiRoleResolverService {
     const startedAt = Date.now()
 
     const conditions = await this.getRoleConditions({ community })
-    const voteIdentities = await this.getVoteIdentities({ cluster: community.cluster, conditions })
+    const voteIdentities = await this.getVoteIdentities({ conditions })
 
     await this.syncCommunityMembers({ communityId, voteIdentities })
 
@@ -128,22 +128,29 @@ export class ApiRoleResolverService {
     return Promise.resolve(result)
   }
 
-  async getVoteIdentities({ cluster, conditions }: { cluster: NetworkCluster; conditions: RoleCondition[] }) {
+  async getVoteIdentities({ conditions }: { conditions: RoleCondition[] }) {
     const hasValidatorCondition: RoleCondition | undefined = conditions.find(
       (c) => c.type === NetworkTokenType.Validator,
     )
     if (!hasValidatorCondition) {
-      this.logger.debug(`[${cluster}] getVoteIdentities: No validator condition found for cluster.`)
+      this.logger.debug(`getVoteIdentities: No validator conditions found.`)
       return []
     }
-    try {
-      const accounts = await this.network.cluster.getVoteIdentities(cluster)
-      this.logger.debug(`[${cluster}] getVoteIdentities: Found ${accounts.length} identities for cluster.`)
-      return accounts
-    } catch (e) {
-      this.logger.error(`[${cluster}] getVoteIdentities: Error getting vote identities for cluster.: ${e}`)
-      return []
+    const clusters: NetworkCluster[] = conditions.map((c) => c.token.cluster)
+
+    const accounts: string[] = []
+
+    for (const cluster of clusters) {
+      try {
+        const accountsForCluster = await this.network.cluster.getVoteIdentities(cluster)
+        this.logger.debug(`[${cluster}] getVoteIdentities: Found ${accountsForCluster.length} identities.`)
+        accounts.push(...accountsForCluster)
+      } catch (e) {
+        this.logger.error(`[${cluster}] getVoteIdentities: Error getting vote identities for cluster.: ${e}`)
+      }
     }
+
+    return accounts
   }
 
   async syncCommunityMembers({ communityId, voteIdentities }: { communityId: string; voteIdentities: string[] }) {
