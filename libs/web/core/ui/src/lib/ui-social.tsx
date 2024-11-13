@@ -29,17 +29,17 @@ export function UiSocial({ href, icon: Icon, iconSize = 16, tooltip, ...props }:
 }
 
 export function UiSocialX({ ...props }: Omit<UiSocialProps, 'icon'>) {
-  return <UiSocial tooltip="Follow us on X" icon={IconBrandXFilled} {...props} />
+  return <UiSocial tooltip="Follow on X" icon={IconBrandXFilled} {...props} />
 }
 export function UiSocialDiscord({ ...props }: Omit<UiSocialProps, 'icon'>) {
-  return <UiSocial tooltip="Join our Discord" icon={IconBrandDiscordFilled} {...props} />
+  return <UiSocial tooltip="Join Discord" icon={IconBrandDiscordFilled} {...props} />
 }
 export function UiSocialGithub({ ...props }: Omit<UiSocialProps, 'icon'>) {
-  return <UiSocial tooltip="Follow us on GitHub" icon={IconBrandGithubFilled} {...props} />
+  return <UiSocial tooltip="Follow on GitHub" icon={IconBrandGithubFilled} {...props} />
 }
 export function UiSocialTelegram({ ...props }: Omit<UiSocialProps, 'icon'>) {
-  return <UiSocial tooltip="Join our Telegram" icon={IconBrandTelegram} {...props} />
+  return <UiSocial tooltip="Join Telegram" icon={IconBrandTelegram} {...props} />
 }
 export function UiSocialWebsite({ ...props }: Omit<UiSocialProps, 'icon'>) {
-  return <UiSocial tooltip="Visit our website" icon={IconWorldWww} {...props} />
+  return <UiSocial tooltip="Visit website" icon={IconWorldWww} {...props} />
 }

@@ -48,8 +48,8 @@ export function AuthUiPage({ authEnabled, children }: { authEnabled: boolean; ch
               <UiSocialGithub
                 size="lg"
                 iconSize={24}
-                href="https://x.com/pubkeyapp"
-                tooltip="Follow pubkeyapp on GitHub"
+                href="https://x.com/pubkeyapp/pubkey-link"
+                tooltip="Star PubKey Link on GitHub"
               />
               <UiSocialX
                 size="lg"
