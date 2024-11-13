@@ -7,8 +7,8 @@ import { UserPaging } from './entity/user.entity'
 export class ApiUserDataService {
   constructor(private readonly core: ApiCoreService) {}
 
-  async create(input: Prisma.UserUncheckedCreateInput) {
-    return this.core.data.user.create({ data: input })
+  async create(input: Omit<Prisma.UserUncheckedCreateInput, 'private'>) {
+    return this.core.data.user.create({ data: { ...input, private: this.core.config.featurePrivateProfiles } })
   }
 
   async delete(userId: string) {

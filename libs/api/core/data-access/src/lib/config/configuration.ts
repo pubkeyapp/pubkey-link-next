@@ -59,6 +59,7 @@ export interface ApiCoreConfig {
   featureCommunitySnapshots: boolean
   featureIdentityCliVerification: boolean
   featureIdentityGrants: boolean
+  featurePrivateProfiles: boolean
   featurePubkeyProtocol: boolean
   featureResolverSolanaFungible: boolean
   featureResolverSolanaNonFungible: boolean
@@ -122,6 +123,7 @@ export function configuration(): ApiCoreConfig {
     featureCommunitySnapshots: process.env['FEATURE_COMMUNITY_SNAPSHOTS'] === 'true',
     featureIdentityCliVerification: process.env['FEATURE_IDENTITY_CLI_VERIFICATION'] === 'true',
     featureIdentityGrants: process.env['FEATURE_IDENTITY_GRANTS'] === 'true',
+    featurePrivateProfiles: process.env['FEATURE_PRIVATE_PROFILES'] === 'true',
     featurePubkeyProtocol: process.env['FEATURE_PUBKEY_PROTOCOL'] === 'true',
     featureResolverSolanaFungible: process.env['FEATURE_RESOLVER_SOLANA_FUNGIBLE'] === 'true',
     featureResolverSolanaNonFungible: process.env['FEATURE_RESOLVER_SOLANA_NON_FUNGIBLE'] === 'true',

@@ -1,5 +1,6 @@
 import { type DynamicModule, Logger, Module } from '@nestjs/common'
 import { ApiCoreDataAccessModule } from '@pubkey-link/api-core-data-access'
+import { ApiUserDataAccessModule } from '@pubkey-link/api-user-data-access'
 import { ApiAuthStrategyService } from '../api-auth-strategy.service'
 import { ApiAuthStrategyDiscord } from './api-auth-strategy-discord'
 
@@ -14,7 +15,7 @@ export class ApiAuthStrategyDiscordModule {
     }
     return {
       module: ApiAuthStrategyDiscordModule,
-      imports: [ApiCoreDataAccessModule],
+      imports: [ApiCoreDataAccessModule, ApiUserDataAccessModule],
       providers: [ApiAuthStrategyDiscord, ApiAuthStrategyService],
     }
   }

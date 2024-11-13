@@ -72,6 +72,7 @@ export class ApiIdentityDataAnonService {
                 owner: {
                   create: {
                     username: slugifyId(`${ellipsify(providerId)}-${provider}`),
+                    private: this.core.config.featurePrivateProfiles,
                     role: admin ? UserRole.Admin : UserRole.User,
                     status: UserStatus.Active,
                     developer: admin,

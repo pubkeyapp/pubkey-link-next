@@ -1,13 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { IdentityProvider, LogLevel, Prisma, UserRole, UserStatus } from '@prisma/client'
 import { ApiCoreService } from '@pubkey-link/api-core-data-access'
+import { ApiUserService } from '@pubkey-link/api-user-data-access'
 
 import type { ApiAuthRequest } from '../interfaces/api-auth.request'
 
 @Injectable()
 export class ApiAuthStrategyService {
   private readonly logger = new Logger(ApiAuthStrategyService.name)
-  constructor(readonly core: ApiCoreService) {}
+  constructor(readonly core: ApiCoreService, readonly user: ApiUserService) {}
 
   async validateRequest({
     req,
@@ -118,30 +119,28 @@ export class ApiAuthStrategyService {
       `Creating user ${username} with identity ${identity.providerId} (${identity.provider}) (admin: ${admin})`,
     )
 
-    const user = await this.core.data.user.create({
-      data: {
-        avatarUrl: (identity.profile as { avatarUrl?: string })?.avatarUrl,
-        developer: admin,
-        role: admin ? UserRole.Admin : UserRole.User,
-        status: UserStatus.Active,
-        username,
-        name: (identity.profile as { name?: string })?.name,
-        identities: {
-          create: {
-            ...identity,
+    const user = await this.user.data.create({
+      avatarUrl: (identity.profile as { avatarUrl?: string })?.avatarUrl,
+      developer: admin,
+      role: admin ? UserRole.Admin : UserRole.User,
+      status: UserStatus.Active,
+      username,
+      name: (identity.profile as { name?: string })?.name,
+      identities: {
+        create: {
+          ...identity,
+        },
+      },
+      lastLogin: new Date(),
+      logs: {
+        create: [
+          {
+            message: `Created user ${username} with ${identity.provider} identity`,
+            level: LogLevel.Info,
+            identityProvider: identity.provider,
+            identityProviderId: identity.providerId,
           },
-        },
-        lastLogin: new Date(),
-        logs: {
-          create: [
-            {
-              message: `Created user ${username} with ${identity.provider} identity`,
-              level: LogLevel.Info,
-              identityProvider: identity.provider,
-              identityProviderId: identity.providerId,
-            },
-          ],
-        },
+        ],
       },
     })
     this.logger.verbose(

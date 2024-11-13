@@ -35,6 +35,7 @@ export const validationSchema = Joi.object({
   FEATURE_COMMUNITY_SNAPSHOTS: Joi.boolean().default(false),
   FEATURE_IDENTITY_CLI_VERIFICATION: Joi.boolean().default(false),
   FEATURE_IDENTITY_GRANTS: Joi.boolean().default(false),
+  FEATURE_PRIVATE_PROFILES: Joi.boolean().default(false),
   FEATURE_PUBKEY_PROTOCOL: Joi.boolean().default(false),
   FEATURE_RESOLVER_SOLANA_FUNGIBLE: Joi.boolean().default(true),
   FEATURE_RESOLVER_SOLANA_NON_FUNGIBLE: Joi.boolean().default(true),

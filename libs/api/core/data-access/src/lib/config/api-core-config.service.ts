@@ -217,6 +217,10 @@ export class ApiCoreConfigService {
     return this.service.get<boolean>('featureIdentityGrants')
   }
 
+  get featurePrivateProfiles() {
+    return this.service.get<boolean>('featurePrivateProfiles')
+  }
+
   get featureResolverSolanaFungible() {
     return this.service.get<boolean>('featureResolverSolanaFungible')
   }

@@ -153,6 +153,7 @@ export class ApiBackupService {
           data: {
             ...restoreUserFields(userData),
             avatarUrl,
+            private: this.core.config.featurePrivateProfiles,
             identities: { create: identities.map(restoreIdentityFields) },
             logs: {
               create: [
