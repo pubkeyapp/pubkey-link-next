@@ -89,6 +89,12 @@ export class ApiNetworkTokenDataService {
 
   async delete(networkTokenId: string) {
     await this.findOne(networkTokenId)
+    const conditions = await this.core.data.roleCondition.findMany({
+      where: { token: { id: networkTokenId } },
+    })
+    if (conditions.length) {
+      throw new Error(`Network token ${networkTokenId} is used by ${conditions.length} role conditions`)
+    }
     const deleted = await this.core.data.networkToken.delete({ where: { id: networkTokenId } })
     return !!deleted
   }
