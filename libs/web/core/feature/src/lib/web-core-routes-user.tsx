@@ -1,7 +1,6 @@
 import { UserCommunityFeature } from '@pubkey-link/web-community-feature'
 import { DashboardFeature } from '@pubkey-link/web-dashboard-feature'
 import { UserNetworkAssetDetailFeature } from '@pubkey-link/web-network-asset-feature'
-import { SolanaFeature } from '@pubkey-link/web-solana-feature'
 import { UserListFeature, UserProfileFeature, UserProfileRedirectFeature } from '@pubkey-link/web-user-feature'
 import { UiDashboardItem } from '@pubkey-ui/core'
 import { IconSettings, IconUsers, IconUsersGroup } from '@tabler/icons-react'
@@ -20,7 +19,6 @@ const routes: RouteObject[] = [
   { path: '/c/*', element: <UserCommunityFeature /> },
   { path: '/dashboard', element: <DashboardFeature links={links} /> },
   { path: '/settings/*', element: <UserProfileRedirectFeature to="settings" /> },
-  { path: '/solana/*', element: <SolanaFeature /> },
   { path: '/u/*', element: <UserProfileFeature /> },
   { path: '/users/*', element: <UserListFeature /> },
 ]

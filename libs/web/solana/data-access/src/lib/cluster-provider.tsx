@@ -1,4 +1,3 @@
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
 import { clusterApiUrl } from '@solana/web3.js'
 import { atom, useAtomValue, useSetAtom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
@@ -16,18 +15,6 @@ export enum ClusterNetwork {
   Testnet = 'testnet',
   Devnet = 'devnet',
   Custom = 'custom',
-}
-export function toWalletAdapterNetwork(cluster?: ClusterNetwork): WalletAdapterNetwork | undefined {
-  switch (cluster) {
-    case ClusterNetwork.Mainnet:
-      return WalletAdapterNetwork.Mainnet
-    case ClusterNetwork.Testnet:
-      return WalletAdapterNetwork.Testnet
-    case ClusterNetwork.Devnet:
-      return WalletAdapterNetwork.Devnet
-    default:
-      return undefined
-  }
 }
 
 export const defaultClusters: Cluster[] = [
@@ -116,24 +103,4 @@ function getClusterUrlParam(cluster: Cluster): string {
   }
 
   return suffix.length ? `?cluster=${suffix}` : ''
-}
-
-export function getExplorerUrl(cluster: Cluster, path: string): string {
-  let suffix = ''
-  switch (cluster.network) {
-    case ClusterNetwork.Devnet:
-      suffix = 'devnet-solana'
-      break
-    case ClusterNetwork.Mainnet:
-      suffix = ''
-      break
-    case ClusterNetwork.Testnet:
-      suffix = 'testnet-solana'
-      break
-    default:
-      suffix = `custom&customUrl=${encodeURIComponent(cluster.endpoint)}`
-      break
-  }
-
-  return `https://solana.fm/${path}${suffix.length ? `?cluster=${suffix}` : ''}`
 }

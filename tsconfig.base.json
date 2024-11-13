@@ -89,8 +89,6 @@
       "@pubkey-link/web-snapshot-feature": ["libs/web/snapshot/feature/src/index.ts"],
       "@pubkey-link/web-snapshot-ui": ["libs/web/snapshot/ui/src/index.ts"],
       "@pubkey-link/web-solana-data-access": ["libs/web/solana/data-access/src/index.ts"],
-      "@pubkey-link/web-solana-feature": ["libs/web/solana/feature/src/index.ts"],
-      "@pubkey-link/web-solana-ui": ["libs/web/solana/ui/src/index.ts"],
       "@pubkey-link/web-user-data-access": ["libs/web/user/data-access/src/index.ts"],
       "@pubkey-link/web-user-feature": ["libs/web/user/feature/src/index.ts"],
       "@pubkey-link/web-user-ui": ["libs/web/user/ui/src/index.ts"],
