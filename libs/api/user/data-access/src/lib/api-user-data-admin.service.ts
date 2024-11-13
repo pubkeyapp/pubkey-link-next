@@ -47,4 +47,8 @@ export class ApiUserDataAdminService {
       username: newUsername,
     })
   }
+
+  async verifyUser(userId: string) {
+    return this.data.verify(userId)
+  }
 }

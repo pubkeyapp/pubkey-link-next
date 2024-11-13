@@ -499,6 +499,7 @@ export type Mutation = {
   adminUpdateRole?: Maybe<Role>
   adminUpdateUser?: Maybe<User>
   adminVerifyNetworkAssets?: Maybe<Scalars['Boolean']['output']>
+  adminVerifyUser?: Maybe<Scalars['Boolean']['output']>
   anonVerifyIdentityChallenge?: Maybe<IdentityChallenge>
   logout?: Maybe<Scalars['Boolean']['output']>
   userAddCommunityMember?: Maybe<CommunityMember>
@@ -676,6 +677,10 @@ export type MutationAdminUpdateRoleArgs = {
 
 export type MutationAdminUpdateUserArgs = {
   input: AdminUpdateUserInput
+  userId: Scalars['String']['input']
+}
+
+export type MutationAdminVerifyUserArgs = {
   userId: Scalars['String']['input']
 }
 
@@ -1370,6 +1375,7 @@ export type User = {
   name?: Maybe<Scalars['String']['output']>
   private?: Maybe<Scalars['Boolean']['output']>
   profileUrl: Scalars['String']['output']
+  pubkeyProfile?: Maybe<Scalars['String']['output']>
   role?: Maybe<UserRole>
   status?: Maybe<UserStatus>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
@@ -1598,17 +1604,18 @@ export type MeQuery = {
   __typename?: 'Query'
   me?: {
     __typename?: 'User'
-    avatarUrl?: string | null
     createdAt?: Date | null
-    developer?: boolean | null
-    private?: boolean | null
     lastLogin?: Date | null
-    id: string
-    name?: string | null
-    profileUrl: string
-    role?: UserRole | null
     status?: UserStatus | null
     updatedAt?: Date | null
+    avatarUrl?: string | null
+    developer?: boolean | null
+    private?: boolean | null
+    id: string
+    name?: string | null
+    pubkeyProfile?: string | null
+    profileUrl: string
+    role?: UserRole | null
     username?: string | null
     identities?: Array<{
       __typename?: 'Identity'
@@ -1979,17 +1986,18 @@ export type UserFindManyBotRolesQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
@@ -2236,17 +2244,18 @@ export type CommunityMemberDetailsFragment = {
   userId: string
   user?: {
     __typename?: 'User'
-    avatarUrl?: string | null
     createdAt?: Date | null
-    developer?: boolean | null
-    private?: boolean | null
     lastLogin?: Date | null
-    id: string
-    name?: string | null
-    profileUrl: string
-    role?: UserRole | null
     status?: UserStatus | null
     updatedAt?: Date | null
+    avatarUrl?: string | null
+    developer?: boolean | null
+    private?: boolean | null
+    id: string
+    name?: string | null
+    pubkeyProfile?: string | null
+    profileUrl: string
+    role?: UserRole | null
     username?: string | null
   } | null
 }
@@ -2350,34 +2359,36 @@ export type AdminFindManyCommunityMemberQuery = {
           userId: string
           user?: {
             __typename?: 'User'
-            avatarUrl?: string | null
             createdAt?: Date | null
-            developer?: boolean | null
-            private?: boolean | null
             lastLogin?: Date | null
-            id: string
-            name?: string | null
-            profileUrl: string
-            role?: UserRole | null
             status?: UserStatus | null
             updatedAt?: Date | null
+            avatarUrl?: string | null
+            developer?: boolean | null
+            private?: boolean | null
+            id: string
+            name?: string | null
+            pubkeyProfile?: string | null
+            profileUrl: string
+            role?: UserRole | null
             username?: string | null
           } | null
         } | null
       }> | null
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     }>
@@ -2491,34 +2502,36 @@ export type AdminFindOneCommunityMemberQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
     }> | null
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -2622,34 +2635,36 @@ export type AdminAddCommunityMemberMutation = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
     }> | null
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -2753,34 +2768,36 @@ export type AdminUpdateCommunityMemberMutation = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
     }> | null
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -2889,34 +2906,36 @@ export type UserGetCommunityMemberQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
     }> | null
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -3021,34 +3040,36 @@ export type UserFindManyCommunityMemberQuery = {
           userId: string
           user?: {
             __typename?: 'User'
-            avatarUrl?: string | null
             createdAt?: Date | null
-            developer?: boolean | null
-            private?: boolean | null
             lastLogin?: Date | null
-            id: string
-            name?: string | null
-            profileUrl: string
-            role?: UserRole | null
             status?: UserStatus | null
             updatedAt?: Date | null
+            avatarUrl?: string | null
+            developer?: boolean | null
+            private?: boolean | null
+            id: string
+            name?: string | null
+            pubkeyProfile?: string | null
+            profileUrl: string
+            role?: UserRole | null
             username?: string | null
           } | null
         } | null
       }> | null
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     }>
@@ -3162,34 +3183,36 @@ export type UserFindOneCommunityMemberQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
     }> | null
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -3293,34 +3316,36 @@ export type UserAddCommunityMemberMutation = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
     }> | null
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -3424,34 +3449,36 @@ export type UserUpdateCommunityMemberMutation = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
     }> | null
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -3639,17 +3666,18 @@ export type AnonGetCommunitiesQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
@@ -3827,17 +3855,18 @@ export type UserGetCommunitiesQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
@@ -3952,17 +3981,18 @@ export type UserFindManyCommunityQuery = {
           userId: string
           user?: {
             __typename?: 'User'
-            avatarUrl?: string | null
             createdAt?: Date | null
-            developer?: boolean | null
-            private?: boolean | null
             lastLogin?: Date | null
-            id: string
-            name?: string | null
-            profileUrl: string
-            role?: UserRole | null
             status?: UserStatus | null
             updatedAt?: Date | null
+            avatarUrl?: string | null
+            developer?: boolean | null
+            private?: boolean | null
+            id: string
+            name?: string | null
+            pubkeyProfile?: string | null
+            profileUrl: string
+            role?: UserRole | null
             username?: string | null
           } | null
         } | null
@@ -4170,17 +4200,18 @@ export type IdentityGrantDetailsFragment = {
   updatedAt?: Date | null
   grantee?: {
     __typename?: 'User'
-    avatarUrl?: string | null
     createdAt?: Date | null
-    developer?: boolean | null
-    private?: boolean | null
     lastLogin?: Date | null
-    id: string
-    name?: string | null
-    profileUrl: string
-    role?: UserRole | null
     status?: UserStatus | null
     updatedAt?: Date | null
+    avatarUrl?: string | null
+    developer?: boolean | null
+    private?: boolean | null
+    id: string
+    name?: string | null
+    pubkeyProfile?: string | null
+    profileUrl: string
+    role?: UserRole | null
     username?: string | null
   } | null
 }
@@ -4230,33 +4261,35 @@ export type AdminFindManyIdentityQuery = {
       updatedAt?: Date | null
       grantee?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     }> | null
     owner?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   }> | null
@@ -4276,6 +4309,7 @@ export type AdminFindUserByIdentityQuery = {
     private?: boolean | null
     id: string
     name?: string | null
+    pubkeyProfile?: string | null
     profileUrl: string
     role?: UserRole | null
     username?: string | null
@@ -4367,17 +4401,18 @@ export type UserFindManyIdentityQuery = {
       updatedAt?: Date | null
       grantee?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     }> | null
@@ -4417,33 +4452,35 @@ export type UserFindOneIdentityQuery = {
       updatedAt?: Date | null
       grantee?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     }> | null
     owner?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -4807,34 +4844,36 @@ export type LogDetailsFragment = {
       userId: string
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     } | null
   } | null
   user?: {
     __typename?: 'User'
-    avatarUrl?: string | null
     createdAt?: Date | null
-    developer?: boolean | null
-    private?: boolean | null
     lastLogin?: Date | null
-    id: string
-    name?: string | null
-    profileUrl: string
-    role?: UserRole | null
     status?: UserStatus | null
     updatedAt?: Date | null
+    avatarUrl?: string | null
+    developer?: boolean | null
+    private?: boolean | null
+    id: string
+    name?: string | null
+    pubkeyProfile?: string | null
+    profileUrl: string
+    role?: UserRole | null
     username?: string | null
   } | null
 }
@@ -5004,34 +5043,36 @@ export type UserFindManyLogQuery = {
           userId: string
           user?: {
             __typename?: 'User'
-            avatarUrl?: string | null
             createdAt?: Date | null
-            developer?: boolean | null
-            private?: boolean | null
             lastLogin?: Date | null
-            id: string
-            name?: string | null
-            profileUrl: string
-            role?: UserRole | null
             status?: UserStatus | null
             updatedAt?: Date | null
+            avatarUrl?: string | null
+            developer?: boolean | null
+            private?: boolean | null
+            id: string
+            name?: string | null
+            pubkeyProfile?: string | null
+            profileUrl: string
+            role?: UserRole | null
             username?: string | null
           } | null
         } | null
       } | null
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     }>
@@ -5211,34 +5252,36 @@ export type UserFindOneLogQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
     } | null
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -5409,34 +5452,36 @@ export type AdminFindManyLogQuery = {
           userId: string
           user?: {
             __typename?: 'User'
-            avatarUrl?: string | null
             createdAt?: Date | null
-            developer?: boolean | null
-            private?: boolean | null
             lastLogin?: Date | null
-            id: string
-            name?: string | null
-            profileUrl: string
-            role?: UserRole | null
             status?: UserStatus | null
             updatedAt?: Date | null
+            avatarUrl?: string | null
+            developer?: boolean | null
+            private?: boolean | null
+            id: string
+            name?: string | null
+            pubkeyProfile?: string | null
+            profileUrl: string
+            role?: UserRole | null
             username?: string | null
           } | null
         } | null
       } | null
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     }>
@@ -5616,34 +5661,36 @@ export type AdminFindOneLogQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
     } | null
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -6292,17 +6339,18 @@ export type RoleDetailsFragment = {
     userId: string
     user?: {
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     } | null
   } | null
@@ -6466,17 +6514,18 @@ export type AdminFindManyRoleQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
@@ -6583,17 +6632,18 @@ export type AdminFindOneRoleQuery = {
       userId: string
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     } | null
@@ -6689,17 +6739,18 @@ export type AdminCreateRoleMutation = {
       userId: string
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     } | null
@@ -6796,17 +6847,18 @@ export type AdminUpdateRoleMutation = {
       userId: string
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     } | null
@@ -6910,17 +6962,18 @@ export type UserFindManyRoleQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
@@ -7027,17 +7080,18 @@ export type UserFindOneRoleQuery = {
       userId: string
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     } | null
@@ -7133,17 +7187,18 @@ export type UserCreateRoleMutation = {
       userId: string
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     } | null
@@ -7321,17 +7376,18 @@ export type UserUpdateRoleMutation = {
       userId: string
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     } | null
@@ -7494,17 +7550,18 @@ export type SnapshotDetailsFragment = {
       userId: string
       user?: {
         __typename?: 'User'
-        avatarUrl?: string | null
         createdAt?: Date | null
-        developer?: boolean | null
-        private?: boolean | null
         lastLogin?: Date | null
-        id: string
-        name?: string | null
-        profileUrl: string
-        role?: UserRole | null
         status?: UserStatus | null
         updatedAt?: Date | null
+        avatarUrl?: string | null
+        developer?: boolean | null
+        private?: boolean | null
+        id: string
+        name?: string | null
+        pubkeyProfile?: string | null
+        profileUrl: string
+        role?: UserRole | null
         username?: string | null
       } | null
     } | null
@@ -7623,17 +7680,18 @@ export type UserFindManySnapshotQuery = {
           userId: string
           user?: {
             __typename?: 'User'
-            avatarUrl?: string | null
             createdAt?: Date | null
-            developer?: boolean | null
-            private?: boolean | null
             lastLogin?: Date | null
-            id: string
-            name?: string | null
-            profileUrl: string
-            role?: UserRole | null
             status?: UserStatus | null
             updatedAt?: Date | null
+            avatarUrl?: string | null
+            developer?: boolean | null
+            private?: boolean | null
+            id: string
+            name?: string | null
+            pubkeyProfile?: string | null
+            profileUrl: string
+            role?: UserRole | null
             username?: string | null
           } | null
         } | null
@@ -7761,17 +7819,18 @@ export type UserFindOneSnapshotQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
@@ -7875,17 +7934,18 @@ export type UserCreateSnapshotMutation = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
@@ -7997,17 +8057,18 @@ export type AdminFindManySnapshotQuery = {
           userId: string
           user?: {
             __typename?: 'User'
-            avatarUrl?: string | null
             createdAt?: Date | null
-            developer?: boolean | null
-            private?: boolean | null
             lastLogin?: Date | null
-            id: string
-            name?: string | null
-            profileUrl: string
-            role?: UserRole | null
             status?: UserStatus | null
             updatedAt?: Date | null
+            avatarUrl?: string | null
+            developer?: boolean | null
+            private?: boolean | null
+            id: string
+            name?: string | null
+            pubkeyProfile?: string | null
+            profileUrl: string
+            role?: UserRole | null
             username?: string | null
           } | null
         } | null
@@ -8135,17 +8196,18 @@ export type AdminFindOneSnapshotQuery = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
@@ -8249,17 +8311,18 @@ export type AdminCreateSnapshotMutation = {
         userId: string
         user?: {
           __typename?: 'User'
-          avatarUrl?: string | null
           createdAt?: Date | null
-          developer?: boolean | null
-          private?: boolean | null
           lastLogin?: Date | null
-          id: string
-          name?: string | null
-          profileUrl: string
-          role?: UserRole | null
           status?: UserStatus | null
           updatedAt?: Date | null
+          avatarUrl?: string | null
+          developer?: boolean | null
+          private?: boolean | null
+          id: string
+          name?: string | null
+          pubkeyProfile?: string | null
+          profileUrl: string
+          role?: UserRole | null
           username?: string | null
         } | null
       } | null
@@ -8280,6 +8343,7 @@ export type UserSummaryFragment = {
   private?: boolean | null
   id: string
   name?: string | null
+  pubkeyProfile?: string | null
   profileUrl: string
   role?: UserRole | null
   username?: string | null
@@ -8287,17 +8351,18 @@ export type UserSummaryFragment = {
 
 export type UserDetailsFragment = {
   __typename?: 'User'
-  avatarUrl?: string | null
   createdAt?: Date | null
-  developer?: boolean | null
-  private?: boolean | null
   lastLogin?: Date | null
-  id: string
-  name?: string | null
-  profileUrl: string
-  role?: UserRole | null
   status?: UserStatus | null
   updatedAt?: Date | null
+  avatarUrl?: string | null
+  developer?: boolean | null
+  private?: boolean | null
+  id: string
+  name?: string | null
+  pubkeyProfile?: string | null
+  profileUrl: string
+  role?: UserRole | null
   username?: string | null
 }
 
@@ -8317,17 +8382,18 @@ export type AdminFindManyUserQuery = {
     __typename?: 'UserPaging'
     data: Array<{
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
       identities?: Array<{
         __typename?: 'Identity'
@@ -8368,17 +8434,18 @@ export type AdminFindOneUserQuery = {
   __typename?: 'Query'
   item?: {
     __typename?: 'User'
-    avatarUrl?: string | null
     createdAt?: Date | null
-    developer?: boolean | null
-    private?: boolean | null
     lastLogin?: Date | null
-    id: string
-    name?: string | null
-    profileUrl: string
-    role?: UserRole | null
     status?: UserStatus | null
     updatedAt?: Date | null
+    avatarUrl?: string | null
+    developer?: boolean | null
+    private?: boolean | null
+    id: string
+    name?: string | null
+    pubkeyProfile?: string | null
+    profileUrl: string
+    role?: UserRole | null
     username?: string | null
   } | null
 }
@@ -8392,20 +8459,27 @@ export type AdminUpdateUserMutation = {
   __typename?: 'Mutation'
   updated?: {
     __typename?: 'User'
-    avatarUrl?: string | null
     createdAt?: Date | null
-    developer?: boolean | null
-    private?: boolean | null
     lastLogin?: Date | null
-    id: string
-    name?: string | null
-    profileUrl: string
-    role?: UserRole | null
     status?: UserStatus | null
     updatedAt?: Date | null
+    avatarUrl?: string | null
+    developer?: boolean | null
+    private?: boolean | null
+    id: string
+    name?: string | null
+    pubkeyProfile?: string | null
+    profileUrl: string
+    role?: UserRole | null
     username?: string | null
   } | null
 }
+
+export type AdminVerifyUserMutationVariables = Exact<{
+  userId: Scalars['String']['input']
+}>
+
+export type AdminVerifyUserMutation = { __typename?: 'Mutation'; verified?: boolean | null }
 
 export type UserFindManyUserQueryVariables = Exact<{
   input: UserFindManyUserInput
@@ -8417,17 +8491,18 @@ export type UserFindManyUserQuery = {
     __typename?: 'UserPaging'
     data: Array<{
       __typename?: 'User'
-      avatarUrl?: string | null
       createdAt?: Date | null
-      developer?: boolean | null
-      private?: boolean | null
       lastLogin?: Date | null
-      id: string
-      name?: string | null
-      profileUrl: string
-      role?: UserRole | null
       status?: UserStatus | null
       updatedAt?: Date | null
+      avatarUrl?: string | null
+      developer?: boolean | null
+      private?: boolean | null
+      id: string
+      name?: string | null
+      pubkeyProfile?: string | null
+      profileUrl: string
+      role?: UserRole | null
       username?: string | null
     }>
     meta: {
@@ -8451,17 +8526,18 @@ export type UserFindOneUserQuery = {
   __typename?: 'Query'
   item?: {
     __typename?: 'User'
-    avatarUrl?: string | null
     createdAt?: Date | null
-    developer?: boolean | null
-    private?: boolean | null
     lastLogin?: Date | null
-    id: string
-    name?: string | null
-    profileUrl: string
-    role?: UserRole | null
     status?: UserStatus | null
     updatedAt?: Date | null
+    avatarUrl?: string | null
+    developer?: boolean | null
+    private?: boolean | null
+    id: string
+    name?: string | null
+    pubkeyProfile?: string | null
+    profileUrl: string
+    role?: UserRole | null
     username?: string | null
     identities?: Array<{
       __typename?: 'Identity'
@@ -8491,17 +8567,18 @@ export type UserFindOneUserByIdQuery = {
   __typename?: 'Query'
   item?: {
     __typename?: 'User'
-    avatarUrl?: string | null
     createdAt?: Date | null
-    developer?: boolean | null
-    private?: boolean | null
     lastLogin?: Date | null
-    id: string
-    name?: string | null
-    profileUrl: string
-    role?: UserRole | null
     status?: UserStatus | null
     updatedAt?: Date | null
+    avatarUrl?: string | null
+    developer?: boolean | null
+    private?: boolean | null
+    id: string
+    name?: string | null
+    pubkeyProfile?: string | null
+    profileUrl: string
+    role?: UserRole | null
     username?: string | null
   } | null
 }
@@ -8514,17 +8591,18 @@ export type UserUpdateUserMutation = {
   __typename?: 'Mutation'
   updated?: {
     __typename?: 'User'
-    avatarUrl?: string | null
     createdAt?: Date | null
-    developer?: boolean | null
-    private?: boolean | null
     lastLogin?: Date | null
-    id: string
-    name?: string | null
-    profileUrl: string
-    role?: UserRole | null
     status?: UserStatus | null
     updatedAt?: Date | null
+    avatarUrl?: string | null
+    developer?: boolean | null
+    private?: boolean | null
+    id: string
+    name?: string | null
+    pubkeyProfile?: string | null
+    profileUrl: string
+    role?: UserRole | null
     username?: string | null
   } | null
 }
@@ -8616,21 +8694,28 @@ export const IdentityChallengeDetailsFragmentDoc = gql`
     verified
   }
 `
-export const UserDetailsFragmentDoc = gql`
-  fragment UserDetails on User {
+export const UserSummaryFragmentDoc = gql`
+  fragment UserSummary on User {
     avatarUrl
-    createdAt
     developer
     private
-    lastLogin
     id
     name
+    pubkeyProfile
     profileUrl
     role
-    status
-    updatedAt
     username
   }
+`
+export const UserDetailsFragmentDoc = gql`
+  fragment UserDetails on User {
+    ...UserSummary
+    createdAt
+    lastLogin
+    status
+    updatedAt
+  }
+  ${UserSummaryFragmentDoc}
 `
 export const IdentityGrantDetailsFragmentDoc = gql`
   fragment IdentityGrantDetails on IdentityGrant {
@@ -8914,18 +8999,6 @@ export const SnapshotItemDetailsFragmentDoc = gql`
       account
       balance
     }
-  }
-`
-export const UserSummaryFragmentDoc = gql`
-  fragment UserSummary on User {
-    avatarUrl
-    developer
-    private
-    id
-    name
-    profileUrl
-    role
-    username
   }
 `
 export const LogoutDocument = gql`
@@ -10066,6 +10139,11 @@ export const AdminUpdateUserDocument = gql`
   }
   ${UserDetailsFragmentDoc}
 `
+export const AdminVerifyUserDocument = gql`
+  mutation adminVerifyUser($userId: String!) {
+    verified: adminVerifyUser(userId: $userId)
+  }
+`
 export const UserFindManyUserDocument = gql`
   query userFindManyUser($input: UserFindManyUserInput!) {
     paging: userFindManyUser(input: $input) {
@@ -10250,6 +10328,7 @@ const AdminDeleteUserDocumentString = print(AdminDeleteUserDocument)
 const AdminFindManyUserDocumentString = print(AdminFindManyUserDocument)
 const AdminFindOneUserDocumentString = print(AdminFindOneUserDocument)
 const AdminUpdateUserDocumentString = print(AdminUpdateUserDocument)
+const AdminVerifyUserDocumentString = print(AdminVerifyUserDocument)
 const UserFindManyUserDocumentString = print(UserFindManyUserDocument)
 const UserFindOneUserDocumentString = print(UserFindOneUserDocument)
 const UserFindOneUserByIdDocumentString = print(UserFindOneUserByIdDocument)
@@ -13022,6 +13101,27 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'adminUpdateUser',
+        'mutation',
+        variables,
+      )
+    },
+    adminVerifyUser(
+      variables: AdminVerifyUserMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: AdminVerifyUserMutation
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<AdminVerifyUserMutation>(AdminVerifyUserDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'adminVerifyUser',
         'mutation',
         variables,
       )

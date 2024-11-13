@@ -1,10 +1,24 @@
-import { Controller, Get, Param } from '@nestjs/common'
+import { Controller, Get, NotFoundException, Param } from '@nestjs/common'
 import { ApiCoreService } from '@pubkey-link/api-core-data-access'
-import { PubKeyIdentityProvider } from '@pubkey-program-library/anchor'
+import { IdentityProvider } from '@pubkey-protocol/sdk'
 
-@Controller()
+@Controller('ppl')
 export class ApiCoreProtocolController {
   constructor(private readonly service: ApiCoreService) {}
+
+  @Get('communities')
+  communities() {
+    return this.service.protocol.getCommunities()
+  }
+
+  @Get('community/:community')
+  async community(@Param('community') community: string) {
+    const found = await this.service.protocol.getCommunity({ community })
+    if (found) {
+      return found
+    }
+    throw new NotFoundException('Profile not found')
+  }
 
   @Get('pointers')
   pointers() {
@@ -22,12 +36,20 @@ export class ApiCoreProtocolController {
   }
 
   @Get('provider/:provider/:providerId')
-  profileByProvider(@Param('provider') provider: PubKeyIdentityProvider, @Param('providerId') providerId: string) {
-    return this.service.protocol.getProfileByProvider({ providerId, provider })
+  async profileByProvider(@Param('provider') provider: IdentityProvider, @Param('providerId') providerId: string) {
+    const found = await this.service.protocol.getProfileByProvider({ providerId, provider })
+    if (found) {
+      return found
+    }
+    throw new NotFoundException('Profile not found')
   }
 
-  @Get('username/:username')
-  profileByUsername(@Param('username') username: string) {
-    return this.service.protocol.getProfileByUsername({ username })
+  @Get('profile/:username')
+  async profileByUsername(@Param('username') username: string) {
+    const found = await this.service.protocol.getProfileByUsername({ username })
+    if (found) {
+      return found
+    }
+    throw new NotFoundException('Profile not found')
   }
 }
