@@ -53,9 +53,15 @@ export function useAdminFindManyNetworkToken(
           return undefined
         }),
     deleteNetworkToken: (networkTokenId: string) =>
-      sdk.adminDeleteNetworkToken({ networkTokenId }).then(() => {
-        toastSuccess('NetworkToken deleted')
-        return query.refetch()
-      }),
+      sdk
+        .adminDeleteNetworkToken({ networkTokenId })
+        .then(() => {
+          toastSuccess('NetworkToken deleted')
+          return query.refetch()
+        })
+        .catch((err) => {
+          toastError(err.message)
+          return undefined
+        }),
   }
 }

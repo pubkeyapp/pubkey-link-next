@@ -46,9 +46,15 @@ export function useAdminFindManyBot(props: Partial<AdminFindManyBotInput> & { co
           return undefined
         }),
     deleteBot: (botId: string) =>
-      sdk.adminDeleteBot({ botId }).then(() => {
-        toastSuccess('Bot deleted')
-        return query.refetch()
-      }),
+      sdk
+        .adminDeleteBot({ botId })
+        .then(() => {
+          toastSuccess('Bot deleted')
+          return query.refetch()
+        })
+        .catch((err) => {
+          toastError(err.message)
+          return undefined
+        }),
   }
 }

@@ -1,6 +1,6 @@
 import { AdminFindManyUserInput, UserRole, UserStatus } from '@pubkey-link/sdk'
 import { useSdk } from '@pubkey-link/web-core-data-access'
-import { toastSuccess } from '@pubkey-ui/core'
+import { toastError, toastSuccess } from '@pubkey-ui/core'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
@@ -45,9 +45,15 @@ export function useAdminFindManyUser(props?: AdminFindManyUserInput) {
       setStatus(status)
     },
     deleteUser: (userId: string) =>
-      sdk.adminDeleteUser({ userId }).then(() => {
-        toastSuccess('User deleted')
-        return query.refetch()
-      }),
+      sdk
+        .adminDeleteUser({ userId })
+        .then(() => {
+          toastSuccess('User deleted')
+          return query.refetch()
+        })
+        .catch((err) => {
+          toastError(err.message)
+          return undefined
+        }),
   }
 }

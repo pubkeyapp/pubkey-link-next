@@ -46,9 +46,15 @@ export function useAdminFindManyRole(props: Partial<AdminFindManyRoleInput> & { 
           return undefined
         }),
     deleteRole: (roleId: string) =>
-      sdk.adminDeleteRole({ roleId }).then(() => {
-        toastSuccess('Role deleted')
-        return query.refetch()
-      }),
+      sdk
+        .adminDeleteRole({ roleId })
+        .then(() => {
+          toastSuccess('Role deleted')
+          return query.refetch()
+        })
+        .catch((err) => {
+          toastError(err.message)
+          return undefined
+        }),
   }
 }

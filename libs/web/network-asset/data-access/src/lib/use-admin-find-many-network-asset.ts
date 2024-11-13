@@ -1,6 +1,6 @@
 import { AdminFindManyNetworkAssetInput, NetworkCluster, NetworkTokenType } from '@pubkey-link/sdk'
 import { useSdk } from '@pubkey-link/web-core-data-access'
-import { toastSuccess } from '@pubkey-ui/core'
+import { toastError, toastSuccess } from '@pubkey-ui/core'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
@@ -35,9 +35,15 @@ export function useAdminFindManyNetworkAsset(
     },
     setSearch,
     deleteNetworkAsset: (networkAssetId: string) =>
-      sdk.adminDeleteNetworkAsset({ networkAssetId }).then(() => {
-        toastSuccess('NetworkAsset deleted')
-        return query.refetch()
-      }),
+      sdk
+        .adminDeleteNetworkAsset({ networkAssetId })
+        .then(() => {
+          toastSuccess('NetworkAsset deleted')
+          return query.refetch()
+        })
+        .catch((err) => {
+          toastError(err.message)
+          return undefined
+        }),
   }
 }

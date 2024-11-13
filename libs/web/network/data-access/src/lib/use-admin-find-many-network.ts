@@ -46,9 +46,15 @@ export function useAdminFindManyNetwork(props?: Partial<AdminFindManyNetworkInpu
           return undefined
         }),
     deleteNetwork: (networkId: string) =>
-      sdk.adminDeleteNetwork({ networkId }).then(() => {
-        toastSuccess('Network deleted')
-        return query.refetch()
-      }),
+      sdk
+        .adminDeleteNetwork({ networkId })
+        .then(() => {
+          toastSuccess('Network deleted')
+          return query.refetch()
+        })
+        .catch((err) => {
+          toastError(err.message)
+          return undefined
+        }),
   }
 }

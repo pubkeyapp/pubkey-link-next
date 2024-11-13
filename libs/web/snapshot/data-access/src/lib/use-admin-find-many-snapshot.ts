@@ -46,9 +46,15 @@ export function useAdminFindManySnapshot(props: Partial<AdminFindManySnapshotInp
           return undefined
         }),
     deleteSnapshot: (snapshotId: string) =>
-      sdk.adminDeleteSnapshot({ snapshotId }).then(() => {
-        toastSuccess('Snapshot deleted')
-        return query.refetch()
-      }),
+      sdk
+        .adminDeleteSnapshot({ snapshotId })
+        .then(() => {
+          toastSuccess('Snapshot deleted')
+          return query.refetch()
+        })
+        .catch((err) => {
+          toastError(err.message)
+          return undefined
+        }),
   }
 }

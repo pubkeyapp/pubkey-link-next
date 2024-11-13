@@ -46,9 +46,15 @@ export function useAdminFindManyCommunity(props?: Partial<AdminFindManyCommunity
           return undefined
         }),
     deleteCommunity: (communityId: string) =>
-      sdk.adminDeleteCommunity({ communityId }).then(() => {
-        toastSuccess('Community deleted')
-        return query.refetch()
-      }),
+      sdk
+        .adminDeleteCommunity({ communityId })
+        .then(() => {
+          toastSuccess('Community deleted')
+          return query.refetch()
+        })
+        .catch((err) => {
+          toastError(err.message)
+          return undefined
+        }),
   }
 }
