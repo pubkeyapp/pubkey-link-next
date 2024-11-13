@@ -55,9 +55,8 @@ export class ApiRoleResolverService {
     const startedAt = Date.now()
 
     const conditions = await this.getRoleConditions({ community })
-    const voteIdentities = await this.getVoteIdentities({ conditions })
-
-    await this.syncCommunityMembers({ communityId, voteIdentities })
+    const clusterVoteIdentities = await this.getVoteIdentities({ conditions })
+    await this.syncCommunityMembers({ communityId, voteIdentities: Object.values(clusterVoteIdentities).flat() })
 
     const [roleMap, users] = await Promise.all([
       this.getRoleMap({ community }),
@@ -83,6 +82,7 @@ export class ApiRoleResolverService {
 
       // Now we want to loop over each condition and check the assets
       for (const condition of conditions) {
+        const voteIdentities = clusterVoteIdentities[condition.token.cluster]
         if (condition.token?.type === NetworkTokenType.Validator && voteIdentities.length) {
           if (voteIdentities.find((identity) => resolved.solanaIds.includes(identity))) {
             resolved.conditions.push(condition)
@@ -128,29 +128,33 @@ export class ApiRoleResolverService {
     return Promise.resolve(result)
   }
 
-  async getVoteIdentities({ conditions }: { conditions: RoleCondition[] }) {
+  async getVoteIdentities({ conditions }: { conditions: RoleCondition[] }): Promise<Record<NetworkCluster, string[]>> {
+    const result: Record<NetworkCluster, string[]> = {
+      [NetworkCluster.SolanaCustom]: [],
+      [NetworkCluster.SolanaDevnet]: [],
+      [NetworkCluster.SolanaMainnet]: [],
+      [NetworkCluster.SolanaTestnet]: [],
+    }
     const hasValidatorCondition: RoleCondition | undefined = conditions.find(
       (c) => c.type === NetworkTokenType.Validator,
     )
     if (!hasValidatorCondition) {
       this.logger.debug(`getVoteIdentities: No validator conditions found.`)
-      return []
+      return result
     }
     const clusters: NetworkCluster[] = conditions.map((c) => c.token.cluster)
-
-    const accounts: string[] = []
 
     for (const cluster of clusters) {
       try {
         const accountsForCluster = await this.network.cluster.getVoteIdentities(cluster)
         this.logger.debug(`[${cluster}] getVoteIdentities: Found ${accountsForCluster.length} identities.`)
-        accounts.push(...accountsForCluster)
+        result[cluster].push(...accountsForCluster)
       } catch (e) {
         this.logger.error(`[${cluster}] getVoteIdentities: Error getting vote identities for cluster.: ${e}`)
       }
     }
 
-    return accounts
+    return result
   }
 
   async syncCommunityMembers({ communityId, voteIdentities }: { communityId: string; voteIdentities: string[] }) {
