@@ -16,17 +16,15 @@ export function CommunityUiList({
   }
   return (
     <UiStack>
-      {communities
-        .filter((item) => item.roles?.length)
-        .map((item) => (
-          <CommunityUiListItem
-            key={item.id}
-            isAuthUser={isAuthUser}
-            item={item}
-            to={`/c/${item.id}`}
-            username={username}
-          />
-        ))}
+      {communities.map((item) => (
+        <CommunityUiListItem
+          key={item.id}
+          isAuthUser={isAuthUser}
+          item={item}
+          to={`/c/${item.id}`}
+          username={username}
+        />
+      ))}
     </UiStack>
   )
 }

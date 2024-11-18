@@ -18,6 +18,7 @@ export function CommunityUiListItem({
   to?: string
   username: string
 }) {
+  const hasRoles = item.roles?.length
   const rolesAssigned = item.roles?.filter((role) => role.member)
   const rolesAvailable = item.roles?.filter((role) => !role.member)
   return (
@@ -31,36 +32,40 @@ export function CommunityUiListItem({
             </CommunityUiSocials>
           </UiStack>
         </UiGroup>
-        <Suspense fallback={<UiLoader />}>
-          <Box>
-            <Text fz="sm" c="dimmed">
-              Roles assigned to {isAuthUser ? 'you' : username}
-            </Text>
-            {rolesAssigned?.length ? (
-              <RoleUiList mt="xs" roles={rolesAssigned} username={username} withAssets />
-            ) : (
-              <UiInfo
-                mt="xs"
-                title="No roles assigned"
-                message={`${isAuthUser ? 'You have' : `${username} has`} no assigned roles in this community.`}
-              />
-            )}
-          </Box>
-          <Box>
-            <Text fz="sm" c="dimmed">
-              Available roles
-            </Text>
-            {rolesAvailable?.length ? (
-              <RoleUiList mt="xs" roles={rolesAvailable} username={username} />
-            ) : (
-              <UiInfo
-                mt="xs"
-                title="All roles are assigned"
-                message={`${isAuthUser ? 'You have' : `${username} has`} all available roles assigned.`}
-              />
-            )}
-          </Box>
-        </Suspense>
+        {hasRoles ? (
+          <Suspense fallback={<UiLoader />}>
+            <Box>
+              <Text fz="sm" c="dimmed">
+                Roles assigned to {isAuthUser ? 'you' : username}
+              </Text>
+              {rolesAssigned?.length ? (
+                <RoleUiList mt="xs" roles={rolesAssigned} username={username} withAssets />
+              ) : (
+                <UiInfo
+                  mt="xs"
+                  title="No roles assigned"
+                  message={`${isAuthUser ? 'You have' : `${username} has`} no assigned roles in this community.`}
+                />
+              )}
+            </Box>
+            <Box>
+              <Text fz="sm" c="dimmed">
+                Available roles
+              </Text>
+              {rolesAvailable?.length ? (
+                <RoleUiList mt="xs" roles={rolesAvailable} username={username} />
+              ) : (
+                <UiInfo
+                  mt="xs"
+                  title="All roles are assigned"
+                  message={`${isAuthUser ? 'You have' : `${username} has`} all available roles assigned.`}
+                />
+              )}
+            </Box>
+          </Suspense>
+        ) : (
+          <UiInfo title="No roles defined" message="This community has no roles defined." />
+        )}
       </UiStack>
     </Paper>
   )
