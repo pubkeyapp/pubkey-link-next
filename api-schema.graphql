@@ -195,6 +195,9 @@ type AppConfig {
   authLinkProviders: [IdentityProvider!]
   authLoginProviders: [IdentityProvider!]
   features: [AppFeature!]!
+  pubkeyProtocolCommunity: String
+  pubkeyProtocolEndpoint: String
+  pubkeyProtocolSigner: String
   resolvers: [NetworkResolver!]!
 }
 

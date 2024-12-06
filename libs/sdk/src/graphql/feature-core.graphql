@@ -6,6 +6,9 @@ fragment AppConfigDetails on AppConfig {
   authLinkProviders
   authLoginProviders
   features
+  pubkeyProtocolCommunity
+  pubkeyProtocolEndpoint
+  pubkeyProtocolSigner
   resolvers
 }
 

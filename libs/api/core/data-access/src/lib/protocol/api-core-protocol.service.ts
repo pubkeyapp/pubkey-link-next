@@ -1,26 +1,29 @@
 import { AnchorProvider } from '@coral-xyz/anchor'
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common'
 import {
-  PUBKEY_PROFILE_PROGRAM_ID,
-  PubKeyIdentityProvider,
+  AnchorKeypairWallet,
+  IdentityProvider,
+  ProfileGetByProvider,
+  ProfileGetByUsername,
+  PUBKEY_PROTOCOL_PROGRAM_ID,
+  PubKeyCommunity,
   PubKeyPointer,
   PubKeyProfile,
-} from '@pubkey-program-library/anchor'
-import { AnchorKeypairWallet, GetProfileByUsername, PubKeyProfileSdk } from '@pubkey-program-library/sdk'
-import { GetProfileByProvider } from '@pubkey-program-library/sdk/src/lib/pubkey-profile-sdk'
+  PubkeyProtocolSdk,
+} from '@pubkey-protocol/sdk'
 import { Connection, Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { ApiCoreConfigService } from '../config/api-core-config.service'
 
 function isValidProvider(provider: string): boolean {
-  return Object.values(PubKeyIdentityProvider).includes(provider as PubKeyIdentityProvider)
+  return Object.values(IdentityProvider).includes(provider as IdentityProvider)
 }
 
 @Injectable()
 export class ApiCoreProtocolService implements OnModuleInit {
   private readonly logger = new Logger(ApiCoreProtocolService.name)
-  private feePayer: Keypair | undefined
+  private signer: Keypair | undefined
   private connection: Connection | undefined
-  private sdk: PubKeyProfileSdk | undefined
+  private sdk: PubkeyProtocolSdk | undefined
 
   constructor(private readonly config: ApiCoreConfigService) {}
 
@@ -28,27 +31,31 @@ export class ApiCoreProtocolService implements OnModuleInit {
     if (
       !this.config.featurePubkeyProtocol ||
       !this.config.pubkeyProtocolCluster ||
+      !this.config.pubkeyProtocolCommunity ||
       !this.config.pubkeyProtocolEndpoint ||
-      !this.config.pubkeyProtocolFeePayer
+      !this.config.pubkeyProtocolSigner
     ) {
+      this.logger.warn(`PubKey Protocol is disabled`)
       return
     }
 
-    this.feePayer = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(this.config.pubkeyProtocolFeePayer)))
+    this.signer = this.config.pubkeyProtocolSigner
     this.connection = new Connection(this.config.pubkeyProtocolEndpoint, 'confirmed')
     this.logger.verbose(`PubKey Protocol: Endpoint: ${this.config.pubkeyProtocolEndpoint}`)
-    const balance = await this.connection.getBalance(this.feePayer.publicKey)
-    this.logger.verbose(
-      `PubKey Protocol: Fee payer: ${this.feePayer.publicKey}, balance: ${balance / LAMPORTS_PER_SOL}`,
-    )
-    this.sdk = new PubKeyProfileSdk({
+    const balance = await this.connection.getBalance(this.signer.publicKey)
+    this.logger.verbose(`PubKey Protocol: Signer: ${this.signer.publicKey}, balance: ${balance / LAMPORTS_PER_SOL}`)
+    this.sdk = new PubkeyProtocolSdk({
       connection: this.connection,
-      programId: PUBKEY_PROFILE_PROGRAM_ID,
-      provider: new AnchorProvider(this.connection, new AnchorKeypairWallet(this.feePayer), {
+      programId: PUBKEY_PROTOCOL_PROGRAM_ID,
+      provider: new AnchorProvider(this.connection, new AnchorKeypairWallet(this.signer), {
         commitment: this.connection.commitment,
       }),
     })
-    this.logger.verbose(`PubKey Protocol: SDK Initialized`)
+    const community = await this.ensureSdk().communityGet({ community: this.config.pubkeyProtocolCommunity })
+    this.logger.verbose(`PubKey Protocol: SDK Initialized. Community: ${community.name} (${community.slug})`)
+    if (!community?.signers.includes(this.signer.publicKey.toString())) {
+      throw new Error(`Signer is not a signer for the community ${community.name} (${community.slug})`)
+    }
   }
 
   private ensureSdk() {
@@ -59,26 +66,34 @@ export class ApiCoreProtocolService implements OnModuleInit {
     return this.sdk
   }
 
-  async getProfileByProvider(options: GetProfileByProvider): Promise<PubKeyProfile | null> {
+  async getCommunity(options: { community: string }): Promise<PubKeyCommunity> {
+    return this.ensureSdk().communityGet(options)
+  }
+
+  async getCommunities(): Promise<PubKeyCommunity[]> {
+    return this.ensureSdk().communityGetAll()
+  }
+
+  async getProfileByProvider(options: ProfileGetByProvider): Promise<PubKeyProfile | null> {
     if (!isValidProvider(options.provider)) {
       throw new Error(`Invalid provider: ${options.provider}`)
     }
-    return this.ensureSdk().getProfileByProviderNullable(options)
+    return this.ensureSdk().profileGetByProviderNullable(options)
   }
 
-  async getProfileByUsername(options: GetProfileByUsername): Promise<PubKeyProfile | null> {
-    return this.ensureSdk().getProfileByUsernameNullable(options)
+  async getProfileByUsername(options: ProfileGetByUsername): Promise<PubKeyProfile | null> {
+    return this.ensureSdk().profileGetByUsernameNullable(options)
   }
 
   async getProfiles(): Promise<PubKeyProfile[]> {
-    return this.ensureSdk().getProfiles()
+    return this.ensureSdk().profileGetAll()
   }
 
   getProviders() {
-    return Object.values(PubKeyIdentityProvider)
+    return Object.values(IdentityProvider)
   }
 
   async getPointers(): Promise<PubKeyPointer[]> {
-    return this.ensureSdk().getPointers()
+    return this.ensureSdk().pointerGetAll()
   }
 }

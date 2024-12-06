@@ -18,6 +18,12 @@ export class AppConfig {
   authLinkProviders!: IdentityProvider[]
   @Field(() => [AppFeature])
   features!: AppFeature[]
+  @Field({ nullable: true })
+  pubkeyProtocolCommunity?: string
+  @Field({ nullable: true })
+  pubkeyProtocolEndpoint?: string
+  @Field({ nullable: true })
+  pubkeyProtocolSigner?: string
   @Field(() => [NetworkResolver])
   resolvers!: NetworkResolver[]
 }

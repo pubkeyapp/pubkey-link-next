@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { LogLevel } from '@ogma/common'
 import { IdentityProvider } from '@prisma/client'
+import { Keypair } from '@solana/web3.js'
 import { RedisOptions } from 'bullmq'
 import { CookieOptions } from 'express-serve-static-core'
 import { AppConfig, AppFeature } from '../entity/app-config.entity'
@@ -48,6 +49,9 @@ export class ApiCoreConfigService {
       authLinkProviders: link,
       authLoginProviders: login,
       features: this.featureFlags,
+      pubkeyProtocolCommunity: this.pubkeyProtocolCommunity,
+      pubkeyProtocolEndpoint: this.pubkeyProtocolEndpointPublic ?? this.pubkeyProtocolEndpoint,
+      pubkeyProtocolSigner: this.pubkeyProtocolSigner?.publicKey.toString(),
       resolvers,
     }
   }
@@ -265,12 +269,20 @@ export class ApiCoreConfigService {
     return this.service.get<string>('pubkeyProtocolCluster')
   }
 
+  get pubkeyProtocolCommunity() {
+    return this.service.get<string>('pubkeyProtocolCommunity')
+  }
+
   get pubkeyProtocolEndpoint() {
     return this.service.get<string>('pubkeyProtocolEndpoint')
   }
 
-  get pubkeyProtocolFeePayer() {
-    return this.service.get<string>('pubkeyProtocolFeePayer')
+  get pubkeyProtocolEndpointPublic() {
+    return this.service.get<string>('pubkeyProtocolEndpointPublic')
+  }
+
+  get pubkeyProtocolSigner() {
+    return this.service.get<Keypair | undefined>('pubkeyProtocolSigner')
   }
 
   get prefix() {
