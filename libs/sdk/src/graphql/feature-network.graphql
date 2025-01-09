@@ -10,6 +10,7 @@ fragment NetworkDetails on Network {
   explorerUrl
   symbol
   updatedAt
+  voters
 }
 
 query adminFindManyNetwork($input: AdminFindManyNetworkInput!) {
@@ -59,4 +60,8 @@ query userGetTokenAccounts($cluster: NetworkCluster!, $account: String!) {
 
 query userGetEnabledNetworkClusters {
   clusters: userGetEnabledNetworkClusters
+}
+
+mutation adminRefreshVoteIdentities($networkId: String!) {
+  refreshed: adminRefreshVoteIdentities(networkId: $networkId)
 }

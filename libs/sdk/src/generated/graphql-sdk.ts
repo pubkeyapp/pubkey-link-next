@@ -483,6 +483,7 @@ export type Mutation = {
   adminDeleteUser?: Maybe<Scalars['Boolean']['output']>
   adminFetchBackup: Scalars['Boolean']['output']
   adminPurgeLogs?: Maybe<Scalars['Boolean']['output']>
+  adminRefreshVoteIdentities?: Maybe<Scalars['Boolean']['output']>
   adminRemoveCommunityMember?: Maybe<Scalars['Boolean']['output']>
   adminRestoreBackup: Scalars['Boolean']['output']
   adminSetIdentityVerified?: Maybe<Scalars['Boolean']['output']>
@@ -619,6 +620,10 @@ export type MutationAdminDeleteUserArgs = {
 
 export type MutationAdminFetchBackupArgs = {
   url: Scalars['String']['input']
+}
+
+export type MutationAdminRefreshVoteIdentitiesArgs = {
+  networkId: Scalars['String']['input']
 }
 
 export type MutationAdminRemoveCommunityMemberArgs = {
@@ -846,6 +851,7 @@ export type Network = {
   symbol: Scalars['String']['output']
   type: NetworkType
   updatedAt?: Maybe<Scalars['DateTime']['output']>
+  voters?: Maybe<Array<Scalars['String']['output']>>
 }
 
 export type NetworkAsset = {
@@ -6061,6 +6067,7 @@ export type NetworkDetailsFragment = {
   explorerUrl: string
   symbol: string
   updatedAt?: Date | null
+  voters?: Array<string> | null
 }
 
 export type AdminFindManyNetworkQueryVariables = Exact<{
@@ -6084,6 +6091,7 @@ export type AdminFindManyNetworkQuery = {
       explorerUrl: string
       symbol: string
       updatedAt?: Date | null
+      voters?: Array<string> | null
     }>
     meta: {
       __typename?: 'PagingMeta'
@@ -6123,6 +6131,7 @@ export type AdminFindOneNetworkQuery = {
     explorerUrl: string
     symbol: string
     updatedAt?: Date | null
+    voters?: Array<string> | null
   } | null
 }
 
@@ -6145,6 +6154,7 @@ export type AdminCreateNetworkMutation = {
     explorerUrl: string
     symbol: string
     updatedAt?: Date | null
+    voters?: Array<string> | null
   } | null
 }
 
@@ -6168,6 +6178,7 @@ export type AdminUpdateNetworkMutation = {
     explorerUrl: string
     symbol: string
     updatedAt?: Date | null
+    voters?: Array<string> | null
   } | null
 }
 
@@ -6194,6 +6205,12 @@ export type UserGetTokenAccountsQuery = { __typename?: 'Query'; result?: any | n
 export type UserGetEnabledNetworkClustersQueryVariables = Exact<{ [key: string]: never }>
 
 export type UserGetEnabledNetworkClustersQuery = { __typename?: 'Query'; clusters: Array<NetworkCluster> }
+
+export type AdminRefreshVoteIdentitiesMutationVariables = Exact<{
+  networkId: Scalars['String']['input']
+}>
+
+export type AdminRefreshVoteIdentitiesMutation = { __typename?: 'Mutation'; refreshed?: boolean | null }
 
 export type RoleDetailsFragment = {
   __typename?: 'Role'
@@ -8870,6 +8887,7 @@ export const NetworkDetailsFragmentDoc = gql`
     explorerUrl
     symbol
     updatedAt
+    voters
   }
 `
 export const SnapshotDetailsFragmentDoc = gql`
@@ -9805,6 +9823,11 @@ export const UserGetEnabledNetworkClustersDocument = gql`
     clusters: userGetEnabledNetworkClusters
   }
 `
+export const AdminRefreshVoteIdentitiesDocument = gql`
+  mutation adminRefreshVoteIdentities($networkId: String!) {
+    refreshed: adminRefreshVoteIdentities(networkId: $networkId)
+  }
+`
 export const AdminFindManyRoleDocument = gql`
   query adminFindManyRole($input: AdminFindManyRoleInput!) {
     paging: adminFindManyRole(input: $input) {
@@ -10207,6 +10230,7 @@ const AdminDeleteNetworkDocumentString = print(AdminDeleteNetworkDocument)
 const UserGetTokenMetadataDocumentString = print(UserGetTokenMetadataDocument)
 const UserGetTokenAccountsDocumentString = print(UserGetTokenAccountsDocument)
 const UserGetEnabledNetworkClustersDocumentString = print(UserGetEnabledNetworkClustersDocument)
+const AdminRefreshVoteIdentitiesDocumentString = print(AdminRefreshVoteIdentitiesDocument)
 const AdminFindManyRoleDocumentString = print(AdminFindManyRoleDocument)
 const AdminFindOneRoleDocumentString = print(AdminFindOneRoleDocument)
 const AdminCreateRoleDocumentString = print(AdminCreateRoleDocument)
@@ -12420,6 +12444,27 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
           ),
         'userGetEnabledNetworkClusters',
         'query',
+        variables,
+      )
+    },
+    adminRefreshVoteIdentities(
+      variables: AdminRefreshVoteIdentitiesMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: AdminRefreshVoteIdentitiesMutation
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<AdminRefreshVoteIdentitiesMutation>(AdminRefreshVoteIdentitiesDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'adminRefreshVoteIdentities',
+        'mutation',
         variables,
       )
     },

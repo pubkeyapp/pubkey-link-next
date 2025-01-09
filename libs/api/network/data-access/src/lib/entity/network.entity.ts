@@ -21,6 +21,8 @@ export class Network {
   endpoint!: string
   @Field({ nullable: true })
   enableSync?: boolean
+  @Field(() => [String], { nullable: true })
+  voters?: string[]
 }
 
 @ObjectType()

@@ -453,6 +453,7 @@ type Mutation {
   adminDeleteUser(userId: String!): Boolean
   adminFetchBackup(url: String!): Boolean!
   adminPurgeLogs: Boolean
+  adminRefreshVoteIdentities(networkId: String!): Boolean
   adminRemoveCommunityMember(communityMemberId: String!): Boolean
   adminRestoreBackup(name: String!): Boolean!
   adminSetIdentityVerified(identityId: String!, verified: Boolean!): Boolean
@@ -518,6 +519,7 @@ type Network {
   symbol: String!
   type: NetworkType!
   updatedAt: DateTime
+  voters: [String!]
 }
 
 type NetworkAsset {

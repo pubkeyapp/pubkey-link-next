@@ -146,7 +146,7 @@ export class ApiRoleResolverService {
 
     for (const cluster of clusters) {
       try {
-        const accountsForCluster = await this.network.cluster.getVoteIdentities(cluster)
+        const accountsForCluster = await this.network.data.findOneByCluster(cluster).then((res) => res?.voters ?? [])
         this.logger.debug(`[${cluster}] getVoteIdentities: Found ${accountsForCluster.length} identities.`)
         result[cluster].push(...accountsForCluster)
       } catch (e) {

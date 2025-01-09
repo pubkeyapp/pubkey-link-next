@@ -11,6 +11,7 @@ import { Token } from '@solflare-wallet/utl-sdk'
 import { LRUCache } from 'lru-cache'
 import { ApiNetworkClusterService } from './api-network-cluster.service'
 import { ApiNetworkDataAdminService } from './api-network-data-admin.service'
+import { ApiNetworkDataService } from './api-network-data.service'
 import { ApiNetworkResolverService } from './resolver/api-network-resolver.service'
 
 @Injectable()
@@ -34,6 +35,7 @@ export class ApiNetworkService {
     readonly admin: ApiNetworkDataAdminService,
     readonly cluster: ApiNetworkClusterService,
     readonly core: ApiCoreService,
+    readonly data: ApiNetworkDataService,
     readonly resolver: ApiNetworkResolverService,
   ) {}
 

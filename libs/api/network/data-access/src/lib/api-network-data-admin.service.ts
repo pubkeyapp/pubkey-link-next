@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { ApiNetworkClusterService } from './api-network-cluster.service'
 import { ApiNetworkDataService } from './api-network-data.service'
 import { AdminCreateNetworkInput } from './dto/admin-create-network.input'
 import { AdminFindManyNetworkInput } from './dto/admin-find-many-network.input'
@@ -9,7 +8,7 @@ import { getNetworkWhereAdminInput } from './helpers/get-network-where-admin.inp
 
 @Injectable()
 export class ApiNetworkDataAdminService {
-  constructor(private readonly cluster: ApiNetworkClusterService, private readonly data: ApiNetworkDataService) {}
+  constructor(private readonly data: ApiNetworkDataService) {}
 
   async createNetwork(input: AdminCreateNetworkInput) {
     return this.data.create(input)
@@ -34,13 +33,5 @@ export class ApiNetworkDataAdminService {
 
   async updateNetwork(networkId: string, input: AdminUpdateNetworkInput) {
     return this.data.update(networkId, input)
-  }
-
-  async getVoteIdentities(networkId: string) {
-    const network = await this.data.findOne(networkId)
-    if (!network) {
-      throw new Error(`Network ${networkId} not found`)
-    }
-    return this.cluster.getVoteIdentities(network.cluster)
   }
 }

@@ -191,6 +191,7 @@ model Network {
   enableSync Boolean        @default(true)
   name       String         @unique
   endpoint   String
+  voters     String[]
   assets     NetworkAsset[]
   tokens     NetworkToken[]
 }

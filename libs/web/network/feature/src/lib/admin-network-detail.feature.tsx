@@ -35,7 +35,7 @@ export function AdminNetworkDetailFeature() {
     tabs.push({
       path: 'vote-identities',
       label: 'Vote Identities',
-      element: <AdminNetworkDetailVoteIdentitiesTab networkId={networkId} />,
+      element: item ? <AdminNetworkDetailVoteIdentitiesTab network={item} refresh={query.refetch} /> : null,
     })
   }
 
