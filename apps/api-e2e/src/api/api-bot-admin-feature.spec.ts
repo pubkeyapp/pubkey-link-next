@@ -1,4 +1,4 @@
-import { AdminCreateBotInput, AdminFindManyBotInput, AdminUpdateBotInput, Bot } from '@pubkey-link/sdk'
+import { AdminCreateBotInput, AdminFindManyBotInput, AdminUpdateBotInput, Bot, BotPlatform } from '@pubkey-link/sdk'
 import { getAliceCookie, getBobCookie, sdk } from '../support'
 
 const defaultCommunityId = 'pubkey'
@@ -7,6 +7,7 @@ const defaultInput: AdminCreateBotInput = {
   clientId: 'pubkey',
   clientSecret: 'pubkey',
   token: 'pubkey',
+  platform: BotPlatform.Discord,
 }
 
 // TODO: Figure out how to test this

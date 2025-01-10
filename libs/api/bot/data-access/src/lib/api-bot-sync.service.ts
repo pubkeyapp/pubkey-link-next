@@ -126,7 +126,7 @@ export class ApiBotSyncService {
     return this.core.data.rolePermission
       .findMany({
         where: {
-          role: { community: { bot: { id: botId } } },
+          role: { community: { bots: { some: { id: botId } } } },
         },
         select: {
           roleId: true,
@@ -153,7 +153,7 @@ export class ApiBotSyncService {
     return this.core.data.communityMember
       .findMany({
         where: {
-          community: { bot: { id: botId } },
+          community: { bots: { some: { id: botId } } },
           user: {
             status: UserStatus.Active,
             identities: { some: { provider: IdentityProvider.Discord } },
@@ -174,7 +174,7 @@ export class ApiBotSyncService {
               communities: {
                 where: {
                   // The community related to this bot
-                  community: { bot: { id: botId } },
+                  community: { bots: { some: { id: botId } } },
                 },
                 include: {
                   // Get the roles for this member in the community

@@ -33,6 +33,7 @@ export type AdminCreateBotInput = {
   clientId: Scalars['String']['input']
   clientSecret: Scalars['String']['input']
   communityId: Scalars['String']['input']
+  platform: BotPlatform
   token: Scalars['String']['input']
 }
 
@@ -241,6 +242,7 @@ export type Bot = {
   inviteUrl: Scalars['String']['output']
   name: Scalars['String']['output']
   permissions?: Maybe<Array<BotRole>>
+  platform: BotPlatform
   redirectUrl: Scalars['String']['output']
   redirectUrlSet?: Maybe<Scalars['Boolean']['output']>
   started: Scalars['Boolean']['output']
@@ -254,6 +256,11 @@ export type BotPaging = {
   __typename?: 'BotPaging'
   data: Array<Bot>
   meta: PagingMeta
+}
+
+export enum BotPlatform {
+  Discord = 'Discord',
+  Telegram = 'Telegram',
 }
 
 export type BotRole = {
@@ -1395,6 +1402,7 @@ export type UserCreateBotInput = {
   clientId: Scalars['String']['input']
   clientSecret: Scalars['String']['input']
   communityId: Scalars['String']['input']
+  platform: BotPlatform
   token: Scalars['String']['input']
 }
 
@@ -1666,6 +1674,7 @@ export type BotDetailsFragment = {
   id: string
   inviteUrl: string
   name: string
+  platform: BotPlatform
   redirectUrl: string
   redirectUrlSet?: boolean | null
   started: boolean
@@ -1756,6 +1765,7 @@ export type AdminFindManyBotQuery = {
       id: string
       inviteUrl: string
       name: string
+      platform: BotPlatform
       redirectUrl: string
       redirectUrlSet?: boolean | null
       started: boolean
@@ -1792,6 +1802,7 @@ export type AdminFindOneBotQuery = {
     id: string
     inviteUrl: string
     name: string
+    platform: BotPlatform
     redirectUrl: string
     redirectUrlSet?: boolean | null
     started: boolean
@@ -1817,6 +1828,7 @@ export type AdminCreateBotMutation = {
     id: string
     inviteUrl: string
     name: string
+    platform: BotPlatform
     redirectUrl: string
     redirectUrlSet?: boolean | null
     started: boolean
@@ -1843,6 +1855,7 @@ export type AdminUpdateBotMutation = {
     id: string
     inviteUrl: string
     name: string
+    platform: BotPlatform
     redirectUrl: string
     redirectUrlSet?: boolean | null
     started: boolean
@@ -1874,6 +1887,7 @@ export type UserFindOneBotQuery = {
     id: string
     inviteUrl: string
     name: string
+    platform: BotPlatform
     redirectUrl: string
     redirectUrlSet?: boolean | null
     started: boolean
@@ -2052,6 +2066,7 @@ export type UserCreateBotMutation = {
     id: string
     inviteUrl: string
     name: string
+    platform: BotPlatform
     redirectUrl: string
     redirectUrlSet?: boolean | null
     started: boolean
@@ -2078,6 +2093,7 @@ export type UserUpdateBotMutation = {
     id: string
     inviteUrl: string
     name: string
+    platform: BotPlatform
     redirectUrl: string
     redirectUrlSet?: boolean | null
     started: boolean
@@ -4668,6 +4684,7 @@ export type LogDetailsFragment = {
     id: string
     inviteUrl: string
     name: string
+    platform: BotPlatform
     redirectUrl: string
     redirectUrlSet?: boolean | null
     started: boolean
@@ -4865,6 +4882,7 @@ export type UserFindManyLogQuery = {
         id: string
         inviteUrl: string
         name: string
+        platform: BotPlatform
         redirectUrl: string
         redirectUrlSet?: boolean | null
         started: boolean
@@ -5072,6 +5090,7 @@ export type UserFindOneLogQuery = {
       id: string
       inviteUrl: string
       name: string
+      platform: BotPlatform
       redirectUrl: string
       redirectUrlSet?: boolean | null
       started: boolean
@@ -5270,6 +5289,7 @@ export type AdminFindManyLogQuery = {
         id: string
         inviteUrl: string
         name: string
+        platform: BotPlatform
         redirectUrl: string
         redirectUrlSet?: boolean | null
         started: boolean
@@ -5477,6 +5497,7 @@ export type AdminFindOneLogQuery = {
       id: string
       inviteUrl: string
       name: string
+      platform: BotPlatform
       redirectUrl: string
       redirectUrlSet?: boolean | null
       started: boolean
@@ -8657,6 +8678,7 @@ export const BotDetailsFragmentDoc = gql`
     id
     inviteUrl
     name
+    platform
     redirectUrl
     redirectUrlSet
     started
@@ -13156,6 +13178,8 @@ export const definedNonNullAnySchema = z.any().refine((v) => isDefinedNonNullAny
 
 export const AppFeatureSchema = z.nativeEnum(AppFeature)
 
+export const BotPlatformSchema = z.nativeEnum(BotPlatform)
+
 export const BotStatusSchema = z.nativeEnum(BotStatus)
 
 export const IdentityProviderSchema = z.nativeEnum(IdentityProvider)
@@ -13188,6 +13212,7 @@ export function AdminCreateBotInputSchema(): z.ZodObject<Properties<AdminCreateB
     clientId: z.string(),
     clientSecret: z.string(),
     communityId: z.string(),
+    platform: BotPlatformSchema,
     token: z.string(),
   })
 }
@@ -13449,6 +13474,7 @@ export function UserCreateBotInputSchema(): z.ZodObject<Properties<UserCreateBot
     clientId: z.string(),
     clientSecret: z.string(),
     communityId: z.string(),
+    platform: BotPlatformSchema,
     token: z.string(),
   })
 }

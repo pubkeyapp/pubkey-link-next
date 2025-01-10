@@ -6,6 +6,7 @@ fragment BotDetails on Bot {
   id
   inviteUrl
   name
+  platform
   redirectUrl
   redirectUrlSet
   started

@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
+import { BotPlatform } from '../entity/bot-platform.enum'
 
 @InputType()
 export class UserCreateBotInput {
@@ -10,4 +11,6 @@ export class UserCreateBotInput {
   clientSecret!: string
   @Field()
   communityId!: string
+  @Field(() => BotPlatform)
+  platform!: BotPlatform
 }

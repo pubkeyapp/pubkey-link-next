@@ -10,7 +10,7 @@ export function CommunityDashboardCardBot({ community }: { community: Community 
   const { item, query } = useUserFindOneBot({ communityId: community.id })
 
   return (
-    <UiCard title="Discord Bot">
+    <UiCard title="Community Bots">
       {query.isLoading ? (
         <UiLoader />
       ) : item ? (
@@ -25,7 +25,7 @@ export function CommunityDashboardCardBot({ community }: { community: Community 
           title="No bot found."
           message={
             <UiGroup>
-              <div>This community does not have a bot.</div>
+              <div>This community does not have any bot.</div>
               <Button component={Link} to={'../discord'}>
                 Add bot
               </Button>
