@@ -1,4 +1,5 @@
 import { Field, HideField, ObjectType } from '@nestjs/graphql'
+import { BotPlatform } from '@prisma/client'
 import { BotApplication } from '@pubkey-link/api-bot-util'
 import { PagingResponse } from '@pubkey-link/api-core-data-access'
 import { GraphQLJSON } from 'graphql-scalars'
@@ -17,6 +18,8 @@ export class Bot {
   name!: string
   @Field({ nullable: true })
   avatarUrl?: string | null
+  @Field(() => BotPlatform)
+  platform!: BotPlatform
   @Field(() => BotStatus)
   status!: BotStatus
   @HideField()

@@ -31,6 +31,8 @@ export const validationSchema = Joi.object({
   FEATURE_ANON_COMMUNITIES: Joi.boolean().default(true),
   FEATURE_BETA_DAS_BURNT: Joi.boolean().default(false),
   FEATURE_BETA_DAS_SEARCH: Joi.boolean().default(false),
+  FEATURE_BOT_PLATFORM_DISCORD: Joi.boolean().default(true),
+  FEATURE_BOT_PLATFORM_TELEGRAM: Joi.boolean().default(false),
   FEATURE_COMMUNITY_CREATE: Joi.boolean().default(true),
   FEATURE_COMMUNITY_SNAPSHOTS: Joi.boolean().default(false),
   FEATURE_IDENTITY_CLI_VERIFICATION: Joi.boolean().default(false),

@@ -11,6 +11,7 @@ input AdminCreateBotInput {
   clientId: String!
   clientSecret: String!
   communityId: String!
+  platform: BotPlatform!
   token: String!
 }
 
@@ -193,6 +194,8 @@ type AppConfig {
 
 enum AppFeature {
   AnonCommunities
+  BotPlatformDiscord
+  BotPlatformTelegram
   CommunityCreate
   CommunitySnapshots
   IdentityCliVerification
@@ -210,6 +213,7 @@ type Bot {
   inviteUrl: String!
   name: String!
   permissions: [BotRole!]
+  platform: BotPlatform!
   redirectUrl: String!
   redirectUrlSet: Boolean
   started: Boolean!
@@ -222,6 +226,11 @@ type Bot {
 type BotPaging {
   data: [Bot!]!
   meta: PagingMeta!
+}
+
+enum BotPlatform {
+  Discord
+  Telegram
 }
 
 type BotRole {
@@ -804,6 +813,7 @@ input UserCreateBotInput {
   clientId: String!
   clientSecret: String!
   communityId: String!
+  platform: BotPlatform!
   token: String!
 }
 

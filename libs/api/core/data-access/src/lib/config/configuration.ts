@@ -55,6 +55,8 @@ export interface ApiCoreConfig {
   featureAnonCommunities: boolean
   featureBetaDasBurnt: boolean
   featureBetaDasSearch: boolean
+  featureBotPlatformDiscord: boolean
+  featureBotPlatformTelegram: boolean
   featureCommunityCreate: boolean
   featureCommunitySnapshots: boolean
   featureIdentityCliVerification: boolean
@@ -119,6 +121,8 @@ export function configuration(): ApiCoreConfig {
     featureAnonCommunities: process.env['FEATURE_ANON_COMMUNITIES'] === 'true',
     featureBetaDasBurnt: process.env['FEATURE_BETA_DAS_BURNT'] === 'true',
     featureBetaDasSearch: process.env['FEATURE_BETA_DAS_SEARCH'] === 'true',
+    featureBotPlatformDiscord: process.env['FEATURE_BOT_PLATFORM_DISCORD'] === 'true',
+    featureBotPlatformTelegram: process.env['FEATURE_BOT_PLATFORM_TELEGRAM'] === 'true',
     featureCommunityCreate: process.env['FEATURE_COMMUNITY_CREATE'] === 'true',
     featureCommunitySnapshots: process.env['FEATURE_COMMUNITY_SNAPSHOTS'] === 'true',
     featureIdentityCliVerification: process.env['FEATURE_IDENTITY_CLI_VERIFICATION'] === 'true',

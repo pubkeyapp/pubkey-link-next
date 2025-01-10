@@ -22,6 +22,7 @@ model Bot {
   permissions  BotRole[]
   servers      BotServer[]
   logs         Log[]
+  platform     BotPlatform
 }
 
 model BotRole {
@@ -72,7 +73,7 @@ model Community {
   members     CommunityMember[]
   roles       Role[]
   cluster     NetworkCluster? // This field is deprecated and will be removed in a future version
-  bot         Bot?
+  bots        Bot[]
   logs        Log[]
 
   // TODO: Add relation to NetworkToken
@@ -314,6 +315,11 @@ model User {
   identities     Identity[]
   identityGrants IdentityGrant[]
   logs           Log[]
+}
+
+enum BotPlatform {
+  Discord
+  Telegram
 }
 
 enum BotStatus {

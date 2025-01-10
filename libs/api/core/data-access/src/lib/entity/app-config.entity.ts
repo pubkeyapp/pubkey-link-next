@@ -24,6 +24,8 @@ export class AppConfig {
 
 export enum AppFeature {
   AnonCommunities = 'AnonCommunities',
+  BotPlatformDiscord = 'BotPlatformDiscord',
+  BotPlatformTelegram = 'BotPlatformTelegram',
   CommunityCreate = 'CommunityCreate',
   CommunitySnapshots = 'CommunitySnapshots',
   IdentityCliVerification = 'IdentityCliVerification',

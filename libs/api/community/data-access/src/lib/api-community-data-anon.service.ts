@@ -8,7 +8,7 @@ export class ApiCommunityDataAnonService {
   async getCommunities() {
     this.core.config.ensureFeature(AppFeature.AnonCommunities)
     return this.core.data.community.findMany({
-      where: { featured: true, bot: { isNot: null } },
+      where: { featured: true, bots: { some: {} } },
       orderBy: { name: 'asc' },
     })
   }

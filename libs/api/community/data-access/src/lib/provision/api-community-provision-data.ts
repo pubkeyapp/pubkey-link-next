@@ -1,4 +1,4 @@
-import { NetworkCluster, NetworkTokenType, Prisma } from '@prisma/client'
+import { BotPlatform, NetworkCluster, NetworkTokenType, Prisma } from '@prisma/client'
 
 const cluster = NetworkCluster.SolanaMainnet
 const DL_SERVER = '953959331353751632'
@@ -18,6 +18,7 @@ const DL_BOT: Prisma.BotCreateWithoutCommunityInput = {
   avatarUrl: 'https://cdn.discordapp.com/avatars/1138462172092039258/2d9f621e44433c97e171bb40ec122b6f.png?size=1024',
   id: process.env['DEANSLIST_BOT_CLIENT_ID'] ?? '',
   name: "Dean's List Projects LOCAL",
+  platform: BotPlatform.Discord,
   permissions: {
     create: [DL_ROLE_ONE_OF_US, DL_ROLE_BV, DL_ROLE_BV_EXPIRED, DL_ROLE_HOLDER].map((serverRoleId) => ({
       id: `${DL_SERVER}-${serverRoleId}`,
@@ -86,6 +87,7 @@ const LOS_BOT: Prisma.BotCreateWithoutCommunityInput = {
   avatarUrl: 'https://cdn.discordapp.com/avatars/1208445127832637451/babbe2d94cc9058e7a66a844a7b15eb5.png?size=1024',
   id: process.env['LOS_BOT_CLIENT_ID'] ?? '',
   name: 'Legends of Sol 🅿 Verification',
+  platform: BotPlatform.Discord,
   permissions: {
     create: [LOS_ROLE_CERTIFIED].map((serverRoleId) => ({
       id: `${LOS_SERVER}-${serverRoleId}`,
@@ -122,6 +124,7 @@ const PK_BOT: Prisma.BotCreateWithoutCommunityInput = {
   id: process.env['PUBKEY_BOT_CLIENT_ID'] ?? '',
   name: 'PubKey Link Yellow',
   status: 'Active',
+  platform: BotPlatform.Discord,
   permissions: {
     create: [PK_ROLE_DEANSLIST, PK_ROLE_DL_BV, PK_ROLE_DL_BV_EXPIRED, PK_ROLE_DL_HOLDER].map((serverRoleId) => ({
       id: `${PK_SERVER}-${serverRoleId}`,
@@ -185,7 +188,7 @@ export const provisionCommunities: Prisma.CommunityCreateInput[] = [
         { user: { connect: { id: 'dave' } }, admin: true },
       ],
     },
-    bot: { create: PK_BOT.clientId ? PK_BOT : undefined },
+    bots: { create: PK_BOT.clientId ? PK_BOT : undefined },
     roles: {
       create: [
         {
@@ -238,7 +241,7 @@ export const provisionCommunities: Prisma.CommunityCreateInput[] = [
     avatarUrl: 'https://avatars.githubusercontent.com/u/137821488?v=4',
     twitterUrl: 'https://twitter.com/deanslistDAO',
     websiteUrl: 'https://deanslist.services',
-    bot: DL_BOT.clientId ? { create: DL_BOT } : undefined,
+    bots: DL_BOT.clientId ? { create: DL_BOT } : undefined,
     roles: {
       create: [
         {
@@ -316,7 +319,7 @@ export const provisionCommunities: Prisma.CommunityCreateInput[] = [
         { user: { connect: { id: 'bob' } }, admin: false },
       ],
     },
-    bot: LOS_BOT.clientId ? { create: LOS_BOT } : undefined,
+    bots: LOS_BOT.clientId ? { create: LOS_BOT } : undefined,
     roles: {
       create: [
         {

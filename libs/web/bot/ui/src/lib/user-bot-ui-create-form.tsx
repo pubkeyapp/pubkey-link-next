@@ -1,6 +1,6 @@
-import { Button, Group, TextInput } from '@mantine/core'
+import { Button, Group, Select, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { UserCreateBotInput } from '@pubkey-link/sdk'
+import { BotPlatform, getEnumOptions, UserCreateBotInput } from '@pubkey-link/sdk'
 import { UiStack } from '@pubkey-ui/core'
 
 export function UserBotUiCreateForm({ submit }: { submit: (res: UserCreateBotInput) => Promise<boolean> }) {
@@ -10,6 +10,7 @@ export function UserBotUiCreateForm({ submit }: { submit: (res: UserCreateBotInp
       clientSecret: '',
       communityId: '',
       token: '',
+      platform: BotPlatform.Discord,
     },
   })
 
@@ -36,6 +37,14 @@ export function UserBotUiCreateForm({ submit }: { submit: (res: UserCreateBotInp
           description="Copy the TOKEN value from the Bot section of your app."
           placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ.12345.ABCDEFGHIJKLMNOPQRSTUVWXYZ"
           {...form.getInputProps('token')}
+        />
+
+        <Select
+          required
+          label="Platform"
+          placeholder="Select a platform"
+          data={getEnumOptions(BotPlatform)}
+          {...form.getInputProps('platform')}
         />
 
         <Group justify="right">
