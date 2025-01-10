@@ -177,6 +177,8 @@ export class ApiCoreConfigService {
   get featureFlags(): AppFeature[] {
     return [
       { flag: this.featureAnonCommunities, feature: AppFeature.AnonCommunities },
+      { flag: this.featureBotPlatformDiscord, feature: AppFeature.BotPlatformDiscord },
+      { flag: this.featureBotPlatformTelegram, feature: AppFeature.BotPlatformTelegram },
       { flag: this.featureCommunityCreate, feature: AppFeature.CommunityCreate },
       { flag: this.featureCommunitySnapshots, feature: AppFeature.CommunitySnapshots },
       { flag: this.featureIdentityCliVerification, feature: AppFeature.IdentityCliVerification },
@@ -195,6 +197,14 @@ export class ApiCoreConfigService {
 
   get featureBetaDasSearch() {
     return this.service.get<boolean>('featureBetaDasSearch')
+  }
+
+  get featureBotPlatformDiscord() {
+    return this.service.get<boolean>('featureBotPlatformDiscord')
+  }
+
+  get featureBotPlatformTelegram() {
+    return this.service.get<boolean>('featureBotPlatformTelegram')
   }
 
   get featurePubkeyProtocol() {
