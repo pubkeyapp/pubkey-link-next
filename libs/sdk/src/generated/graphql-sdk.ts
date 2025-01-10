@@ -37,14 +37,7 @@ export type AdminCreateBotInput = {
 }
 
 export type AdminCreateCommunityInput = {
-  avatarUrl?: InputMaybe<Scalars['String']['input']>
-  description?: InputMaybe<Scalars['String']['input']>
-  discordUrl?: InputMaybe<Scalars['String']['input']>
-  githubUrl?: InputMaybe<Scalars['String']['input']>
   name: Scalars['String']['input']
-  telegramUrl?: InputMaybe<Scalars['String']['input']>
-  twitterUrl?: InputMaybe<Scalars['String']['input']>
-  websiteUrl?: InputMaybe<Scalars['String']['input']>
 }
 
 export type AdminCreateIdentityInput = {
@@ -1401,14 +1394,7 @@ export type UserCreateBotInput = {
 }
 
 export type UserCreateCommunityInput = {
-  avatarUrl?: InputMaybe<Scalars['String']['input']>
-  description?: InputMaybe<Scalars['String']['input']>
-  discordUrl?: InputMaybe<Scalars['String']['input']>
-  githubUrl?: InputMaybe<Scalars['String']['input']>
   name: Scalars['String']['input']
-  telegramUrl?: InputMaybe<Scalars['String']['input']>
-  twitterUrl?: InputMaybe<Scalars['String']['input']>
-  websiteUrl?: InputMaybe<Scalars['String']['input']>
 }
 
 export type UserCreateRoleConditionInput = {
@@ -13337,14 +13323,7 @@ export function AdminCreateBotInputSchema(): z.ZodObject<Properties<AdminCreateB
 
 export function AdminCreateCommunityInputSchema(): z.ZodObject<Properties<AdminCreateCommunityInput>> {
   return z.object({
-    avatarUrl: z.string().nullish(),
-    description: z.string().nullish(),
-    discordUrl: z.string().nullish(),
-    githubUrl: z.string().nullish(),
     name: z.string(),
-    telegramUrl: z.string().nullish(),
-    twitterUrl: z.string().nullish(),
-    websiteUrl: z.string().nullish(),
   })
 }
 
@@ -13598,14 +13577,7 @@ export function UserCreateBotInputSchema(): z.ZodObject<Properties<UserCreateBot
 
 export function UserCreateCommunityInputSchema(): z.ZodObject<Properties<UserCreateCommunityInput>> {
   return z.object({
-    avatarUrl: z.string().nullish(),
-    description: z.string().nullish(),
-    discordUrl: z.string().nullish(),
-    githubUrl: z.string().nullish(),
     name: z.string(),
-    telegramUrl: z.string().nullish(),
-    twitterUrl: z.string().nullish(),
-    websiteUrl: z.string().nullish(),
   })
 }
 

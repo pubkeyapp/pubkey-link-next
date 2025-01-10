@@ -15,14 +15,7 @@ input AdminCreateBotInput {
 }
 
 input AdminCreateCommunityInput {
-  avatarUrl: String
-  description: String
-  discordUrl: String
-  githubUrl: String
   name: String!
-  telegramUrl: String
-  twitterUrl: String
-  websiteUrl: String
 }
 
 input AdminCreateIdentityInput {
@@ -815,14 +808,7 @@ input UserCreateBotInput {
 }
 
 input UserCreateCommunityInput {
-  avatarUrl: String
-  description: String
-  discordUrl: String
-  githubUrl: String
   name: String!
-  telegramUrl: String
-  twitterUrl: String
-  websiteUrl: String
 }
 
 input UserCreateRoleConditionInput {

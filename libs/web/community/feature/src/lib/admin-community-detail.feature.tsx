@@ -1,4 +1,4 @@
-import { Group } from '@mantine/core'
+import { Button, Group } from '@mantine/core'
 import { AppFeature } from '@pubkey-link/sdk'
 import { AdminBotFeature } from '@pubkey-link/web-bot-feature'
 import { useAdminFindOneCommunity } from '@pubkey-link/web-community-data-access'
@@ -7,8 +7,18 @@ import { CommunityUiItem } from '@pubkey-link/web-community-ui'
 import { useAppConfig } from '@pubkey-link/web-core-data-access'
 import { AdminLogFeature } from '@pubkey-link/web-log-feature'
 import { AdminRoleFeature } from '@pubkey-link/web-role-feature'
-import { UiBack, UiDebugModal, UiError, UiLoader, UiPage, UiTabRoute, UiTabRoutes } from '@pubkey-ui/core'
-import { useParams } from 'react-router-dom'
+import {
+  UiAlert,
+  UiBack,
+  UiDebugModal,
+  UiError,
+  UiLoader,
+  UiPage,
+  UiStack,
+  UiTabRoute,
+  UiTabRoutes,
+} from '@pubkey-ui/core'
+import { Link, useParams } from 'react-router-dom'
 import { AdminCommunityDetailOverviewTab } from './admin-community-detail-overview.tab'
 import { AdminCommunityDetailSettingsTab } from './admin-community-detail-settings.tab'
 
@@ -31,7 +41,12 @@ export function AdminCommunityDetailFeature() {
     {
       path: 'overview',
       label: 'Overview',
-      element: <AdminCommunityDetailOverviewTab communityId={communityId} />,
+      element: (
+        <UiStack>
+          <UiAlert message="This section is for admin operations and debugging. Use the Manage Community option above to adjust its settings" />
+          <AdminCommunityDetailOverviewTab communityId={communityId} />
+        </UiStack>
+      ),
     },
     {
       path: 'roles',
@@ -68,6 +83,9 @@ export function AdminCommunityDetailFeature() {
       rightAction={
         <Group>
           <UiDebugModal data={item} />
+          <Button component={Link} to={item.viewUrl} variant="light">
+            Manage Community
+          </Button>
         </Group>
       }
     >
