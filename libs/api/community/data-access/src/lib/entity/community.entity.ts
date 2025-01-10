@@ -1,4 +1,5 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, HideField, ObjectType } from '@nestjs/graphql'
+import { CommunityMember } from '@pubkey-link/api-community-member-data-access'
 import { PagingResponse } from '@pubkey-link/api-core-data-access'
 import { Role } from '@pubkey-link/api-role-data-access'
 
@@ -30,6 +31,8 @@ export class Community {
   twitterUrl?: string | null
   @Field({ nullable: true })
   telegramUrl?: string | null
+  @HideField()
+  members?: CommunityMember[]
   @Field(() => [Role], { nullable: true })
   roles?: Role[]
 }

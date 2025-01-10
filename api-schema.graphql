@@ -270,11 +270,13 @@ type Community {
   featured: Boolean
   githubUrl: String
   id: String!
+  membership: CommunityMember
   name: String!
   roles: [Role!]
   telegramUrl: String
   twitterUrl: String
   updatedAt: DateTime
+  viewUrl: String!
   websiteUrl: String
 }
 

@@ -1,9 +1,10 @@
-import { Box, Paper, Text } from '@mantine/core'
+import { Box, Button, Paper, Text } from '@mantine/core'
 import { Community } from '@pubkey-link/sdk'
 import { AppUiDebugModal } from '@pubkey-link/web-core-ui'
 import { RoleUiList } from '@pubkey-link/web-role-ui'
 import { UiGroup, UiInfo, UiLoader, UiStack } from '@pubkey-ui/core'
 import { Suspense } from 'react'
+import { Link } from 'react-router-dom'
 import { CommunityUiItem } from './community-ui-item'
 import { CommunityUiSocials } from './community-ui-socials'
 
@@ -21,6 +22,8 @@ export function CommunityUiListItem({
   const hasRoles = item.roles?.length
   const rolesAssigned = item.roles?.filter((role) => role.member)
   const rolesAvailable = item.roles?.filter((role) => !role.member)
+  const isAdmin = !!item?.membership?.admin
+
   return (
     <Paper withBorder p="md">
       <UiStack>
@@ -29,6 +32,11 @@ export function CommunityUiListItem({
           <UiStack align="end">
             <CommunityUiSocials community={item}>
               <AppUiDebugModal data={item} />
+              {isAdmin && (
+                <Button component={Link} to={item.viewUrl} variant="light">
+                  Manage Community
+                </Button>
+              )}
             </CommunityUiSocials>
           </UiStack>
         </UiGroup>

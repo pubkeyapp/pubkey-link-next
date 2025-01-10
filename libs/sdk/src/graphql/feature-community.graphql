@@ -12,6 +12,7 @@ fragment CommunityDetails on Community {
   twitterUrl
   telegramUrl
   updatedAt
+  viewUrl
 }
 
 query adminFindManyCommunity($input: AdminFindManyCommunityInput!) {
@@ -62,6 +63,12 @@ query anonGetCommunities {
 query userGetCommunities($username: String!) {
   items: userGetCommunities(username: $username) {
     ...CommunityDetails
+    membership {
+      ...CommunityMemberDetails
+      roles {
+        ...RoleDetails
+      }
+    }
     roles {
       ...RoleDetails
     }

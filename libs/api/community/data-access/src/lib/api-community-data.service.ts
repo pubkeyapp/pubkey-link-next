@@ -41,6 +41,9 @@ export class ApiCommunityDataService {
   async getCommunities(username: string) {
     return this.core.data.community.findMany({
       include: {
+        members: {
+          where: { user: { username } },
+        },
         roles: {
           // Ensure that the role has at least one condition
           where: { conditions: { some: {} } },
