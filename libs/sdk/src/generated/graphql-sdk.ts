@@ -399,6 +399,7 @@ export type IdentityGrant = {
 export enum IdentityProvider {
   Discord = 'Discord',
   Solana = 'Solana',
+  Telegram = 'Telegram',
 }
 
 export type LinkIdentityInput = {

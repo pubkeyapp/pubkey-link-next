@@ -10,5 +10,14 @@ module.exports = composePlugins(withNx(), withReact(), (config) => {
     crypto: false,
   }
 
+  // Add allowedHosts configuration for ngrok URL
+  config.devServer = {
+    ...config.devServer,
+    allowedHosts: [
+      'localhost',
+      '.ngrok-free.app', // Allow all ngrok subdomains
+    ],
+  }
+
   return config
 })

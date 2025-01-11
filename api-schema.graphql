@@ -367,6 +367,7 @@ type IdentityGrant {
 enum IdentityProvider {
   Discord
   Solana
+  Telegram
 }
 
 """

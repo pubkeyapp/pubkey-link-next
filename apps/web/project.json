@@ -51,7 +51,12 @@
       "options": {
         "buildTarget": "web:build",
         "hmr": true,
-        "proxyConfig": "apps/web/proxy.conf.js"
+        "proxyConfig": "apps/web/proxy.conf.js",
+        "allowedHosts": "all",
+        "host": "0.0.0.0",
+        "port": 4200,
+        "publicHost": "https://dad2-36-255-84-98.ngrok-free.app",
+        "webSocketPath": "/ws"
       },
       "configurations": {
         "development": {

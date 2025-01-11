@@ -25,6 +25,6 @@ import { ApiIdentityService } from './api-identity.service'
     ApiIdentitySolanaService,
     ApiIdentityDataUserService,
   ],
-  exports: [ApiIdentityService],
+  exports: [ApiIdentityService, ApiIdentityDataUserService],
 })
 export class ApiIdentityDataAccessModule {}

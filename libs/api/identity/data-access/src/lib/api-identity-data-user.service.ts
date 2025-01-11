@@ -224,24 +224,49 @@ export class ApiIdentityDataUserService {
   }
 
   async linkIdentity(userId: string, { name, provider, providerId }: LinkIdentityInput) {
-    // Make sure the provider is allowed
-    this.solana.ensureAllowedProvider(provider)
     // Make sure the provider is enabled
     if (!this.core.config.appConfig.authLinkProviders.includes(provider)) {
       throw new Error(`Provider ${provider} not enabled for linking`)
     }
+
     // Make sure the identity does not exist
     const found = await this.findOneIdentity(provider, providerId)
     if (found) {
       throw new Error(`Identity ${provider} ${providerId} already linked`)
     }
 
-    if (provider === IdentityProvider.Discord) {
-      const existing = await this.core.data.identity.findFirst({ where: { provider, ownerId: userId } })
-      if (existing) {
-        throw new Error(`Discord identity already linked`)
+    console.log('provider', provider)
+
+    // Handle provider-specific validation
+    switch (provider) {
+      case IdentityProvider.Solana:
+        this.solana.ensureAllowedProvider(provider)
+        this.solana.ensureValidProviderId(provider, providerId)
+        break
+      case IdentityProvider.Discord: {
+        const existing = await this.core.data.identity.findFirst({ where: { provider, ownerId: userId } })
+        if (existing) {
+          throw new Error(`Discord identity already linked`)
+        }
+        break
       }
+      case IdentityProvider.Telegram:{
+        const existing = await this.core.data.identity.findFirst({ where: { provider, ownerId: userId } })
+        if (existing) {
+          throw new Error(`Telegram identity already linked`)
+        }
+        break
+      }
+      default:
+        throw new Error(`Provider ${provider} not supported`)
     }
+
+    console.log('--------------------------------Data--------------------------------')
+    console.log('name', name)
+    console.log('providerId', providerId)
+    console.log('userId', userId)
+    console.log('provider', provider)
+    console.log('providerId', providerId)
 
     // Create the identity
     return this.core.data.identity.create({

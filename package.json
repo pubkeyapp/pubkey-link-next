@@ -87,6 +87,7 @@
     "@swc/helpers": "0.5.11",
     "@tabler/icons-react": "^2.45.0",
     "@tanstack/react-query": "^5.17.9",
+    "@telegram-auth/server": "^1.0.4",
     "@willsoto/nestjs-prometheus": "^6.0.0",
     "axios": "1.6.7",
     "bcrypt": "^5.1.1",

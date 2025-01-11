@@ -60,4 +60,9 @@ export const validationSchema = Joi.object({
   SYNC_BOT_SERVERS: Joi.boolean().default(true),
   SYNC_NETWORK_ASSETS: Joi.boolean().default(true),
   SYNC_COMMUNITY_ROLES: Joi.boolean().default(true),
+  // Add Telegram Authentication validation
+  AUTH_TELEGRAM_LINK_ENABLED: Joi.boolean().default(false),
+  AUTH_TELEGRAM_LOGIN_ENABLED: Joi.boolean().default(false),
+  BOT_NAME: Joi.string(),
+  BOT_TOKEN: Joi.string(),
 })

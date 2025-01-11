@@ -28,6 +28,9 @@ export class ApiCoreConfigService {
     if (this.authSolanaLoginEnabled) {
       login.push(IdentityProvider.Solana)
     }
+    if (this.authTelegramLinkEnabled) {
+      login.push(IdentityProvider.Telegram)
+    }
 
     const resolvers: NetworkResolver[] = []
     if (this.featureResolverSolanaFungible) {
@@ -39,14 +42,26 @@ export class ApiCoreConfigService {
     if (this.featureResolverSolanaValidator) {
       resolvers.push(NetworkResolver.SolanaValidator)
     }
-
+    console.log("--------------------------------------------------------------------------")
+    console.log(link)
+    console.log("--------------------------------------------------------------------------")
+    console.log(login)
+    console.log("--------------------------------------------------------------------------")
     return {
       appLogoUrlDark: this.appLogoUrlDark,
       appLogoUrlLight: this.appLogoUrlLight,
       appThemeBackground: this.appThemeBackground,
       appThemeColor: this.appThemeColor,
-      authLinkProviders: link,
-      authLoginProviders: login,
+      authLinkProviders: [
+        ...(process.env['AUTH_SOLANA_LINK_ENABLED'] ? [IdentityProvider.Solana] : []),
+        ...(process.env['AUTH_DISCORD_LINK_ENABLED'] ? [IdentityProvider.Discord] : []),
+        ...(process.env['AUTH_TELEGRAM_LINK_ENABLED'] ? [IdentityProvider.Telegram] : []),
+      ],
+      authLoginProviders: [
+        ...(process.env['AUTH_SOLANA_LOGIN_ENABLED'] ? [IdentityProvider.Solana] : []),
+        ...(process.env['AUTH_DISCORD_LOGIN_ENABLED'] ? [IdentityProvider.Discord] : []),
+        ...(process.env['AUTH_TELEGRAM_LOGIN_ENABLED'] ? [IdentityProvider.Telegram] : []),
+      ],
       features: this.featureFlags,
       resolvers,
     }
@@ -104,6 +119,22 @@ export class ApiCoreConfigService {
       scope: this.authDiscordScope,
       passReqToCallback: true,
     }
+  }
+
+  get botName() {
+    return this.service.get<string>('botName')
+  }
+
+  get botToken() {
+    return this.service.get<string>('botToken')
+  }
+
+  get authTelegramSecrets(): boolean {
+    return !(!this.botName || !this.botToken)
+  }
+
+  get authTelegramLinkEnabled(): boolean {
+    return (this.authTelegramSecrets && this.service.get<boolean>('authTelegramLinkEnabled')) ?? false
   }
 
   get authSolanaAdminIds() {
