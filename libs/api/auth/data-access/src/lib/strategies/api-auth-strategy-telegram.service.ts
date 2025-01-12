@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { IdentityProvider } from '@prisma/client'
+import { ApiCoreService } from '@pubkey-link/api-core-data-access'
 import { AuthDataValidator, objectToAuthDataMap } from '@telegram-auth/server'
 import { Response } from 'express-serve-static-core'
 import { ApiAuthService } from '../api-auth.service'
@@ -19,35 +20,17 @@ export interface TelegramAuthPayload {
 @Injectable()
 export class ApiAuthStrategyTelegramService {
   private validator = new AuthDataValidator({
-    // botToken: this.core.config.authTelegramBotToken
-    botToken: process.env['AUTH_TELEGRAM_BOT_TOKEN'] as string,
+    botToken: this.core.config.authTelegramBotToken,
   })
   constructor(
+    private readonly core: ApiCoreService,
     private readonly authService: ApiAuthService,
     private readonly authStrategyService: ApiAuthStrategyService,
   ) {}
 
   async link(input: TelegramAuthPayload, req: ApiAuthRequest) {
     try {
-      const authData = objectToAuthDataMap(JSON.parse(JSON.stringify(input)))
-      const user = await this.validator.validate(authData)
-
-      if (!user || user.id !== input.id) {
-        throw new Error('User ID mismatch')
-      }
-
-      return this.authStrategyService.validateRequest({
-        req,
-        providerId: user.id.toString(),
-        provider: IdentityProvider.Telegram,
-        accessToken: '', // Telegram doesn't use OAuth tokens
-        refreshToken: '',
-        profile: {
-          username: user.username,
-          name: `${input.first_name}${input.last_name ? ' ' + input.last_name : ''}`,
-          avatarUrl: input.photo_url,
-        },
-      })
+      return this.verifyInput(req, input)
     } catch (error) {
       console.error('Error processing request:', error)
       throw new Error('Invalid Telegram authentication data')
@@ -56,29 +39,8 @@ export class ApiAuthStrategyTelegramService {
 
   async login(input: TelegramAuthPayload, req: ApiAuthRequest, res: Response) {
     try {
-      const authData = objectToAuthDataMap(JSON.parse(JSON.stringify(input)))
-      const user = await this.validator.validate(authData)
-
-      if (user?.id !== input.id) {
-        throw new Error('User ID mismatch')
-      }
-
-      // First validate the request to create/update the user
-      const validatedUser = await this.authStrategyService.validateRequest({
-        req,
-        providerId: user.id.toString(),
-        provider: IdentityProvider.Telegram,
-        accessToken: '',
-        refreshToken: '',
-        profile: {
-          username: user.username,
-          name: `${input.first_name}${input.last_name ? ' ' + input.last_name : ''}`,
-          avatarUrl: input.photo_url,
-        },
-      })
-
       // Assign the validated user to the request
-      req.user = validatedUser
+      req.user = await this.verifyInput(req, input)
 
       // Then redirect with cookie set
       return this.authService.userCookieRedirect(req, res)
@@ -86,5 +48,27 @@ export class ApiAuthStrategyTelegramService {
       console.error('Error processing login:', error)
       throw new Error('Invalid Telegram authentication data')
     }
+  }
+
+  private async verifyInput(req: ApiAuthRequest, input: TelegramAuthPayload) {
+    const authData = objectToAuthDataMap(JSON.parse(JSON.stringify(input)))
+    const user = await this.validator.validate(authData)
+
+    if (user?.id !== input.id) {
+      throw new Error('User ID mismatch')
+    }
+
+    return await this.authStrategyService.validateRequest({
+      req,
+      providerId: user.id.toString(),
+      provider: IdentityProvider.Telegram,
+      accessToken: '',
+      refreshToken: '',
+      profile: {
+        username: user.username,
+        name: `${input.first_name}${input.last_name ? ' ' + input.last_name : ''}`,
+        avatarUrl: input.photo_url,
+      },
+    })
   }
 }
