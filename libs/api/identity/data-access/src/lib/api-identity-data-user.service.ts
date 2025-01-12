@@ -224,39 +224,28 @@ export class ApiIdentityDataUserService {
   }
 
   async linkIdentity(userId: string, { name, provider, providerId }: LinkIdentityInput) {
+    // Make sure the provider is allowed
+    this.solana.ensureAllowedProvider(provider)
     // Make sure the provider is enabled
     if (!this.core.config.appConfig.authLinkProviders.includes(provider)) {
       throw new Error(`Provider ${provider} not enabled for linking`)
     }
-
     // Make sure the identity does not exist
     const found = await this.findOneIdentity(provider, providerId)
     if (found) {
       throw new Error(`Identity ${provider} ${providerId} already linked`)
     }
 
-    // Handle provider-specific validation
-    switch (provider) {
-      case IdentityProvider.Solana:
-        this.solana.ensureAllowedProvider(provider)
-        this.solana.ensureValidProviderId(provider, providerId)
-        break
-      case IdentityProvider.Discord: {
-        const existing = await this.core.data.identity.findFirst({ where: { provider, ownerId: userId } })
-        if (existing) {
-          throw new Error(`Discord identity already linked`)
-        }
-        break
+    if (provider === IdentityProvider.Discord) {
+      const existing = await this.core.data.identity.findFirst({ where: { provider, ownerId: userId } })
+      if (existing) {
+        throw new Error(`Discord identity already linked`)
       }
-      case IdentityProvider.Telegram:{
-        const existing = await this.core.data.identity.findFirst({ where: { provider, ownerId: userId } })
-        if (existing) {
-          throw new Error(`Telegram identity already linked`)
-        }
-        break
+    }else if(provider === IdentityProvider.Telegram){
+      const existing = await this.core.data.identity.findFirst({ where: { provider, ownerId: userId } })
+      if (existing) {
+        throw new Error(`Telegram identity already linked`)
       }
-      default:
-        throw new Error(`Provider ${provider} not supported`)
     }
 
     // Create the identity

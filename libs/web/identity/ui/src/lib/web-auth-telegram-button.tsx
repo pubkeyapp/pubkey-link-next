@@ -43,17 +43,6 @@ export function TelegramLoginButton({ onSuccess }: { onSuccess: (data: any) => v
       }
     }
 
-    console.log(window.onTelegramAuth);
-
-    if(telegramWrapperRef.current) {
-      const btn = document.querySelector('.tgme_widget_login_button') as HTMLElement;
-      if (btn) {
-        telegramWrapperRef.current.style.width ="100% !important";
-        btn.style.borderRadius = '0px !important';
-        btn.style.backgroundColor  = 'rgb(88, 101, 242) !important';
-      }
-    }
-
     const scriptElement = document.createElement('script');
     scriptElement.src = 'https://telegram.org/js/telegram-widget.js?22';
     scriptElement.setAttribute('data-telegram-login', 'PubkeyLinkBot');
