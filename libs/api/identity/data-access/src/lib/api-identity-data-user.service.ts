@@ -261,13 +261,6 @@ export class ApiIdentityDataUserService {
         throw new Error(`Provider ${provider} not supported`)
     }
 
-    console.log('--------------------------------Data--------------------------------')
-    console.log('name', name)
-    console.log('providerId', providerId)
-    console.log('userId', userId)
-    console.log('provider', provider)
-    console.log('providerId', providerId)
-
     // Create the identity
     return this.core.data.identity.create({
       data: {

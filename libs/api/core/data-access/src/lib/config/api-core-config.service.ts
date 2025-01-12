@@ -42,11 +42,6 @@ export class ApiCoreConfigService {
     if (this.featureResolverSolanaValidator) {
       resolvers.push(NetworkResolver.SolanaValidator)
     }
-    console.log("--------------------------------------------------------------------------")
-    console.log(link)
-    console.log("--------------------------------------------------------------------------")
-    console.log(login)
-    console.log("--------------------------------------------------------------------------")
     return {
       appLogoUrlDark: this.appLogoUrlDark,
       appLogoUrlLight: this.appLogoUrlLight,

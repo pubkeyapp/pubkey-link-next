@@ -52,12 +52,6 @@ const telegramWrapperRef = useRef<HTMLDivElement>(null);
       }
     }
 
-    console.log(window.onTelegramAuth);
-
-    if(telegramWrapperRef.current) {
-      console.log('telegramWrapperRef.current', telegramWrapperRef.current)
-    }
-
     const scriptElement = document.createElement('script');
     scriptElement.src = 'https://telegram.org/js/telegram-widget.js?22';
     scriptElement.setAttribute('data-telegram-login', 'PubkeyLinkBot');
@@ -67,7 +61,6 @@ const telegramWrapperRef = useRef<HTMLDivElement>(null);
     scriptElement.async = true;
 
     telegramWrapperRef.current?.appendChild(scriptElement);
-    console.log('scriptElement', scriptElement)
   }, [telegramWrapperRef, query])
 
   return (
