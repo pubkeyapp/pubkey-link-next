@@ -3,7 +3,7 @@ import { objectToAuthDataMap, AuthDataValidator } from "@telegram-auth/server"
 import { IdentityProvider } from '@prisma/client'
 import { ApiAnonJwtGuard } from '@pubkey-link/api-auth-data-access'
 import { ApiAuthRequest } from '@pubkey-link/api-auth-data-access'
-import { ApiAuthStrategyService } from 'libs/api/auth/data-access/src/lib/strategies/api-auth-strategy.service'
+import { ApiAuthStrategyService } from '@pubkey-link/api-auth-data-access'
 import { ApiAuthService } from '@pubkey-link/api-auth-data-access'
 import { Response } from 'express-serve-static-core'
 
