@@ -235,8 +235,6 @@ export class ApiIdentityDataUserService {
       throw new Error(`Identity ${provider} ${providerId} already linked`)
     }
 
-    console.log('provider', provider)
-
     // Handle provider-specific validation
     switch (provider) {
       case IdentityProvider.Solana:

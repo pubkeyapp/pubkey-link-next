@@ -47,16 +47,8 @@ export class ApiCoreConfigService {
       appLogoUrlLight: this.appLogoUrlLight,
       appThemeBackground: this.appThemeBackground,
       appThemeColor: this.appThemeColor,
-      authLinkProviders: [
-        ...(process.env['AUTH_SOLANA_LINK_ENABLED'] ? [IdentityProvider.Solana] : []),
-        ...(process.env['AUTH_DISCORD_LINK_ENABLED'] ? [IdentityProvider.Discord] : []),
-        ...(process.env['AUTH_TELEGRAM_LINK_ENABLED'] ? [IdentityProvider.Telegram] : []),
-      ],
-      authLoginProviders: [
-        ...(process.env['AUTH_SOLANA_LOGIN_ENABLED'] ? [IdentityProvider.Solana] : []),
-        ...(process.env['AUTH_DISCORD_LOGIN_ENABLED'] ? [IdentityProvider.Discord] : []),
-        ...(process.env['AUTH_TELEGRAM_LOGIN_ENABLED'] ? [IdentityProvider.Telegram] : []),
-      ],
+      authLinkProviders: [...link],
+      authLoginProviders: [...login],
       features: this.featureFlags,
       resolvers,
     }
