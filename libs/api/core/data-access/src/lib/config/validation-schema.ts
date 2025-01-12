@@ -19,6 +19,11 @@ export const validationSchema = Joi.object({
   AUTH_SOLANA_LINK_ENABLED: Joi.boolean().default(true),
   AUTH_SOLANA_LOGIN_ENABLED: Joi.boolean().default(false),
   AUTH_SOLANA_REGISTER_ENABLED: Joi.boolean().default(false),
+  // Telegram Authentication
+  AUTH_TELEGRAM_LINK_ENABLED: Joi.boolean().default(false),
+  AUTH_TELEGRAM_LOGIN_ENABLED: Joi.boolean().default(false),
+  AUTH_TELEGRAM_BOT_NAME: Joi.string(),
+  AUTH_TELEGRAM_BOT_TOKEN: Joi.string(),
   // Bot
   BOT_AUTO_START: Joi.boolean().default(true),
   CLOAK_MASTER_KEY: Joi.string().required().error(new Error(`CLOAK_MASTER_KEY is required.`)),
@@ -60,9 +65,4 @@ export const validationSchema = Joi.object({
   SYNC_BOT_SERVERS: Joi.boolean().default(true),
   SYNC_NETWORK_ASSETS: Joi.boolean().default(true),
   SYNC_COMMUNITY_ROLES: Joi.boolean().default(true),
-  // Add Telegram Authentication validation
-  AUTH_TELEGRAM_LINK_ENABLED: Joi.boolean().default(false),
-  AUTH_TELEGRAM_LOGIN_ENABLED: Joi.boolean().default(false),
-  BOT_NAME: Joi.string(),
-  BOT_TOKEN: Joi.string(),
 })
