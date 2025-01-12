@@ -4212,7 +4212,6 @@ export type AppConfigQuery = {
   __typename?: 'Query'
   config: {
     __typename?: 'AppConfig'
-    authTelegramBotName?: string | null
     appLogoUrlDark?: string | null
     appLogoUrlLight?: string | null
     appThemeBackground?: string | null
