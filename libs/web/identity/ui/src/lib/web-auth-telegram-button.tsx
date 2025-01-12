@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react'
 import { useAppConfig } from '@pubkey-link/web-core-data-access'
-import { createTelegramScriptElement } from './create-telegram-script-element'
+import { useEffect, useRef } from 'react'
 import type { TelegramUser } from './create-telegram-script-element'
+import { createTelegramScriptElement } from './create-telegram-script-element'
 
 export function TelegramLoginButton({ onSuccess }: { onSuccess: () => void }) {
   const { authTelegramBotName } = useAppConfig()
-  const telegramWrapperRef = useRef<HTMLDivElement>(null);
+  const telegramWrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!authTelegramBotName) {
@@ -15,7 +15,7 @@ export function TelegramLoginButton({ onSuccess }: { onSuccess: () => void }) {
 
     window.onTelegramAuth = async (user: TelegramUser) => {
       try {
-        const response = await fetch('/api/auth/telegram/signin', {
+        const response = await fetch('/api/auth/telegram/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(user),

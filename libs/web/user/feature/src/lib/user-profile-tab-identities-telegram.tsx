@@ -1,10 +1,10 @@
 import { Group } from '@mantine/core'
 import { IdentityProvider } from '@pubkey-link/sdk'
 import { useAuth } from '@pubkey-link/web-auth-data-access'
-import { useUserFindManyIdentity } from '@pubkey-link/web-identity-data-access'
-import { IdentityUiList, createTelegramScriptElement } from '@pubkey-link/web-identity-ui'
-import { UiLoader, UiStack } from '@pubkey-ui/core'
 import { useAppConfig } from '@pubkey-link/web-core-data-access'
+import { useUserFindManyIdentity } from '@pubkey-link/web-identity-data-access'
+import { createTelegramScriptElement, IdentityUiList } from '@pubkey-link/web-identity-ui'
+import { UiLoader, UiStack } from '@pubkey-ui/core'
 import { useEffect, useRef } from 'react'
 
 export default function UserProfileTabIdentitiesTelegram() {
@@ -26,13 +26,13 @@ export default function UserProfileTabIdentitiesTelegram() {
 
     window.onTelegramAuth = async (user) => {
       try {
-        const response = await fetch('/api/auth/telegram/validate', {
+        const response = await fetch('/api/auth/telegram/link', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(user),
         })
         if (response.ok) {
-          query.refetch()
+          await query.refetch()
         }
       } catch (error) {
         console.error('Telegram auth error:', error)

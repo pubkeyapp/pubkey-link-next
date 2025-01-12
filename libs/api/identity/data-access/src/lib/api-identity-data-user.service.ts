@@ -241,7 +241,7 @@ export class ApiIdentityDataUserService {
       if (existing) {
         throw new Error(`Discord identity already linked`)
       }
-    }else if(provider === IdentityProvider.Telegram){
+    } else if (provider === IdentityProvider.Telegram) {
       const existing = await this.core.data.identity.findFirst({ where: { provider, ownerId: userId } })
       if (existing) {
         throw new Error(`Telegram identity already linked`)
