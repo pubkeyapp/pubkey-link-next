@@ -49,6 +49,7 @@ export class ApiCoreConfigService {
       appThemeColor: this.appThemeColor,
       authLinkProviders: [...link],
       authLoginProviders: [...login],
+      authTelegramBotName: this.authTelegramBotName,
       features: this.featureFlags,
       resolvers,
     }

@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import { useAppConfig } from '@pubkey-link/web-core-data-access'
+import { createTelegramScriptElement } from './create-telegram-script-element'
 
 declare global {
   interface Window {
     TelegramLoginWidget: any;
-    onTelegramAuth?: (user: any) => void;
+    onTelegramAuth?: (user: TelegramUser) => void;
   }
 }
 
@@ -19,10 +20,15 @@ interface TelegramUser {
 }
 
 export function TelegramLoginButton({ onSuccess }: { onSuccess: (data: any) => void }) {
-  const navigate = useNavigate()
+  const { authTelegramBotName } = useAppConfig()
   const telegramWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!authTelegramBotName) {
+      console.error('Telegram bot name not configured')
+      return
+    }
+
     window.onTelegramAuth = async (user: TelegramUser) => {
       try {
         const response = await fetch('/api/auth/telegram/signin', {
@@ -43,16 +49,17 @@ export function TelegramLoginButton({ onSuccess }: { onSuccess: (data: any) => v
       }
     }
 
-    const scriptElement = document.createElement('script');
-    scriptElement.src = 'https://telegram.org/js/telegram-widget.js?22';
-    scriptElement.setAttribute('data-telegram-login', 'PubkeyLinkBot');
-    scriptElement.setAttribute('data-size', 'large');
-    scriptElement.setAttribute('data-onauth', 'onTelegramAuth(user)');
-    scriptElement.setAttribute('data-request-access', 'write');
-    scriptElement.async = true;
+    try {
+      const scriptElement = createTelegramScriptElement(authTelegramBotName)
+      telegramWrapperRef.current?.appendChild(scriptElement)
+    } catch (error) {
+      console.error('Error creating Telegram script:', error)
+    }
+  }, [onSuccess, authTelegramBotName])
 
-    telegramWrapperRef.current?.appendChild(scriptElement)
-  }, [onSuccess])
+  if (!authTelegramBotName) {
+    return null
+  }
 
   return <div ref={telegramWrapperRef}></div>
 }

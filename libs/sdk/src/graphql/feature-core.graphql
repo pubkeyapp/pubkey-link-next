@@ -5,6 +5,7 @@ fragment AppConfigDetails on AppConfig {
   appThemeColor
   authLinkProviders
   authLoginProviders
+  authTelegramBotName
   features
   resolvers
 }
