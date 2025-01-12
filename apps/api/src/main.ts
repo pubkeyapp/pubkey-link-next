@@ -10,14 +10,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   })
-  app.enableCors({
-    origin: [
-      'http://localhost:4200',
-      'https://a94a-36-255-84-98.ngrok-free.app /',
-      /\.ngrok-free\.app$/,
-    ],
-    credentials: true,
-  });
   const ogma = app.get(OgmaService, { strict: false })
   app.useLogger(ogma)
   const core = app.get(ApiCoreService)
