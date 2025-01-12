@@ -55,7 +55,7 @@
         "allowedHosts": "all",
         "host": "0.0.0.0",
         "port": 4200,
-        "publicHost": "https://dad2-36-255-84-98.ngrok-free.app",
+        "publicHost": "https://a94a-36-255-84-98.ngrok-free.app ",
         "webSocketPath": "/ws"
       },
       "configurations": {
