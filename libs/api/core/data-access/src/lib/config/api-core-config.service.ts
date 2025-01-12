@@ -108,16 +108,16 @@ export class ApiCoreConfigService {
     }
   }
 
-  get botName() {
-    return this.service.get<string>('botName')
+  get authTelegramBotName() {
+    return this.service.get<string>('authTelegramBotName')
   }
 
-  get botToken() {
-    return this.service.get<string>('botToken')
+  get authTelegramBotToken() {
+    return this.service.get<string>('authTelegramBotToken')
   }
 
   get authTelegramSecrets(): boolean {
-    return !(!this.botName || !this.botToken)
+    return !(!this.authTelegramBotName || !this.authTelegramBotToken)
   }
 
   get authTelegramLinkEnabled(): boolean {
