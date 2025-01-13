@@ -329,6 +329,7 @@ enum CommunityRole {
 enum IdentityProvider {
   Discord
   Solana
+  Telegram
 }
 
 enum LogLevel {

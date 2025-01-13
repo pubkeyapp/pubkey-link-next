@@ -16,6 +16,8 @@ export function IdentityUiLinkButton({
   switch (provider) {
     case IdentityProvider.Discord:
       return <IdentityUiProviderButton action="link" provider={provider} {...props} />
+    case IdentityProvider.Telegram:
+      return <IdentityUiProviderButton action="link" provider={provider} {...props} />
     case IdentityProvider.Solana:
       return refresh ? <IdentityUiSolanaLinkButton identities={identities} refresh={refresh} {...props} /> : null
     default:

@@ -187,6 +187,7 @@ type AppConfig {
   appThemeColor: String
   authLinkProviders: [IdentityProvider!]
   authLoginProviders: [IdentityProvider!]
+  authTelegramBotName: String!
   features: [AppFeature!]!
   resolvers: [NetworkResolver!]!
 }
@@ -367,6 +368,7 @@ type IdentityGrant {
 enum IdentityProvider {
   Discord
   Solana
+  Telegram
 }
 
 """

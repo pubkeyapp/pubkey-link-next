@@ -25,6 +25,7 @@ export interface AppConfigContext {
   appConfig?: AppConfig | undefined
   appConfigLoading: boolean
   authEnabled: boolean
+  authTelegramBotName: string | null | undefined
   enabledProviders: IdentityProvider[]
   enabledTokenTypes: NetworkTokenType[]
   hasFeature: (feature: AppFeature) => boolean
@@ -78,6 +79,7 @@ export function AppConfigProvider({ children }: { children: ReactNode }) {
     appLogoUrlLight: appConfig?.appLogoUrlLight ?? undefined,
     appTheme,
     authEnabled,
+    authTelegramBotName: appConfig?.authTelegramBotName ?? undefined,
     enabledProviders,
     enabledTokenTypes,
     hasFeature: (feature: AppFeature) => features.includes(feature),

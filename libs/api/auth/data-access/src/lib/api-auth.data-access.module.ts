@@ -23,6 +23,6 @@ import { ApiAuthStrategyModule } from './strategies/api-auth-strategy.module'
     ApiAuthStrategyModule.register(),
   ],
   providers: [ApiAuthGraphQLUserGuard, ApiAuthStrategyJwt, ApiAuthService],
-  exports: [ApiAuthService],
+  exports: [ApiAuthService, ApiAuthStrategyModule],
 })
 export class ApiAuthDataAccessModule {}

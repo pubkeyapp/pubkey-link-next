@@ -39,6 +39,12 @@ export interface ApiCoreConfig {
   authSolanaLinkEnabled: boolean
   authSolanaLoginEnabled: boolean
   authSolanaRegisterEnabled: boolean
+  // Telegram Authentication
+  authTelegramLinkEnabled: boolean
+  authTelegramLoginEnabled: boolean
+  authTelegramBotName: string
+  authTelegramBotToken: string
+
   // Bot
   botAutoStart: boolean
   // Cookies
@@ -109,6 +115,10 @@ export function configuration(): ApiCoreConfig {
     authSolanaLinkEnabled: process.env['AUTH_SOLANA_LINK_ENABLED'] === 'true',
     authSolanaLoginEnabled: process.env['AUTH_SOLANA_LOGIN_ENABLED'] === 'true',
     authSolanaRegisterEnabled: process.env['AUTH_SOLANA_REGISTER_ENABLED'] === 'true',
+    authTelegramLinkEnabled: process.env['AUTH_TELEGRAM_LINK_ENABLED'] === 'true',
+    authTelegramLoginEnabled: process.env['AUTH_TELEGRAM_LOGIN_ENABLED'] === 'true',
+    authTelegramBotName: process.env['AUTH_TELEGRAM_BOT_NAME'] as string,
+    authTelegramBotToken: process.env['AUTH_TELEGRAM_BOT_TOKEN'] as string,
     botAutoStart: process.env['BOT_AUTO_START'] === 'true',
     cookieDomains,
     cookieName: '__session',
