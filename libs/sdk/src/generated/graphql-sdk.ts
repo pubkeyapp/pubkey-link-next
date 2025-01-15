@@ -210,7 +210,7 @@ export type AppConfig = {
   appThemeColor?: Maybe<Scalars['String']['output']>
   authLinkProviders?: Maybe<Array<IdentityProvider>>
   authLoginProviders?: Maybe<Array<IdentityProvider>>
-  authTelegramBotName?: Maybe<Scalars['String']['output']>
+  authTelegramBotName: Scalars['String']['output']
   features: Array<AppFeature>
   resolvers: Array<NetworkResolver>
 }
@@ -4186,7 +4186,7 @@ export type AppConfigDetailsFragment = {
   appThemeColor?: string | null
   authLinkProviders?: Array<IdentityProvider> | null
   authLoginProviders?: Array<IdentityProvider> | null
-  authTelegramBotName?: string | null
+  authTelegramBotName: string
   features: Array<AppFeature>
   resolvers: Array<NetworkResolver>
 }
@@ -4218,7 +4218,7 @@ export type AppConfigQuery = {
     appThemeColor?: string | null
     authLinkProviders?: Array<IdentityProvider> | null
     authLoginProviders?: Array<IdentityProvider> | null
-    authTelegramBotName?: string | null
+    authTelegramBotName: string
     features: Array<AppFeature>
     resolvers: Array<NetworkResolver>
   }

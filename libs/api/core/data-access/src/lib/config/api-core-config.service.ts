@@ -47,8 +47,8 @@ export class ApiCoreConfigService {
       appLogoUrlLight: this.appLogoUrlLight,
       appThemeBackground: this.appThemeBackground,
       appThemeColor: this.appThemeColor,
-      authLinkProviders: [...link],
-      authLoginProviders: [...login],
+      authLinkProviders: link,
+      authLoginProviders: login,
       authTelegramBotName: this.authTelegramBotName,
       features: this.featureFlags,
       resolvers,
@@ -109,22 +109,6 @@ export class ApiCoreConfigService {
     }
   }
 
-  get authTelegramBotName() {
-    return this.service.get<string>('authTelegramBotName')
-  }
-
-  get authTelegramBotToken() {
-    return this.service.get<string>('authTelegramBotToken')
-  }
-
-  get authTelegramSecrets(): boolean {
-    return !(!this.authTelegramBotName || !this.authTelegramBotToken)
-  }
-
-  get authTelegramLinkEnabled(): boolean {
-    return (this.authTelegramSecrets && this.service.get<boolean>('authTelegramLinkEnabled')) ?? false
-  }
-
   get authSolanaAdminIds() {
     return this.service.get<string[]>('authSolanaAdminIds')
   }
@@ -139,6 +123,22 @@ export class ApiCoreConfigService {
 
   get authSolanaRegisterEnabled(): boolean {
     return this.service.get<boolean>('authSolanaRegisterEnabled') ?? false
+  }
+
+  get authTelegramBotName() {
+    return this.service.get<string>('authTelegramBotName')
+  }
+
+  get authTelegramBotToken() {
+    return this.service.get<string>('authTelegramBotToken')
+  }
+
+  get authTelegramSecrets(): boolean {
+    return !(!this.authTelegramBotName || !this.authTelegramBotToken)
+  }
+
+  get authTelegramLinkEnabled(): boolean {
+    return (this.authTelegramSecrets && this.service.get<boolean>('authTelegramLinkEnabled')) ?? false
   }
 
   get apiUrl(): string {
