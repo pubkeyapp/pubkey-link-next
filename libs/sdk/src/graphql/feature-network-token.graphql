@@ -12,6 +12,7 @@ fragment NetworkTokenDetails on NetworkToken {
   description
   imageUrl
   metadataUrl
+  enableBuy
   raw
 }
 

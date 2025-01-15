@@ -12,6 +12,7 @@ export function useUserFindManyNetworkToken(props: Partial<UserFindManyNetworkTo
   const [search, setSearch] = useState<string>(props?.search ?? '')
 
   const input: UserFindManyNetworkTokenInput = {
+    enableBuy: props.enableBuy,
     page,
     limit,
     cluster,
