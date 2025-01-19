@@ -16,7 +16,7 @@ export class AppConfig {
   authLoginProviders!: IdentityProvider[]
   @Field(() => [IdentityProvider], { nullable: true })
   authLinkProviders!: IdentityProvider[]
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   authTelegramBotName?: string
   @Field(() => [AppFeature])
   features!: AppFeature[]
