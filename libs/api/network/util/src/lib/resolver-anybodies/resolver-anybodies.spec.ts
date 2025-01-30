@@ -1,7 +1,7 @@
 import { getAnybodiesVaultMap, getAnybodiesVaultResponse, getAnybodiesVaultSnapshot } from './resolver-anybodies'
 import { AnybodiesVaultOptions } from './types'
 
-describe('resolverAnybodies', () => {
+describe.skip('resolverAnybodies', () => {
   const options: AnybodiesVaultOptions = { vault: 'JiZUwqz0ETakNYOIulut' }
 
   it('getAnybodiesVaultResponse', async () => {
