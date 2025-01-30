@@ -16,6 +16,7 @@ export function getDasApiAssetAttributes(
 
   const main = attributes.length
     ? (attributes
+        .filter((s) => !!s)
         .filter((s) => s.trait_type?.length && s.value?.length)
         .map((s) => [s.trait_type?.toString(), s.value?.toString()]) as [string, string][])
     : []

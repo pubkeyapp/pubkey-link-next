@@ -55,6 +55,7 @@ export class ApiNetworkResolverSolanaNonFungibleService {
         const mint = tokensWithMintList.find((t) => t.mintList.includes(asset.id))
         const group = findAssetGroupValue(asset) ?? mint?.account
 
+        // TODO: Figure out a way to not run the code below if the asset is not part of a group
         return convertDasApiAsset({ asset, cluster, group: mint ? mint.account : group })
       })
       .filter((asset) => {
