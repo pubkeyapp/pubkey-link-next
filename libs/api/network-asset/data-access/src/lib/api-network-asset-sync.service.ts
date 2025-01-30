@@ -193,13 +193,20 @@ export class ApiNetworkAssetSyncService {
     this.logger.verbose(
       `[${cluster}] syncIdentity: Syncing assets for ${owner} on ${cluster}, anybodiesTokens: ${anybodiesTokens.length}, solanaFungibleTokens: ${solanaFungibleTokens.length}, solanaNonFungibleTokens: ${solanaNonFungibleTokens.length},`,
     )
-    const assets: NetworkAssetInput[] = await this.network.resolver.resolveNetworkAssets({
-      cluster,
-      owner,
-      anybodiesTokens,
-      solanaFungibleTokens,
-      solanaNonFungibleTokens,
-    })
+    // TODO: Move the resolveNetworkAssets function into a separate method
+    let assets: NetworkAssetInput[] = []
+    try {
+      assets = await this.network.resolver.resolveNetworkAssets({
+        cluster,
+        owner,
+        anybodiesTokens,
+        solanaFungibleTokens,
+        solanaNonFungibleTokens,
+      })
+    } catch (error) {
+      this.logger.error(`[${cluster}] syncIdentity: Error syncing assets for ${owner} on ${cluster}: ${error}`)
+      throw error
+    }
     const assetIds = assets.map((a) => a.account)
 
     this.logger.verbose(`[${cluster}] syncIdentity: Resolved ${assets.length} assets for ${owner} on ${cluster}`)
