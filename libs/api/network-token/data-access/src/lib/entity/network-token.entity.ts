@@ -17,6 +17,8 @@ export class NetworkToken {
   type!: NetworkTokenType
   @Field(() => NetworkCluster)
   cluster!: NetworkCluster
+  @Field({ nullable: true })
+  enableBuy?: boolean | null
   @Field()
   account!: string
   @Field()

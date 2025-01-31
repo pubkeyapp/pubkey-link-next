@@ -184,6 +184,7 @@ export type AdminUpdateNetworkInput = {
 }
 
 export type AdminUpdateNetworkTokenInput = {
+  enableBuy?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
 }
 
@@ -906,6 +907,7 @@ export type NetworkToken = {
   cluster: NetworkCluster
   createdAt?: Maybe<Scalars['DateTime']['output']>
   description?: Maybe<Scalars['String']['output']>
+  enableBuy?: Maybe<Scalars['Boolean']['output']>
   id: Scalars['String']['output']
   imageUrl?: Maybe<Scalars['String']['output']>
   metadataUrl?: Maybe<Scalars['String']['output']>
@@ -1466,6 +1468,7 @@ export type UserFindManyNetworkAssetInput = {
 
 export type UserFindManyNetworkTokenInput = {
   cluster?: InputMaybe<NetworkCluster>
+  enableBuy?: InputMaybe<Scalars['Boolean']['input']>
   limit?: InputMaybe<Scalars['Int']['input']>
   page?: InputMaybe<Scalars['Int']['input']>
   search?: InputMaybe<Scalars['String']['input']>
@@ -1923,6 +1926,7 @@ export type UserFindManyBotRolesQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -2293,6 +2297,7 @@ export type AdminFindManyCommunityMemberQuery = {
             description?: string | null
             imageUrl?: string | null
             metadataUrl?: string | null
+            enableBuy?: boolean | null
             raw?: any | null
           } | null
           asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -2433,6 +2438,7 @@ export type AdminFindOneCommunityMemberQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -2563,6 +2569,7 @@ export type AdminAddCommunityMemberMutation = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -2693,6 +2700,7 @@ export type AdminUpdateCommunityMemberMutation = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -2828,6 +2836,7 @@ export type UserGetCommunityMemberQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -2959,6 +2968,7 @@ export type UserFindManyCommunityMemberQuery = {
             description?: string | null
             imageUrl?: string | null
             metadataUrl?: string | null
+            enableBuy?: boolean | null
             raw?: any | null
           } | null
           asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -3099,6 +3109,7 @@ export type UserFindOneCommunityMemberQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -3229,6 +3240,7 @@ export type UserAddCommunityMemberMutation = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -3359,6 +3371,7 @@ export type UserUpdateCommunityMemberMutation = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -3662,6 +3675,7 @@ export type AnonGetCommunitiesQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -3768,6 +3782,7 @@ export type UserGetCommunitiesQuery = {
             description?: string | null
             imageUrl?: string | null
             metadataUrl?: string | null
+            enableBuy?: boolean | null
             raw?: any | null
           } | null
           asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -3881,6 +3896,7 @@ export type UserGetCommunitiesQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -4005,6 +4021,7 @@ export type UserFindManyCommunityQuery = {
             description?: string | null
             imageUrl?: string | null
             metadataUrl?: string | null
+            enableBuy?: boolean | null
             raw?: any | null
           } | null
           asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -4861,6 +4878,7 @@ export type LogDetailsFragment = {
         description?: string | null
         imageUrl?: string | null
         metadataUrl?: string | null
+        enableBuy?: boolean | null
         raw?: any | null
       } | null
       asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -5057,6 +5075,7 @@ export type UserFindManyLogQuery = {
             description?: string | null
             imageUrl?: string | null
             metadataUrl?: string | null
+            enableBuy?: boolean | null
             raw?: any | null
           } | null
           asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -5263,6 +5282,7 @@ export type UserFindOneLogQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -5460,6 +5480,7 @@ export type AdminFindManyLogQuery = {
             description?: string | null
             imageUrl?: string | null
             metadataUrl?: string | null
+            enableBuy?: boolean | null
             raw?: any | null
           } | null
           asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -5666,6 +5687,7 @@ export type AdminFindOneLogQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -5965,6 +5987,7 @@ export type NetworkTokenDetailsFragment = {
   description?: string | null
   imageUrl?: string | null
   metadataUrl?: string | null
+  enableBuy?: boolean | null
   raw?: any | null
 }
 
@@ -5991,6 +6014,7 @@ export type AdminFindManyNetworkTokenQuery = {
       description?: string | null
       imageUrl?: string | null
       metadataUrl?: string | null
+      enableBuy?: boolean | null
       raw?: any | null
     }>
     meta: {
@@ -6027,6 +6051,7 @@ export type AdminFindOneNetworkTokenQuery = {
     description?: string | null
     imageUrl?: string | null
     metadataUrl?: string | null
+    enableBuy?: boolean | null
     raw?: any | null
   } | null
 }
@@ -6052,6 +6077,7 @@ export type AdminCreateNetworkTokenMutation = {
     description?: string | null
     imageUrl?: string | null
     metadataUrl?: string | null
+    enableBuy?: boolean | null
     raw?: any | null
   } | null
 }
@@ -6078,6 +6104,7 @@ export type AdminUpdateNetworkTokenMutation = {
     description?: string | null
     imageUrl?: string | null
     metadataUrl?: string | null
+    enableBuy?: boolean | null
     raw?: any | null
   } | null
 }
@@ -6103,6 +6130,7 @@ export type AdminUpdateNetworkTokenMetadataMutation = {
     description?: string | null
     imageUrl?: string | null
     metadataUrl?: string | null
+    enableBuy?: boolean | null
     raw?: any | null
   } | null
 }
@@ -6136,6 +6164,7 @@ export type UserFindManyNetworkTokenQuery = {
       description?: string | null
       imageUrl?: string | null
       metadataUrl?: string | null
+      enableBuy?: boolean | null
       raw?: any | null
     }>
     meta: {
@@ -6345,6 +6374,7 @@ export type RoleDetailsFragment = {
       description?: string | null
       imageUrl?: string | null
       metadataUrl?: string | null
+      enableBuy?: boolean | null
       raw?: any | null
     } | null
     asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -6435,6 +6465,7 @@ export type RoleConditionDetailsFragment = {
     description?: string | null
     imageUrl?: string | null
     metadataUrl?: string | null
+    enableBuy?: boolean | null
     raw?: any | null
   } | null
   asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -6517,6 +6548,7 @@ export type AdminFindManyRoleQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -6633,6 +6665,7 @@ export type AdminFindOneRoleQuery = {
         description?: string | null
         imageUrl?: string | null
         metadataUrl?: string | null
+        enableBuy?: boolean | null
         raw?: any | null
       } | null
       asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -6738,6 +6771,7 @@ export type AdminCreateRoleMutation = {
         description?: string | null
         imageUrl?: string | null
         metadataUrl?: string | null
+        enableBuy?: boolean | null
         raw?: any | null
       } | null
       asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -6844,6 +6878,7 @@ export type AdminUpdateRoleMutation = {
         description?: string | null
         imageUrl?: string | null
         metadataUrl?: string | null
+        enableBuy?: boolean | null
         raw?: any | null
       } | null
       asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -6957,6 +6992,7 @@ export type UserFindManyRoleQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -7105,6 +7141,7 @@ export type UserFindOneRoleQuery = {
         description?: string | null
         imageUrl?: string | null
         metadataUrl?: string | null
+        enableBuy?: boolean | null
         raw?: any | null
       } | null
       asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -7178,6 +7215,7 @@ export type UserCreateRoleMutation = {
         description?: string | null
         imageUrl?: string | null
         metadataUrl?: string | null
+        enableBuy?: boolean | null
         raw?: any | null
       } | null
       asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -7275,6 +7313,7 @@ export type UserCreateRoleConditionMutation = {
       description?: string | null
       imageUrl?: string | null
       metadataUrl?: string | null
+      enableBuy?: boolean | null
       raw?: any | null
     } | null
     asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -7364,6 +7403,7 @@ export type UserUpdateRoleMutation = {
         description?: string | null
         imageUrl?: string | null
         metadataUrl?: string | null
+        enableBuy?: boolean | null
         raw?: any | null
       } | null
       asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -7462,6 +7502,7 @@ export type UserUpdateRoleConditionMutation = {
       description?: string | null
       imageUrl?: string | null
       metadataUrl?: string | null
+      enableBuy?: boolean | null
       raw?: any | null
     } | null
     asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -7535,6 +7576,7 @@ export type SnapshotDetailsFragment = {
         description?: string | null
         imageUrl?: string | null
         metadataUrl?: string | null
+        enableBuy?: boolean | null
         raw?: any | null
       } | null
       asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -7663,6 +7705,7 @@ export type UserFindManySnapshotQuery = {
             description?: string | null
             imageUrl?: string | null
             metadataUrl?: string | null
+            enableBuy?: boolean | null
             raw?: any | null
           } | null
           asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -7800,6 +7843,7 @@ export type UserFindOneSnapshotQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -7913,6 +7957,7 @@ export type UserCreateSnapshotMutation = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -8034,6 +8079,7 @@ export type AdminFindManySnapshotQuery = {
             description?: string | null
             imageUrl?: string | null
             metadataUrl?: string | null
+            enableBuy?: boolean | null
             raw?: any | null
           } | null
           asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -8171,6 +8217,7 @@ export type AdminFindOneSnapshotQuery = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -8284,6 +8331,7 @@ export type AdminCreateSnapshotMutation = {
           description?: string | null
           imageUrl?: string | null
           metadataUrl?: string | null
+          enableBuy?: boolean | null
           raw?: any | null
         } | null
         asset?: { __typename?: 'SolanaNetworkAsset'; owner: string; amount: string; accounts: Array<string> } | null
@@ -8803,6 +8851,7 @@ export const NetworkTokenDetailsFragmentDoc = gql`
     description
     imageUrl
     metadataUrl
+    enableBuy
     raw
   }
 `
@@ -13469,6 +13518,7 @@ export function AdminUpdateNetworkInputSchema(): z.ZodObject<Properties<AdminUpd
 
 export function AdminUpdateNetworkTokenInputSchema(): z.ZodObject<Properties<AdminUpdateNetworkTokenInput>> {
   return z.object({
+    enableBuy: z.boolean().nullish(),
     name: z.string().nullish(),
   })
 }
@@ -13625,6 +13675,7 @@ export function UserFindManyNetworkAssetInputSchema(): z.ZodObject<Properties<Us
 export function UserFindManyNetworkTokenInputSchema(): z.ZodObject<Properties<UserFindManyNetworkTokenInput>> {
   return z.object({
     cluster: NetworkClusterSchema.nullish(),
+    enableBuy: z.boolean().nullish(),
     limit: z.number().nullish(),
     page: z.number().nullish(),
     search: z.string().nullish(),

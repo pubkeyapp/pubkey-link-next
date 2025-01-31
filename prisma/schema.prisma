@@ -241,6 +241,7 @@ model NetworkToken {
   metadataUrl String?
   description String?
   symbol      String?
+  enableBuy   Boolean          @default(false)
   raw         Json?
   conditions  RoleCondition[]
 

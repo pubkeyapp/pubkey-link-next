@@ -138,6 +138,7 @@ function networkInputSolanaMainnet(endpoint: string): Prisma.NetworkCreateInput 
           description: 'FluxBot - #1 Solana Telegram Bot',
           imageUrl: 'https://assets.coingecko.com/coins/images/33018/large/fluxbot.jpeg?1700193761',
           metadataUrl: 'https://bafkreido4e5mbufltt4yva6cpzxsep5pmjjd7jx7kuwzm5vlkor45hm5s4.ipfs.nftstorage.link/',
+          enableBuy: true,
         },
         {
           type: NetworkTokenType.Fungible,
@@ -149,16 +150,18 @@ function networkInputSolanaMainnet(endpoint: string): Prisma.NetworkCreateInput 
           imageUrl: 'https://arweave.net/sCGvXDlbFn8p0s0cfqtznbjn9K_cyYY2aa9HGC1XWR8',
           metadataUrl:
             'https://shdw-drive.genesysgo.net/NZkFUhCfuhhDKnQnPjqVcanddkkaf51rVwYYhryxiZo/kE94cDcRWswNMTYamnxqx.json',
+          enableBuy: true,
         },
         {
           type: NetworkTokenType.NonFungible,
           account: '8fmefJZapGpyVMDzj4MSYQfR7mTET1oV9hXyu1axCjLE',
-          program: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
+          program: TOKEN_PROGRAM_ID.toString(),
           name: 'The Choice',
           symbol: 'CHOOSE',
           description: 'A Legendary Airdrop to the Legends of SOL which leads to The Choice',
           imageUrl: 'https://arweave.net/t9IITRU07LOqVnYnuzphaMX4rSmbEmqlWbsBecbIkis?ext=gif',
           metadataUrl: 'https://arweave.net/0qGGBeYhvzSY4f9j1ql4ftRkCVUgLAM5ldppn4eNIg8',
+          enableBuy: true,
         },
         {
           type: NetworkTokenType.Fungible,
@@ -168,6 +171,17 @@ function networkInputSolanaMainnet(endpoint: string): Prisma.NetworkCreateInput 
           symbol: 'BERN',
           imageUrl: 'https://assets.coingecko.com/coins/images/32946/large/bonkearn.jpeg?1699927347',
           metadataUrl: 'https://api.npoint.io/6276c0cc3ab046e9b770',
+          enableBuy: true,
+        },
+        {
+          type: NetworkTokenType.Fungible,
+          account: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
+          program: TOKEN_PROGRAM_ID.toString(),
+          name: 'Bonk',
+          symbol: 'Bonk',
+          imageUrl: 'https://arweave.net/hQiPZOsRZXGXBJd_82PhVdlM_hACsT_q6wqwf5cSY7I',
+          metadataUrl: 'https://arweave.net/QPC6FYdUn-3V8ytFNuoCS85S2tHAuiDblh6u3CIZLsw',
+          enableBuy: true,
         },
         {
           account: 'MNDEFzGvMt87ueuHvVU9VcTqsAP5b3fTGPsHuuPA5ey',
@@ -177,6 +191,7 @@ function networkInputSolanaMainnet(endpoint: string): Prisma.NetworkCreateInput 
           symbol: 'MNDE',
           type: NetworkTokenType.Fungible,
           metadataUrl: '',
+          enableBuy: true,
         },
         {
           account: 'Ds52CDgqdWbTWsua1hgT3AuSSy4FNx2Ezge1br3jQ14a',
@@ -186,6 +201,7 @@ function networkInputSolanaMainnet(endpoint: string): Prisma.NetworkCreateInput 
           program: TOKEN_PROGRAM_ID.toString(),
           symbol: 'DEAN',
           type: NetworkTokenType.Fungible,
+          enableBuy: true,
         },
         {
           account: '5FusHaKEKjfKsmQwXNrhFcFABGGxu7iYCdbvyVSRe3Ri',
@@ -196,6 +212,7 @@ function networkInputSolanaMainnet(endpoint: string): Prisma.NetworkCreateInput 
           program: TOKEN_PROGRAM_ID.toString(),
           symbol: 'DEAN',
           type: NetworkTokenType.NonFungible,
+          enableBuy: true,
         },
         {
           account: '9HdPsLjMBUW8fQTp314kg4LoiqGxQqvCxKk6uhHttjVp',

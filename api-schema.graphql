@@ -162,6 +162,7 @@ input AdminUpdateNetworkInput {
 }
 
 input AdminUpdateNetworkTokenInput {
+  enableBuy: Boolean
   name: String
 }
 
@@ -570,6 +571,7 @@ type NetworkToken {
   cluster: NetworkCluster!
   createdAt: DateTime
   description: String
+  enableBuy: Boolean
   id: String!
   imageUrl: String
   metadataUrl: String
@@ -880,6 +882,7 @@ input UserFindManyNetworkAssetInput {
 
 input UserFindManyNetworkTokenInput {
   cluster: NetworkCluster
+  enableBuy: Boolean
   limit: Int = 10
   page: Int = 1
   search: String

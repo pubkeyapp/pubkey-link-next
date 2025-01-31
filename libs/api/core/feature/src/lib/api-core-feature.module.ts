@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ApiAuthFeatureModule } from '@pubkey-link/api-auth-feature'
 import { ApiBackupFeatureModule } from '@pubkey-link/api-backup-feature'
 import { ApiBotFeatureModule } from '@pubkey-link/api-bot-feature'
+import { ApiBuyFeatureModule } from '@pubkey-link/api-buy-feature'
 import { ApiCommunityFeatureModule } from '@pubkey-link/api-community-feature'
 import { ApiCommunityMemberFeatureModule } from '@pubkey-link/api-community-member-feature'
 import { ApiCoreDataAccessModule } from '@pubkey-link/api-core-data-access'
@@ -22,6 +23,7 @@ const imports = [
   ApiAuthFeatureModule,
   ApiBackupFeatureModule,
   ApiBotFeatureModule,
+  ApiBuyFeatureModule,
   ApiCommunityFeatureModule,
   ApiCommunityMemberFeatureModule,
   ApiCoreDataAccessModule,
