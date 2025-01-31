@@ -2,8 +2,6 @@ import { NetworkResolver, NetworkTokenType } from '../generated/graphql-sdk'
 
 export function getNetworkTokenTypeForResolver(resolver: NetworkResolver) {
   switch (resolver) {
-    case NetworkResolver.Anybodies:
-      return NetworkTokenType.NonFungible
     case NetworkResolver.SolanaFungible:
       return NetworkTokenType.Fungible
     case NetworkResolver.SolanaNonFungible:

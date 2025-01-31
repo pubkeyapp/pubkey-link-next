@@ -185,7 +185,6 @@ export type AdminUpdateNetworkInput = {
 
 export type AdminUpdateNetworkTokenInput = {
   name?: InputMaybe<Scalars['String']['input']>
-  vault?: InputMaybe<Scalars['String']['input']>
 }
 
 export type AdminUpdateRoleInput = {
@@ -917,7 +916,6 @@ export type NetworkToken = {
   symbol?: Maybe<Scalars['String']['output']>
   type: NetworkTokenType
   updatedAt?: Maybe<Scalars['DateTime']['output']>
-  vault?: Maybe<Scalars['String']['output']>
 }
 
 export type NetworkTokenPaging = {
@@ -1921,7 +1919,6 @@ export type UserFindManyBotRolesQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -2292,7 +2289,6 @@ export type AdminFindManyCommunityMemberQuery = {
             program: string
             name: string
             mintList?: Array<string> | null
-            vault?: string | null
             symbol?: string | null
             description?: string | null
             imageUrl?: string | null
@@ -2433,7 +2429,6 @@ export type AdminFindOneCommunityMemberQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -2564,7 +2559,6 @@ export type AdminAddCommunityMemberMutation = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -2695,7 +2689,6 @@ export type AdminUpdateCommunityMemberMutation = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -2831,7 +2824,6 @@ export type UserGetCommunityMemberQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -2963,7 +2955,6 @@ export type UserFindManyCommunityMemberQuery = {
             program: string
             name: string
             mintList?: Array<string> | null
-            vault?: string | null
             symbol?: string | null
             description?: string | null
             imageUrl?: string | null
@@ -3104,7 +3095,6 @@ export type UserFindOneCommunityMemberQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -3235,7 +3225,6 @@ export type UserAddCommunityMemberMutation = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -3366,7 +3355,6 @@ export type UserUpdateCommunityMemberMutation = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -3670,7 +3658,6 @@ export type AnonGetCommunitiesQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -3777,7 +3764,6 @@ export type UserGetCommunitiesQuery = {
             program: string
             name: string
             mintList?: Array<string> | null
-            vault?: string | null
             symbol?: string | null
             description?: string | null
             imageUrl?: string | null
@@ -3891,7 +3877,6 @@ export type UserGetCommunitiesQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -4016,7 +4001,6 @@ export type UserFindManyCommunityQuery = {
             program: string
             name: string
             mintList?: Array<string> | null
-            vault?: string | null
             symbol?: string | null
             description?: string | null
             imageUrl?: string | null
@@ -4873,7 +4857,6 @@ export type LogDetailsFragment = {
         program: string
         name: string
         mintList?: Array<string> | null
-        vault?: string | null
         symbol?: string | null
         description?: string | null
         imageUrl?: string | null
@@ -5070,7 +5053,6 @@ export type UserFindManyLogQuery = {
             program: string
             name: string
             mintList?: Array<string> | null
-            vault?: string | null
             symbol?: string | null
             description?: string | null
             imageUrl?: string | null
@@ -5277,7 +5259,6 @@ export type UserFindOneLogQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -5475,7 +5456,6 @@ export type AdminFindManyLogQuery = {
             program: string
             name: string
             mintList?: Array<string> | null
-            vault?: string | null
             symbol?: string | null
             description?: string | null
             imageUrl?: string | null
@@ -5682,7 +5662,6 @@ export type AdminFindOneLogQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -5982,7 +5961,6 @@ export type NetworkTokenDetailsFragment = {
   program: string
   name: string
   mintList?: Array<string> | null
-  vault?: string | null
   symbol?: string | null
   description?: string | null
   imageUrl?: string | null
@@ -6009,7 +5987,6 @@ export type AdminFindManyNetworkTokenQuery = {
       program: string
       name: string
       mintList?: Array<string> | null
-      vault?: string | null
       symbol?: string | null
       description?: string | null
       imageUrl?: string | null
@@ -6046,7 +6023,6 @@ export type AdminFindOneNetworkTokenQuery = {
     program: string
     name: string
     mintList?: Array<string> | null
-    vault?: string | null
     symbol?: string | null
     description?: string | null
     imageUrl?: string | null
@@ -6072,7 +6048,6 @@ export type AdminCreateNetworkTokenMutation = {
     program: string
     name: string
     mintList?: Array<string> | null
-    vault?: string | null
     symbol?: string | null
     description?: string | null
     imageUrl?: string | null
@@ -6099,7 +6074,6 @@ export type AdminUpdateNetworkTokenMutation = {
     program: string
     name: string
     mintList?: Array<string> | null
-    vault?: string | null
     symbol?: string | null
     description?: string | null
     imageUrl?: string | null
@@ -6125,7 +6099,6 @@ export type AdminUpdateNetworkTokenMetadataMutation = {
     program: string
     name: string
     mintList?: Array<string> | null
-    vault?: string | null
     symbol?: string | null
     description?: string | null
     imageUrl?: string | null
@@ -6159,7 +6132,6 @@ export type UserFindManyNetworkTokenQuery = {
       program: string
       name: string
       mintList?: Array<string> | null
-      vault?: string | null
       symbol?: string | null
       description?: string | null
       imageUrl?: string | null
@@ -6369,7 +6341,6 @@ export type RoleDetailsFragment = {
       program: string
       name: string
       mintList?: Array<string> | null
-      vault?: string | null
       symbol?: string | null
       description?: string | null
       imageUrl?: string | null
@@ -6460,7 +6431,6 @@ export type RoleConditionDetailsFragment = {
     program: string
     name: string
     mintList?: Array<string> | null
-    vault?: string | null
     symbol?: string | null
     description?: string | null
     imageUrl?: string | null
@@ -6543,7 +6513,6 @@ export type AdminFindManyRoleQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -6660,7 +6629,6 @@ export type AdminFindOneRoleQuery = {
         program: string
         name: string
         mintList?: Array<string> | null
-        vault?: string | null
         symbol?: string | null
         description?: string | null
         imageUrl?: string | null
@@ -6766,7 +6734,6 @@ export type AdminCreateRoleMutation = {
         program: string
         name: string
         mintList?: Array<string> | null
-        vault?: string | null
         symbol?: string | null
         description?: string | null
         imageUrl?: string | null
@@ -6873,7 +6840,6 @@ export type AdminUpdateRoleMutation = {
         program: string
         name: string
         mintList?: Array<string> | null
-        vault?: string | null
         symbol?: string | null
         description?: string | null
         imageUrl?: string | null
@@ -6987,7 +6953,6 @@ export type UserFindManyRoleQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -7136,7 +7101,6 @@ export type UserFindOneRoleQuery = {
         program: string
         name: string
         mintList?: Array<string> | null
-        vault?: string | null
         symbol?: string | null
         description?: string | null
         imageUrl?: string | null
@@ -7210,7 +7174,6 @@ export type UserCreateRoleMutation = {
         program: string
         name: string
         mintList?: Array<string> | null
-        vault?: string | null
         symbol?: string | null
         description?: string | null
         imageUrl?: string | null
@@ -7308,7 +7271,6 @@ export type UserCreateRoleConditionMutation = {
       program: string
       name: string
       mintList?: Array<string> | null
-      vault?: string | null
       symbol?: string | null
       description?: string | null
       imageUrl?: string | null
@@ -7398,7 +7360,6 @@ export type UserUpdateRoleMutation = {
         program: string
         name: string
         mintList?: Array<string> | null
-        vault?: string | null
         symbol?: string | null
         description?: string | null
         imageUrl?: string | null
@@ -7497,7 +7458,6 @@ export type UserUpdateRoleConditionMutation = {
       program: string
       name: string
       mintList?: Array<string> | null
-      vault?: string | null
       symbol?: string | null
       description?: string | null
       imageUrl?: string | null
@@ -7571,7 +7531,6 @@ export type SnapshotDetailsFragment = {
         program: string
         name: string
         mintList?: Array<string> | null
-        vault?: string | null
         symbol?: string | null
         description?: string | null
         imageUrl?: string | null
@@ -7700,7 +7659,6 @@ export type UserFindManySnapshotQuery = {
             program: string
             name: string
             mintList?: Array<string> | null
-            vault?: string | null
             symbol?: string | null
             description?: string | null
             imageUrl?: string | null
@@ -7838,7 +7796,6 @@ export type UserFindOneSnapshotQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -7952,7 +7909,6 @@ export type UserCreateSnapshotMutation = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -8074,7 +8030,6 @@ export type AdminFindManySnapshotQuery = {
             program: string
             name: string
             mintList?: Array<string> | null
-            vault?: string | null
             symbol?: string | null
             description?: string | null
             imageUrl?: string | null
@@ -8212,7 +8167,6 @@ export type AdminFindOneSnapshotQuery = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -8326,7 +8280,6 @@ export type AdminCreateSnapshotMutation = {
           program: string
           name: string
           mintList?: Array<string> | null
-          vault?: string | null
           symbol?: string | null
           description?: string | null
           imageUrl?: string | null
@@ -8846,7 +8799,6 @@ export const NetworkTokenDetailsFragmentDoc = gql`
     program
     name
     mintList
-    vault
     symbol
     description
     imageUrl
@@ -13518,7 +13470,6 @@ export function AdminUpdateNetworkInputSchema(): z.ZodObject<Properties<AdminUpd
 export function AdminUpdateNetworkTokenInputSchema(): z.ZodObject<Properties<AdminUpdateNetworkTokenInput>> {
   return z.object({
     name: z.string().nullish(),
-    vault: z.string().nullish(),
   })
 }
 

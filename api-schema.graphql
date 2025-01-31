@@ -163,7 +163,6 @@ input AdminUpdateNetworkInput {
 
 input AdminUpdateNetworkTokenInput {
   name: String
-  vault: String
 }
 
 input AdminUpdateRoleInput {
@@ -581,7 +580,6 @@ type NetworkToken {
   symbol: String
   type: NetworkTokenType!
   updatedAt: DateTime
-  vault: String
 }
 
 type NetworkTokenPaging {

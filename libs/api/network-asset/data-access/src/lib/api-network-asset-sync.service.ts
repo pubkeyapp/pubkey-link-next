@@ -187,11 +187,8 @@ export class ApiNetworkAssetSyncService {
     const solanaFungibleTokens: NetworkToken[] = tokens.filter((t) => t.type === NetworkTokenType.Fungible)
     const solanaNonFungibleTokens: NetworkToken[] = tokens.filter((t) => t.type === NetworkTokenType.NonFungible)
 
-    // Get the tokens that have a vault
-    const anybodiesTokens: NetworkToken[] = solanaNonFungibleTokens.filter((v) => v.vault?.length)
-
     this.logger.verbose(
-      `[${cluster}] syncIdentity: Syncing assets for ${owner} on ${cluster}, anybodiesTokens: ${anybodiesTokens.length}, solanaFungibleTokens: ${solanaFungibleTokens.length}, solanaNonFungibleTokens: ${solanaNonFungibleTokens.length},`,
+      `[${cluster}] syncIdentity: Syncing assets for ${owner} on ${cluster}, solanaFungibleTokens: ${solanaFungibleTokens.length}, solanaNonFungibleTokens: ${solanaNonFungibleTokens.length},`,
     )
     // TODO: Move the resolveNetworkAssets function into a separate method
     let assets: NetworkAssetInput[] = []
@@ -199,7 +196,6 @@ export class ApiNetworkAssetSyncService {
       assets = await this.network.resolver.resolveNetworkAssets({
         cluster,
         owner,
-        anybodiesTokens,
         solanaFungibleTokens,
         solanaNonFungibleTokens,
       })

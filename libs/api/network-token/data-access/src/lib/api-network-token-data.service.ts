@@ -19,6 +19,17 @@ export class ApiNetworkTokenDataService {
       where: { metadataUrl: null, network: { cluster: { notIn: [NetworkCluster.SolanaCustom] } } },
     })
     await Promise.all(tokens.map((token) => this.updateNetworkTokenMetadata(token.id)))
+
+    // TODO: V3: delete this code
+    const hasVaultTokens = await this.core.data.networkToken.count({ where: { vault: { not: null } } })
+    if (!hasVaultTokens) {
+      return
+    }
+    const deleted = await this.core.data.networkToken.updateMany({
+      where: { vault: { not: null } },
+      data: { vault: null },
+    })
+    this.logger.log(`Removed vault from ${deleted.count} tokens`)
   }
 
   @OnEvent(EVENT_NETWORKS_PROVISIONED)
@@ -120,13 +131,7 @@ export class ApiNetworkTokenDataService {
   async update(networkTokenId: string, input: AdminUpdateNetworkTokenInput) {
     const token = await this.findOne(networkTokenId)
 
-    if (input.vault && token.type !== NetworkTokenType.NonFungible) {
-      throw new Error(`Vault can only be set for non-fungible tokens`)
-    }
-    if (input.vault && !input.vault.includes(':')) {
-      throw new Error(`Vault must be in the format <cluster>:<address>`)
-    }
-    return this.core.data.networkToken.update({ where: { id: networkTokenId }, data: input })
+    return this.core.data.networkToken.update({ where: { id: token.id }, data: input })
   }
 
   async updateNetworkTokenMetadata(networkTokenId: string) {

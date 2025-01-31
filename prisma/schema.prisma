@@ -236,7 +236,7 @@ model NetworkToken {
   account     String
   mintList    String[]
   program     String
-  vault       String?
+  vault       String? // TODO: V3: delete this field
   imageUrl    String?
   metadataUrl String?
   description String?
@@ -356,7 +356,7 @@ enum NetworkCluster {
 }
 
 enum NetworkResolver {
-  Anybodies
+  Anybodies // TODO: V3: delete this item
   SolanaFungible
   SolanaNonFungible
   SolanaValidator

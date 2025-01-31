@@ -4,6 +4,4 @@ import { Field, InputType } from '@nestjs/graphql'
 export class AdminUpdateNetworkTokenInput {
   @Field({ nullable: true })
   name?: string
-  @Field({ nullable: true })
-  vault?: string | null
 }

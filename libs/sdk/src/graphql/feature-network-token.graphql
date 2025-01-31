@@ -8,7 +8,6 @@ fragment NetworkTokenDetails on NetworkToken {
   program
   name
   mintList
-  vault
   symbol
   description
   imageUrl

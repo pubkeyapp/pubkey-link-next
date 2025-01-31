@@ -26,8 +26,6 @@ export class NetworkToken {
   @Field(() => [String], { nullable: true })
   mintList?: string[]
   @Field({ nullable: true })
-  vault?: string | null
-  @Field({ nullable: true })
   imageUrl?: string | null
   @Field({ nullable: true })
   metadataUrl?: string | null
