@@ -56,7 +56,7 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
-      - uses: actions/setup-node@v4.1.0
+      - uses: actions/setup-node@v4.2.0
         with:
           node-version: '18'
       - run: pnpm install --frozen-lockfile --prefer-frozen-lockfile
